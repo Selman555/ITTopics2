@@ -2,6 +2,11 @@
 var timeout;
 var clicked = false; //Om dubbele foutmeldingen te voorkomen
 
+function nogNietKlaar(){
+	alert("Dit werkt nog niet! Pas na webservice!!!");
+}
+
+
 function allowDrop(ev){
 	ev.preventDefault();
 }

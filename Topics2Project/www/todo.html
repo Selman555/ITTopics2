@@ -4,21 +4,25 @@
 		<style type="text/css">
 			html {
 				background-color: #232323;
+				width: 100%;
+				height: 100%;
 			}
 
 			body {
 				font-family: Tahoma;
-				color: white;
+				width: 80%;
+				margin: auto;
+				margin-top: 1.5%;
 			}
 
-			input[type=button], input[type=submit]  {
-				color: white;
-				background-color: #E01B5D;
+			input[type=button], input[type=submit], select {
+				background-color: #F7A0CD;
+				font-weight: bold;
 
 				border: none;
 				border-radius: 15px;
 
-				padding: 5px;
+				padding: .5%;
 			}
 
 			article {
@@ -32,7 +36,7 @@
 				font-weight: normal;
 			}
 
-			section:nth-child(2) { /* 2de kindelement in article (= 2de section) */
+			section:nth-child(3) { /* 2de kindelement in article (= 2de section) */
 				font-size: 0.75em;
 				font-style: italic;
 				text-align: right;
@@ -41,114 +45,159 @@
 
 
 			#box1, #box2, #box3, #box4, #box5 {
-				width: 15%;
-				min-height: 35%;
+				width: 90%;
 
-				border-radius: 30px;
+				border-radius: 10px;
 				border: 1px solid black;
-
-				position: relative;
-				float: left;
 
 				margin: 15px;
 				padding: 15px;
 			}
 
 			#box1 {
-				background-color: #D61C1C;
+				background-color: #FF6969;
 			}
 
 			#box2 {
-				background-color: #D6951C;
+				background-color: #FFA769;
 			}
 
 			#box3 {
-				background-color: #D6D31C;
-				color: black;
+				background-color: #FFE869;
 			}
 
 			#box4 {
-				background-color: #8FD61C;
-				color: black;
+				background-color: #CFFF69;
 			}
 
 			#box5 {
-				background-color: #00E82B;
-				color: black;
+				background-color: #7FFF69;
 			}
 
-			#todo, #inVerwerking, #nazicht, #inNazicht, #klaar {
+			h1 {
+				font-size: 1.4em;
 				font-weight: bold;
 				padding-left: 10px;
-				color: #7fbf0f;
+				margin-top: 30px; 
+				color: white;
+			}
+
+			h2 {
+				font-size: 1em;
+				padding-bottom: 0%;
+				margin-bottom: 0%;
+			}
+
+			#btnChangeState {
+				text-align: center;
+			}
+
+			form {
+				padding-bottom: 50px;
+			}
+
+			form h1 {
+				margin-top: 50px;
+			}
+
+			form table {
+				font-size: .9em;
+				color: white;
+				border: 1px solid gray;
+				margin-top: 25px;
+				margin-left: 25px;
+				padding: 10px;
+			}
+
+			form table tr td:nth-child(1) {
+				width: 100px;
+			}
+
+			form table tr td input[type=text] {
+				width: 400px;
 			}
 		</style>
 	</head>
 	<body>
-		<h1>To Do's [Zit nog een bug in - AFBLIJVEN]</h1>
+		<div id="btnChangeState">
+			<input type="button" value="Wijzig status" onclick="changeState()" />
+			<input type="button" value="Wijziging klaar" onclick="changeStateReady()" />
+		</div>
 
-		<div id="todo">To Do</div>
+		<h1>To Do</h1>
 		<div id="box1" ondrop="drop(event)" ondragover="allowDrop(event)">
 			<article id="taak1" draggable="false" ondragstart="drag(event)">
-				Taak 1 - Naam (AON)
-				<section>
-					Omschrijving opdracht
-				</section>
+				<h2>Taak 1 - Naam (AON)</h2>
+				<section>Omschrijving opdracht</section>
 				<section>~Door: [Naam]</section>
 			</article>			
 		</div>
 
-		<div id="inVerwerking">In Behandeling</div>
+		<h1>In Behandeling</h1>
 		<div id="box2" ondrop="drop(event)" ondragover="allowDrop(event)">
 			<article id="taak2" draggable="false" ondragstart="drag(event)">
-				Taak 2 - Naam (SNB)
-				<section>
-					Omschrijving opdracht
-				</section>
+				<h2>Taak 2 - Naam (SNB)</h2>
+				<section>Omschrijving opdracht</section>
 				<section>~Door: [Naam]</section>
 			</article>
 		</div>
 
-		<div id="nazicht">Nazicht Nodig</div>
+		<h1>Nazicht Nodig</h1>
 		<div id="box3" ondrop="drop(event)" ondragover="allowDrop(event)">
 			<article id="taak3" draggable="false" ondragstart="drag(event)">
-				Taak 3 - Naam (SNB)
-				<section>
-					Omschrijving opdracht
-				</section>
+				<h2>Taak 3 - Naam (SNB)</h2>
+				<section>Omschrijving opdracht</section>
 				<section>~Door: [Naam]</section>
 			</article>
 		</div>
 
-		<div id="inNazicht">In Nazicht</div>
+		<h1>In Nazicht</h1>
 		<div id="box4" ondrop="drop(event)" ondragover="allowDrop(event)">
 			<article id="taak4" draggable="false" ondragstart="drag(event)">
-				Taak 4 - Naam (AON)
-				<section>
-					Omschrijving opdracht
-				</section>
+				<h2>Taak 4 - Naam (AON)</h2>
+				<section>Omschrijving opdracht</section>
 				<section>~Door: [Naam]</section>
 			</article>
 		</div>
 
-		<div id="klaar">Klaar!</div>
+		<h1>Klaar!</h1>
 		<div id="box5" ondrop="drop(event)" ondragover="allowDrop(event)">
 			<article id="taak5" draggable="false" ondragstart="drag(event)">
-				Taak 5 - Naam (AON)
-				<section>
-					Omschrijving opdracht
-				</section>
+				<h2>Taak 5 - Naam (AON)</h2>
+				<section>Omschrijving opdracht</section>
 				<section>~Door: [Naam]</section>
 			</article>
 		</div>
 
-		<div id="btnChangeState">
-			<input type="button" value="Wijzig status" onclick="changeState()" /><br>
-			<input type="button" value="Wijziging klaar" onclick="changeStateReady()" />
-		</div>
-
-		<form id="formToevoegen" method="POST" action="toevoegingOpdracht.php">
-			<input type="text" placeholder="Geef naam opdracht" name="naamOpdrachten" /> <input type="submit" value="Toevoegen" />
+		<form method="POST" action="#">
+			<h1>Voeg opdracht toe</h1>
+			<table>
+				<tbody>
+					<tr>
+						<td>Taaknaam:</td>
+						<td><input type="text" placeholder="Bijv. GUI Win8" name="naam" /></td>
+					</tr>
+					<tr>
+						<td>Omschrijving:</td>
+						<td><input type="text" placeholder="Bijv. GUI verspringt bij rotatie scherm" name="omschrijving" /></td>
+					</tr>
+					<tr>
+						<td>Prioriteit:</td>
+						<td>
+							<select name="prioriteit">
+								<option name="1">Zeer Hoog</option>
+								<option name="2">Hoog</option>
+								<option name="3">Matig</option>
+								<option name="4">Laag</option>
+								<option name="5">Zeer Laag</option>
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="2"><input type="submit" value="Aanmaken" onclick="nogNietKlaar()" /></td>
+					</tr>
+				</tbody>
+			</table>
 		</form>
 	</body>
 	<script type="text/javascript" src="todo.js"></script>
