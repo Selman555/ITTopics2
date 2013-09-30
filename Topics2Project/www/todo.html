@@ -1,0 +1,155 @@
+<html>
+	<head>
+		<title>To Do's</title>
+		<style type="text/css">
+			html {
+				background-color: #232323;
+			}
+
+			body {
+				font-family: Tahoma;
+				color: white;
+			}
+
+			input[type=button], input[type=submit]  {
+				color: white;
+				background-color: #E01B5D;
+
+				border: none;
+				border-radius: 15px;
+
+				padding: 5px;
+			}
+
+			article {
+				padding-bottom: 10px;
+				font-weight: bold;
+			}
+
+			article section {
+				font-size: 0.8em;
+				padding-left: 20px;
+				font-weight: normal;
+			}
+
+			section:nth-child(2) { /* 2de kindelement in article (= 2de section) */
+				font-size: 0.75em;
+				font-style: italic;
+				text-align: right;
+				font-weight: normal;
+			}
+
+
+			#box1, #box2, #box3, #box4, #box5 {
+				width: 15%;
+				min-height: 35%;
+
+				border-radius: 30px;
+				border: 1px solid black;
+
+				position: relative;
+				float: left;
+
+				margin: 15px;
+				padding: 15px;
+			}
+
+			#box1 {
+				background-color: #D61C1C;
+			}
+
+			#box2 {
+				background-color: #D6951C;
+			}
+
+			#box3 {
+				background-color: #D6D31C;
+				color: black;
+			}
+
+			#box4 {
+				background-color: #8FD61C;
+				color: black;
+			}
+
+			#box5 {
+				background-color: #00E82B;
+				color: black;
+			}
+
+			#todo, #inVerwerking, #nazicht, #inNazicht, #klaar {
+				font-weight: bold;
+				padding-left: 10px;
+				color: #7fbf0f;
+			}
+		</style>
+	</head>
+	<body>
+		<h1>To Do's [Zit nog een bug in - AFBLIJVEN]</h1>
+
+		<div id="todo">To Do</div>
+		<div id="box1" ondrop="drop(event)" ondragover="allowDrop(event)">
+			<article id="taak1" draggable="false" ondragstart="drag(event)">
+				Taak 1 - Naam (AON)
+				<section>
+					Omschrijving opdracht
+				</section>
+				<section>~Door: [Naam]</section>
+			</article>			
+		</div>
+
+		<div id="inVerwerking">In Behandeling</div>
+		<div id="box2" ondrop="drop(event)" ondragover="allowDrop(event)">
+			<article id="taak2" draggable="false" ondragstart="drag(event)">
+				Taak 2 - Naam (SNB)
+				<section>
+					Omschrijving opdracht
+				</section>
+				<section>~Door: [Naam]</section>
+			</article>
+		</div>
+
+		<div id="nazicht">Nazicht Nodig</div>
+		<div id="box3" ondrop="drop(event)" ondragover="allowDrop(event)">
+			<article id="taak3" draggable="false" ondragstart="drag(event)">
+				Taak 3 - Naam (SNB)
+				<section>
+					Omschrijving opdracht
+				</section>
+				<section>~Door: [Naam]</section>
+			</article>
+		</div>
+
+		<div id="inNazicht">In Nazicht</div>
+		<div id="box4" ondrop="drop(event)" ondragover="allowDrop(event)">
+			<article id="taak4" draggable="false" ondragstart="drag(event)">
+				Taak 4 - Naam (AON)
+				<section>
+					Omschrijving opdracht
+				</section>
+				<section>~Door: [Naam]</section>
+			</article>
+		</div>
+
+		<div id="klaar">Klaar!</div>
+		<div id="box5" ondrop="drop(event)" ondragover="allowDrop(event)">
+			<article id="taak5" draggable="false" ondragstart="drag(event)">
+				Taak 5 - Naam (AON)
+				<section>
+					Omschrijving opdracht
+				</section>
+				<section>~Door: [Naam]</section>
+			</article>
+		</div>
+
+		<div id="btnChangeState">
+			<input type="button" value="Wijzig status" onclick="changeState()" /><br>
+			<input type="button" value="Wijziging klaar" onclick="changeStateReady()" />
+		</div>
+
+		<form id="formToevoegen" method="POST" action="toevoegingOpdracht.php">
+			<input type="text" placeholder="Geef naam opdracht" name="naamOpdrachten" /> <input type="submit" value="Toevoegen" />
+		</form>
+	</body>
+	<script type="text/javascript" src="todo.js"></script>
+</html>
