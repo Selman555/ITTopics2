@@ -14,7 +14,7 @@
 | path to your installation.
 |
 */
-$config['base_url']	= '/ITTopics%20Project/Topics2Project/www%20codeigniter/';
+$config['base_url']	= '';
 
 /*
 |--------------------------------------------------------------------------

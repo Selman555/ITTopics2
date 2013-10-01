@@ -1,13 +1,14 @@
 <!DOCTYPE html />
 <html lang="nl-be">
 	<head>
-		<link rel="stylesheet" href="styles/main.css" />
+		<link rel="stylesheet" href="<?php echo base_url('styles/main.css'); ?>" 
+			type="text/css" media="screen"/>
 
 		<title>PixelApps - Groepsleden</title>
 	</head>
 	<body>
 		<div id="headerStripe" style="background-color: #151C8A; color: #151C8A;">.</div>
-		<?php include 'templates/header.html'; ?>
+		<?php include 'templates/header.php'; ?>
 
 		<div id="content">
 			<header><h1>Biografie Groepsleden</h1></header>
@@ -94,6 +95,6 @@
 			</section>
 		</div>
 
-		<?php include 'templates/footer.html'; ?>
+		<?php include 'templates/footer.php'; ?>
 	</body>
 </html>
