@@ -1,0 +1,204 @@
+<html>
+	<head>
+		<title>To Do's</title>
+		<style type="text/css">
+			html {
+				background-color: #232323;
+				width: 100%;
+				height: 100%;
+			}
+
+			body {
+				font-family: Tahoma;
+				width: 80%;
+				margin: auto;
+				margin-top: 1.5%;
+			}
+
+			input[type=button], input[type=submit], select {
+				background-color: #F7A0CD;
+				font-weight: bold;
+
+				border: none;
+				border-radius: 15px;
+
+				padding: .5%;
+			}
+
+			article {
+				padding-bottom: 10px;
+				font-weight: bold;
+			}
+
+			article section {
+				font-size: 0.8em;
+				padding-left: 20px;
+				font-weight: normal;
+			}
+
+			section:nth-child(3) { /* 2de kindelement in article (= 2de section) */
+				font-size: 0.75em;
+				font-style: italic;
+				text-align: right;
+				font-weight: normal;
+			}
+
+
+			#box1, #box2, #box3, #box4, #box5 {
+				width: 90%;
+
+				border-radius: 10px;
+				border: 1px solid black;
+
+				margin: 15px;
+				padding: 15px;
+			}
+
+			#box1 {
+				background-color: #FF6969;
+			}
+
+			#box2 {
+				background-color: #FFA769;
+			}
+
+			#box3 {
+				background-color: #FFE869;
+			}
+
+			#box4 {
+				background-color: #CFFF69;
+			}
+
+			#box5 {
+				background-color: #7FFF69;
+			}
+
+			h1 {
+				font-size: 1.4em;
+				font-weight: bold;
+				padding-left: 10px;
+				margin-top: 30px; 
+				color: white;
+			}
+
+			h2 {
+				font-size: 1em;
+				padding-bottom: 0%;
+				margin-bottom: 0%;
+			}
+
+			#btnChangeState {
+				text-align: center;
+			}
+
+			form {
+				padding-bottom: 50px;
+			}
+
+			form h1 {
+				margin-top: 50px;
+			}
+
+			form table {
+				font-size: .9em;
+				color: white;
+				border: 1px solid gray;
+				margin-top: 25px;
+				margin-left: 25px;
+				padding: 10px;
+			}
+
+			form table tr td:nth-child(1) {
+				width: 100px;
+			}
+
+			form table tr td input[type=text] {
+				width: 400px;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="btnChangeState">
+			<input type="button" value="Wijzig status" onclick="changeState()" />
+			<input type="button" value="Wijziging klaar" onclick="changeStateReady()" />
+		</div>
+
+		<h1>To Do</h1>
+		<div id="box1" ondrop="drop(event)" ondragover="allowDrop(event)">
+			<article id="taak1" draggable="false" ondragstart="drag(event)">
+				<h2>Taak 1 - Naam (AON)</h2>
+				<section>Omschrijving opdracht</section>
+				<section>~Door: [Naam]</section>
+			</article>			
+		</div>
+
+		<h1>In Behandeling</h1>
+		<div id="box2" ondrop="drop(event)" ondragover="allowDrop(event)">
+			<article id="taak2" draggable="false" ondragstart="drag(event)">
+				<h2>Taak 2 - Naam (SNB)</h2>
+				<section>Omschrijving opdracht</section>
+				<section>~Door: [Naam]</section>
+			</article>
+		</div>
+
+		<h1>Nazicht Nodig</h1>
+		<div id="box3" ondrop="drop(event)" ondragover="allowDrop(event)">
+			<article id="taak3" draggable="false" ondragstart="drag(event)">
+				<h2>Taak 3 - Naam (SNB)</h2>
+				<section>Omschrijving opdracht</section>
+				<section>~Door: [Naam]</section>
+			</article>
+		</div>
+
+		<h1>In Nazicht</h1>
+		<div id="box4" ondrop="drop(event)" ondragover="allowDrop(event)">
+			<article id="taak4" draggable="false" ondragstart="drag(event)">
+				<h2>Taak 4 - Naam (AON)</h2>
+				<section>Omschrijving opdracht</section>
+				<section>~Door: [Naam]</section>
+			</article>
+		</div>
+
+		<h1>Klaar!</h1>
+		<div id="box5" ondrop="drop(event)" ondragover="allowDrop(event)">
+			<article id="taak5" draggable="false" ondragstart="drag(event)">
+				<h2>Taak 5 - Naam (AON)</h2>
+				<section>Omschrijving opdracht</section>
+				<section>~Door: [Naam]</section>
+			</article>
+		</div>
+
+		<form method="POST" action="#">
+			<h1>Voeg opdracht toe</h1>
+			<table>
+				<tbody>
+					<tr>
+						<td>Taaknaam:</td>
+						<td><input type="text" placeholder="Bijv. GUI Win8" name="naam" /></td>
+					</tr>
+					<tr>
+						<td>Omschrijving:</td>
+						<td><input type="text" placeholder="Bijv. GUI verspringt bij rotatie scherm" name="omschrijving" /></td>
+					</tr>
+					<tr>
+						<td>Prioriteit:</td>
+						<td>
+							<select name="prioriteit">
+								<option name="1">Zeer Hoog</option>
+								<option name="2">Hoog</option>
+								<option name="3">Matig</option>
+								<option name="4">Laag</option>
+								<option name="5">Zeer Laag</option>
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="2"><input type="submit" value="Aanmaken" onclick="nogNietKlaar()" /></td>
+					</tr>
+				</tbody>
+			</table>
+		</form>
+	</body>
+	<script type="text/javascript" src="todo.js"></script>
+</html>
