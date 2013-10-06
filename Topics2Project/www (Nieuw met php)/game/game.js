@@ -19,11 +19,18 @@ var backgroundPosX1; //Positie x-as achtergrond 1
 var backgroundPosY1; //Positie y-as achtergrond 1
 var backgroundPosX2; //Positie x-as achtergrond 2
 var backgroundPosY2; //Positie y-as achtergrond 2
+var cloudImg1; //Wolk 1 op het startscherm
+var clousImg2; //Wolk 2 op het startscherm
+var cloudPosX1; //Positie x wolk 1
+var cloudPosY1; //Positie y wolk 1
+var cloudPosX2; //Positie x wolk 2
+var clousPosY2; //Positie y wolk 2
 var playerImg; //Afbeelding speler
 var playerPosX; //Positie x-as speler
 var playerPosY; //Positie y-as speler
-var jumpHeight; //hoogte van het springen
+var jumpVelocity; //hoogte van het springen
 var jumpState; //Status van de speler (false != springen - true = springen)
+var goDown; //Speler is omlaag aan het gaan na het springen
 var gravity; //Hoe snel een speler omlaag gaat
 var meters; //Afstand dat de speler gelopen heeft
 var posRectY; //Startpositie y-as rectangle
@@ -39,12 +46,40 @@ var platformImg;
 var platformPosX;
 var platformPosY;
 
-var dead;
-var gameover;
+var dead; //Boolean -> true = dood, false != dood
+var gameover; //Boolean -> true = gameover, false != gameover
+var playing;
+var highscore;
+var startscreen;
 
-var intervalScrollBackground; //Nodig om te laten stoppen bij doodgaan
+var intervalPlaying; //Nodig om te laten stoppen bij doodgaan
+var intervalStartscherm; //Nodig om te laten stoppen bij het klikken van startknop
+var intervalJumping;
+var intervalGoingDown;
+
+var posStartbutton = [];
+var playingSong;
+
+var allowKeyEvent;
+
+var listPlatformPos;
+
+var Debugger = function() { };
+Debugger.log = function (message) {
+	try {
+		console.log(message);
+	} catch(e) {
+		console.log(e);
+	}
+}
+
+window.onload = init();
 
 function init() {
+	playing = true;
+	highscore = false;
+	startscreen = false;
+
 	soundJump = new Audio("sounds/jump.wav");
 	soundBackground = new Audio("sounds/racing.wav");
 	soundDead = new Audio("sounds/dead.wav");
@@ -64,6 +99,20 @@ function init() {
 	rectXVelocity = 5;
 	statusRect = true;
 
+	cloudImg1 = new Image();
+	cloudImg1.src = "img/clouds.png";
+	cloudImg1.width = 1280;
+	cloudImg1.height = canvasHeight;
+	cloudPosX1 = 0;
+	cloudPosY1 = 0;
+
+	cloudImg2 = new Image();
+	cloudImg2.src = "img/clouds.png";
+	cloudImg2.width = 1280;
+	cloudImg2.height = canvasHeight;
+	cloudPosX2 = cloudImg1.width;
+	cloudPosY2 = 0;
+
 	//2 backgrounds om het te laten scrollen
 	backgroundImg1 = new Image();
 	backgroundImg1.src = "img/backgroundGame.png";
@@ -81,121 +130,298 @@ function init() {
 
 	backgroundVelocity = 10;
 
-	platformImg = new Image();
-	platformImg.src = "img/platform.png";
-	platformPosX = 40;
-	platformPosY = 400;
-	platformImg.width = 32;
-	platformImg.height = 32;
-
 	playerImg = new Image();
 	playerImg.src = "img/mushroom.png"
 	playerImg.width = playerWidth;
 	playerImg.height = playerHeight;
-	playerPosX = 10;
-	playerPosY = platformPosY - playerImg.height; //Beginnen OP de rectangle
+	playerPosX = 200;
+	playerPosY = 100 - playerImg.height; //Beginnen OP de rectangle
+
+	listPlatformPos = new Array(10); //10 platformen maken
+	platformImg = new Image();
+	platformImg.src = "img/platform.png";
+	platformImg.width = 32;
+	platformImg.height = 32;
+	makePlatforms();
 
 	jumpHeight = 50;
 	gravity = 3;
 	jumpState = false;
+	goDown = false;
 
-	userClickSpeed = 200; //1000 = 1 seconde
+	userClickSpeed = 1000; //1000 = 1 seconde
+	allowKeyEvent = true;
 
 	meters = 0;
 	dead = false;
 	gameover = false;
+	playingSong = false;
 
-	setInterval(drawRectangle, FPS);
-	intervalScrollBackground = setInterval(scrollBackground, FPS);
+	Debugger.log("Elementen aangemaakt");
 
-	soundBackground.play();
+	intervalStartscherm = setInterval(drawStartscreen, FPS);
 }
 
-function scrollBackground() {
-	backgroundPosX1 -= backgroundVelocity;
-	backgroundPosX2 -= backgroundVelocity;
+function makePlatforms() {
 
-	if(backgroundPosX1 <= -backgroundImg1.width) {
-		backgroundPosX1 = backgroundImg1.width;
-	}else if(backgroundPosX2 <= -backgroundImg2.width) {
-		backgroundPosX2 = backgroundImg2.width;
+	for(var i=0; i<10; i++) { //10 posities in de array maken met elk een array van 2 posities
+			listPlatformPos[i] = new Array(2);
 	}
 
-	scrollRectangle();
-	drawRectangle();
+	var posYVorigPlatf = 400;
+	for(var i=0; i<10; i++) { //10 platformen maken
+		platformPosX = i*100;
+
+		//Platformhoogte randrom genereren
+		if(posYVorigPlatf >= 300) {
+			platformPosY = ((Math.random()*4)+3) * 100; //Tussen 3 en 4
+		}else if(posYVorigPlatf >= 200 && posYVorigPlatf < 300) {
+			platformPosY = ((Math.random()*3)+2) * 100; //Tussen 2 en 3
+		}else if(posYVorigPlatf >= 100 && posYVorigPlatf < 200) {
+			platformPosY = ((Math.random()*2)+1) * 100; //Tussen 1 en 2
+		}else if(posYVorigPlatf < 100) {
+			platformPosY = ((Math.random()*1)+1) * 100; //Tussen 1 en 1
+		}
+
+		posYVorigPlatf = platformPosY;
+
+		listPlatformPos[i][0] = platformPosX;
+		listPlatformPos[i][1] = platformPosY;
+	}
+
+	Debugger.log("Platformen aangemaakt");
 }
 
-function scrollRectangle() {
-	posRectX -= rectXVelocity;
+function playBgSound() {
+	//if(!gameover && !dead) {
+	//	if(!playingSong) {
+	//		soundBackground.play();
+	//		playingSong = true;
+	//	}
+	//}
 }
 
-window.onload = init();
+function drawStartscreen() {
+	if(startscreen) {
+		//Canvas leegmaken om weer op te vullen met ofbeeldingen op een ander locatie
+		context2D.clearRect(0, 0, canvasWidth, canvasHeight);
 
-function draw() {
+		//Achtergrond tekenen
+		context2D.drawImage(backgroundImg1, backgroundPosX1, backgroundPosY1, backgroundImg1.width, backgroundImg1.height);
+		context2D.drawImage(backgroundImg2, backgroundPosX2, backgroundPosY2, backgroundImg2.width, backgroundImg2.height);
+
+		//Wolken tekenen
+		context2D.drawImage(cloudImg1, cloudPosX1, cloudPosY1, cloudImg1.width, cloudImg1.height);
+		context2D.drawImage(cloudImg2, cloudPosX2, cloudPosY2, cloudImg2.width, cloudImg2.height);
+
+		scrollCloudsStartscreen(1); //Wolken laten scrollen
+		
+		drawStartbutton(); //Startknop op het scherm tekenen
+
+		Debugger.log("Canvas opgevuld");
+	}
+	else if(playing) {
+		clearInterval(intervalStartscherm);
+		intervalPlaying = setInterval(draw, FPS);
+	}
+}
+
+function scrollCloudsStartscreen(vel) {
+	cloudPosX1 -= vel;
+	cloudPosX2 -= vel;
+
+	if(cloudPosX1 <= -cloudImg1.width) {
+		cloudPosX1 = cloudImg1.width;
+	}else if(cloudPosX2 <= -cloudImg2.width) {
+		cloudPosX2 = cloudImg2.width;
+	}
+}
+
+function scrollPlatforms(vel) {
+	for(var i=0; i<listPlatformPos.length-1; i++) {
+		listPlatformPos[i][0] -= vel;
+		if(listPlatformPos[i][0]+platformImg.width < 0) {
+			listPlatformPos[i][0] = canvasWidth;
+		}
+	}
+}
+
+function scrollBackground(vel) {
+	backgroundPosX1 -= vel;
+	backgroundPosX2 -= vel;
+
+	if(backgroundPosX1 <= -backgroundImg1.width) {
+		backgroundPosX1 = backgroundImg1.width-10; //-10 om een zwarte streep tussen backgrounds te voorkomen
+	}else if(backgroundPosX2 <= -backgroundImg2.width) {
+		backgroundPosX2 = backgroundImg2.width-10; //-10 om een zwarte streep tussen backgrounds te voorkomen
+	}
+}
+
+function gravityPlayer(vel) {
+	if(!jumpState && !goDown) { //Zorgen voor springen
+		if(playerPosY+playerHeight < listPlatformPos[0][1]) {
+			playerPosY+=3;
+			//Voorlopig elk platform nakijken
+			if((playerPosX >= listPlatformPos[0][0] && playerPosX+playerImg.width <= listPlatformPos[0][0]+platformImg.width) && 
+				(playerPosX >= listPlatformPos[1][0] && playerPosX+playerImg.width <= listPlatformPos[1][0]+platformImg.width) && 
+				(playerPosX >= listPlatformPos[2][0] && playerPosX+playerImg.width <= listPlatformPos[2][0]+platformImg.width) && 
+				(playerPosX >= listPlatformPos[3][0] && playerPosX+playerImg.width <= listPlatformPos[3][0]+platformImg.width) && 
+				(playerPosX >= listPlatformPos[4][0] && playerPosX+playerImg.width <= listPlatformPos[4][0]+platformImg.width) && 
+				(playerPosX >= listPlatformPos[5][0] && playerPosX+playerImg.width <= listPlatformPos[5][0]+platformImg.width) && 
+				(playerPosX >= listPlatformPos[6][0] && playerPosX+playerImg.width <= listPlatformPos[6][0]+platformImg.width) && 
+				(playerPosX >= listPlatformPos[7][0] && playerPosX+playerImg.width <= listPlatformPos[7][0]+platformImg.width) && 
+				(playerPosX >= listPlatformPos[8][0] && playerPosX+playerImg.width <= listPlatformPos[8][0]+platformImg.width) && 
+				(playerPosX >= listPlatformPos[9][0] && playerPosX+playerImg.width <= listPlatformPos[9][0]+platformImg.width)) 
+			{
+				playerPosY=+3;
+
+				//Kijken als de speler de grond raakt
+				if(playerPosY + playerHeight > canvasHeight) {
+					dead = true;
+					gameover = true;
+					playing = false;
+				}
+			}
+		}
+
+
+		//Onderstaande zit een fout
+		//for(var i=0; i<listPlatformPos.length-1; i++) { //Voor elk platform nakijken
+		//	if(!(playerPosX >= listPlatformPos[i][0] && playerPosX+playerImg.width <= listPlatformPos[i][0]+platformImg.width)) { //Als de speler op het platform staat
+		//		if(!(playerPosY-playerHeight > listPlatformPos[i][1])) {
+		//			playerPosY += vel;
+		//			Debugger.log("Speler valt");
+		//		} else {
+		//			dead = true;
+		//			gameover = true;
+		//			playing = false;
+
+		//			Debugger.log("Speler is dood");
+		//		}
+		//	} else {
+		//		dead = true;
+		//		gameover = true;
+		//		playing = false;
+
+		//		Debugger.log("Speler is dood");
+		//	}
+		//}
+	}
+}
+
+function draw() { //Deze wordt bij het spelen ALTIJD opgeroepen (zie het als een update-functie)
+	context2D.clearRect(0, 0, canvasWidth, canvasHeight);
+
 	context2D.drawImage(backgroundImg1, backgroundPosX1, backgroundPosY1, backgroundImg1.width, backgroundImg1.height);
 	context2D.drawImage(backgroundImg2, backgroundPosX2, backgroundPosY2, backgroundImg2.width, backgroundImg2.height);
 
 	context2D.fillText("Meters: " + meters, 30, 30);
+	
+	drawPlatforms();
+	gravityPlayer(1);
 
 	if(!gameover) {
-		if(!dead) {
-			meters++;
+		scrollBackground(3);
+		//playBgSound();
+		meters++;
 
-			if(meters >= 250) //Om te testen
-				dead = true;
-			
-			context2D.drawImage(playerImg, playerPosX+25, playerPosY, playerImg.width, playerImg.height);
-		}else {
-			clearInterval(intervalScrollBackground);
-			soundDead.play();
-			soundBackground.pause();
-			gameover = true;
-		}
+		drawPlayer();
+	}else {
+		clearInterval(intervalPlaying);
+		soundBackground.pause();
+		soundDead.play();
 	}
 }
 
-function drawRectangle() {
-	context2D.clearRect(0, 0, canvasWidth, canvasHeight);
-	draw();
+function drawPlayer() {
+	context2D.drawImage(playerImg, playerPosX, playerPosY, playerImg.width, playerImg.height);
+}
 
-	context2D.drawImage(platformImg, platformPosX, platformPosY, platformImg.width, platformImg.height);
+function drawStartbutton() {
+	var buttonWidth = 100;
+	var buttonHeight = 50;
+	var buttonPosX = canvasWidth/2 - buttonWidth/2;
+	var buttonPosY = 400;
+
+	posStartbutton.push(buttonWidth, buttonHeight, buttonPosX, buttonPosY);
+
+	context2D.fillStyle = "black";
+	context2D.fillRect(buttonPosX, buttonPosY, buttonWidth, buttonHeight);
+
+	context2D.fillStyle = "white";
+	context2D.fillText("Start", canvasWidth/2 - buttonWidth/2+25, buttonPosY + buttonHeight/2); //Text, x, y
 
 
-	//context2D.beginPath();
-	//	context2D.rect(posRectX, posRectY, rectWidth, rectHeight);
-	//	context2D.fillStyle = rectColor;
-	//context2D.closePath();
-	//context2D.fill();
+	Debugger.log("Startknop gemaakt");
+}
 
-	//Beweging van de rectangle (OPTIONEEL)
-	//if(posRectX <= canvas.width-rectWidth && statusRect) {
-	//	posRectX += rectXVelocity;
-	//	if(posRectX == canvas.width-rectWidth)
-	//		statusRect = false;
-	//}else {
-	//	posRectX -= rectXVelocity;
-	//	if(posRectX <= 0)
-	//		statusRect = true;
-	//}
+function drawPlatforms() {
+	//context2D.clearRect(0, 0, canvasWidth, canvasHeight);
+	scrollPlatforms(5);
+
+	for(var i=0; i<listPlatformPos.length-1; i++) {
+		context2D.drawImage(platformImg, listPlatformPos[i][0], listPlatformPos[i][1], platformImg.width, platformImg.height);
+	}
+	Debugger.log("Platformen getekend");
 }
 
 function jumping() {
-	if(!gameover) {
+	if(!gameover && !startscreen) {
 		if(!jumpState) {
 			jumpState = true;
-			playerPosY -= jumpHeight;
+			allowKeyEvent = false;
+			intervalJumping = setInterval (function() {
+				playerPosY--;
+				drawPlayer();
 
+				Debugger.log("Aan het springen");
+			});
+
+
+			//jumpState = true;
 			soundJump.currentTime = 0;
 			soundJump.play();
-			setTimeout(notJumping, userClickSpeed);
+			setTimeout(goingDown, 500); //Bepaalt hoe lang de speler kan springen (500ms)
 		}
 	}
 }
 
-function notJumping() {
-	jumpState = false;
+function goingDown() {
+	if(!gameover && !startscreen) {
+		if(jumpState) {
+			goDown = true;
+			clearInterval(intervalJumping);
+
+			intervalGoingDown = setInterval(function() {
+				playerPosY++;
+				drawPlayer();
+
+				Debugger.log("Aan het neerkomen");
+			});
+
+			jumpState = false;
+
+			setTimeout(function() {
+				goDown = false;
+				clearInterval(intervalGoingDown);
+				allowKeyEvent = true;
+			}, 500);
+		}
+	}
 }
 
-canvas.onmousedown = function(e) { //Wanneer de speler wil springen
-	jumping();
+canvas.onmousedown = function() { //Wanneer de speler wil springen
+	if(allowKeyEvent) {
+		jumping();
+	}
+	else return false;
 };
+
+document.body.onkeydown = function (e) {
+	if(allowKeyEvent) {
+		if(e.keyCode == 32 || e.keyCode == 38) { //Spatiebalk (32), pijltje omhoog (38)
+			jumping();
+		}
+	}
+	else return false;
+}
