@@ -33,6 +33,9 @@ class Start extends CI_Controller {
 	{
 		$this->load->view('todo');
 	}
+         public function login(){
+            $this->load->view('login');
+        }
 }
 
 /* End of file welcome.php */

@@ -5,7 +5,7 @@
 	</div>
 
 	<div id="headerRechts">
-		<p id="inlog"><a href="#">Inloggen</a> | <a href="#">Registreren</a></p>
+		<p id="inlog"><a href="<?php echo base_url('start/login'); ?>">Inloggen</a> | <a href="#">Registreren</a></p>
 		<nav>
 			<a href="index">Home</a> / 
 			<a href="#">Verslagen</a> / 
