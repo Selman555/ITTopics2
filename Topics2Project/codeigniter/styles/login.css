@@ -6,42 +6,59 @@
         Purpose of the stylesheet follows.
 */
 
-root { 
-    display: block;
-}
 
 h1
-{
-    text-shadow: 0 1px 0 rgba(255, 255, 255, .7), 0px 2px 0 rgba(0, 0, 0, .5);
+{ 
+    text-shadow: 0 0.1em 0 rgba(255, 255, 255, .7), 0em 0.104em 0 rgba(0, 0, 0, .5);
     text-transform: uppercase;
     text-align: center;
     color: #000000;
-   
     letter-spacing: 0.3em;
-    font: normal 26px/1 Verdana, Helvetica;
+    font-family:"Verdana, Helvetica";
     position: relative;
+    font-size: 2em;
 }
 
-#inputs
+#geheel
 {
-    display: block;
+   background-color: #CCCC99; 
    
-    width:20em;
-    margin:1em;
-    padding:1em;
-    
 }
+
 input.tekstfield
 {
-    width:18em;
+    width:60%;
 }
 #login
+{ 
+    padding: 12% 25% 0% 25%  
+}
+p
 {
-    border:1px solid black;
+    font-family: "Verdana, Helvetica";
+    font-size: 1em;
 }
 
-#submit
+input.submit
 {
-    border:1px solid blue;
+   width: 45%; 
+   padding: 0.4em 0.9em;
+   border: 2px solid #ffffff;
+   
 }
+#btn
+{
+   padding: 2% 11% 0% 22%;  
+   height: 5%;
+   border:0;
+}
+
+#inputsAndTekst
+{
+   border:0;
+}
+
+
+
+
 

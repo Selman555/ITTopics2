@@ -11,13 +11,19 @@
 
 		<div id="content">
 		  <form id="login">
+                      <fieldset id="geheel">
+                      <fieldset id="inputsAndTekst">
                         <h1>Log in</h1>
-                        <fieldset id="inputs">
-                            <input id="username" type="text" placeholder="Username" class="tekstfield" autofocus required>
-                            <input id="password" type="password" placeholder="Password" class="tekstfield" required>
+                      
+                            <p>Geef hier uw gebruikersnaam en paswoord in </p>
+                            <input id="username" type="text" placeholder="Gebruikersnaam" class="tekstfield" autofocus required>
+                            <input id="password" type="password" placeholder="Paswoord" class="tekstfield" required>
                         </fieldset>
-                            <input type="submit" id="submit" value="Log in">
-                       
+                      <fieldset id="btn">
+                          <input type="submit" id="submit" class="submit" value="Log in">
+                            <input type="button" id="passwordRecovery" class="submit" value="Paswoord vergeten?">
+                      </fieldset>
+                      </fieldset>
                     </form>	
 		</div>
 
