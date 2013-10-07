@@ -22,6 +22,12 @@ h1
 #geheel
 {
    background-color: #CCCC99; 
+  border-bottom-color: #588c52;
+  border-bottom-width: 0.4em;
+  border-right-color: #588c52;
+  border-right-width:0.4em;
+  border-left-color: #45d068;
+  border-top-color:  #45d068;
    
 }
 
@@ -43,7 +49,7 @@ input.submit
 {
    width: 45%; 
    padding: 0.4em 0.9em;
-   border: 2px solid #ffffff;
+    border-color: #588c52;
    
 }
 #btn
@@ -51,6 +57,7 @@ input.submit
    padding: 2% 11% 0% 22%;  
    height: 5%;
    border:0;
+  
 }
 
 #inputsAndTekst
