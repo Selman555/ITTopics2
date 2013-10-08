@@ -965,3 +965,6 @@ java.lang.NullPointerException
 	at org.eclipse.equinox.launcher.Main.basicRun(Main.java:591)
 	at org.eclipse.equinox.launcher.Main.run(Main.java:1450)
 	at org.eclipse.equinox.launcher.Main.main(Main.java:1426)
+
+!ENTRY org.eclipse.ui 4 4 2013-10-08 16:38:50.368
+!MESSAGE Conflicting handlers for org.eclipse.wst.sse.ui.cleanup.document: {org.eclipse.wst.css.ui.internal.handlers.CleanupDocumentHandler} vs {org.eclipse.wst.html.ui.internal.edit.ui.CleanupDocumentHandler}
