@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename source module &apos;application/models.usermodel.php&apos; to &apos;user_model.php&apos;&#x0D;&#x0A;- Original element: &apos;application/models\usermodel.php&apos;&#x0D;&#x0A;- Renamed element: &apos;application/models\user_model.php&apos;" description="Rename source module &apos;usermodel.php&apos;" flags="589830" id="org.eclipse.dltk.ui.rename.sourcemodule" input="/&lt;application\/models{usermodel.php" name="user_model.php" stamp="1381235792688" version="1.0"/>
+</session>
