@@ -29,13 +29,20 @@ class Start extends CI_Controller {
 	{
 		$this->load->view('groepsleden');
 	}
+	
 	public function todo()
 	{
 		$this->load->view('todo');
 	}
-         public function login(){
-            $this->load->view('login');
-        }
+	
+    public function login(){
+    	$this->load->view('login');
+    }
+    
+    public function prive()
+    {
+    	$this->load->view('privatefiles');
+    }
 }
 
 /* End of file welcome.php */

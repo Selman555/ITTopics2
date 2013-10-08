@@ -6,7 +6,6 @@
 		<title>Hoofdpagina</title>
 	</head>
 	<body>
-		<div id="headerStripe" style="background-color: #151C8A; color: #151C8A;">.</div>
 		<?php include 'templates/header.php'; ?>
 
 		<div id="content">

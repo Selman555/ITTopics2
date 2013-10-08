@@ -1,16 +1,14 @@
 <header>
 			
-	<div id="logo">
-		<a href="index"><img src="<?php echo base_url('img/logo.png'); ?>" alt="logo" /></a>
-	</div>
+	<a href="index"><img src="<?php echo base_url('img/logo.png'); ?>" alt="logo" /></a>
 
-	<div id="headerRechts">
+	<section>
 		<p id="inlog"><a href="<?php echo base_url('start/login'); ?>">Inloggen</a> | <a href="#">Registreren</a></p>
 		<nav>
 			<a href="index">Home</a> / 
-			<a href="#">Verslagen</a> / 
+			<a href="<?php echo base_url('start/prive'); ?>">Privé bestanden</a> / 
 			<a href="#">About</a>
 		</nav>
-	</div>
+	</section>
 </header>
 <div style="clear: both;"></div>
