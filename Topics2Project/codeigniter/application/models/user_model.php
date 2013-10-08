@@ -27,13 +27,12 @@
 				';
 	    $this->load->library('email');
 	    $config['mailtype'] = 'html'; //mailopmaak definiëren
-	    $this->email->initialize($config); //instelling uit de configuratie halen+
-	    $this->email->from('topics2.groep1@gmail.com', 'Topics2 - Groep 1: wachtwoord'); //verzender groep 1
+	    $this->email->initialize($config); //instelling uit de $config[] array halen+
+	    $this->email->from('topics2.groep1@gmail.com', 'Topics2 - Groep 1'); //verzender groep 1
 	    $this->email->to($email); //ontvanger
 	    $this->email->subject($subject); //onderwerp toevoegen
-	    //inhoud van het bericht met activatiecode als link.
-	    $this->email->message($message);
-	    $this->email->send();
+	    $this->email->message($message); //bericht toevoegen
+	    $this->email->send(); //verzenden
 	    return true;
     }
 }
