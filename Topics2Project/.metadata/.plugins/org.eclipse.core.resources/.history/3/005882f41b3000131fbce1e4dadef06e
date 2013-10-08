@@ -8,12 +8,7 @@
 		<title>PixelApps - Groepsleden</title>
 		
 		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
-		<script src="<?php echo base_url('scripts/jquery/jquery.bxslider.min.js'); ?>"></script>
-		<script>
-			$(document).ready(function(){
-			  $('.bxslider').bxSlider();
-			});
-		</script>
+		<script src="scripts/jquery/jquery.bxslider.min.js"></script>
 	</head>
 	<body>
 		<?php include 'templates/header.php'; ?>
@@ -24,9 +19,6 @@
 			  <li>
 			  	<section>
 					<header><h1>Steven Verheyen</h1></header>
-					<article>
-						<img src="<?php echo base_url('img/Steven.png');?>" alt="Steven's foto" />
-					</article>
 					<article>
 						<h2>Functies</h2>
 						Functie hier
@@ -47,9 +39,6 @@
 			  	<section>
 					<header><h1>Anke Appeltans</h1></header>
 					<article>
-						<img src="<?php echo base_url('img/Anke.png');?>" alt="Steven's foto" />
-					</article>
-					<article>
 						<h2>Functies</h2>
 						Functie hier
 					</article>
@@ -69,9 +58,6 @@
 			  	<section>
 					<header><h1>Glenn Thielman</h1></header>
 					<article>
-						<img src="<?php echo base_url('img/Glenn.png');?>" alt="Steven's foto" />
-					</article>
-					<article>
 						<h2>Functies</h2>
 						Functies hier
 					</article>
@@ -90,9 +76,7 @@
 			  <li>
 			  	<section>
 					<header><h1>Robbie Vercammen</h1></header>
-					<article>
-						<img src="<?php echo base_url('img/Robbie.png');?>" alt="Steven's foto" />
-					</article>
+					
 					<article>
 						<h2>Functies</h2>
 						Mijn functies binnen dit project zijn momenteel nog onbepaald.<br />

@@ -47,9 +47,6 @@
 			  	<section>
 					<header><h1>Anke Appeltans</h1></header>
 					<article>
-						<img src="<?php echo base_url('img/Anke.png');?>" alt="Steven's foto" />
-					</article>
-					<article>
 						<h2>Functies</h2>
 						Functie hier
 					</article>
@@ -69,9 +66,6 @@
 			  	<section>
 					<header><h1>Glenn Thielman</h1></header>
 					<article>
-						<img src="<?php echo base_url('img/Glenn.png');?>" alt="Steven's foto" />
-					</article>
-					<article>
 						<h2>Functies</h2>
 						Functies hier
 					</article>
@@ -90,9 +84,6 @@
 			  <li>
 			  	<section>
 					<header><h1>Robbie Vercammen</h1></header>
-					<article>
-						<img src="<?php echo base_url('img/Robbie.png');?>" alt="Steven's foto" />
-					</article>
 					<article>
 						<h2>Functies</h2>
 						Mijn functies binnen dit project zijn momenteel nog onbepaald.<br />
