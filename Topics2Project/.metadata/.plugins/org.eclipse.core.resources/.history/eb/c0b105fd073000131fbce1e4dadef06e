@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="nl-be">
+	<head>
+		<link rel="stylesheet" href="<?php echo base_url('styles/main.css'); ?>" 
+			type="text/css" media="screen"/>
+		<title>Privé bestanden</title>
+		<script type="text/javascript" src="https://www.dropbox.com/static/api/1/dropins.js" id="dropboxjs"
+		data-app-key="clmhchmnj71v0t0"></script>
+	</head>
+	<body>
+
+		<?php include 'templates/header.php'; ?>
+		
+		<div id="content">
+			<section>
+				<header><h1>Privé bestanden</h1></header>
+				<article>
+					<p>Hier kan u al onze bestanden zoals verslagen, mock-ups, enz.</p>
+					<input type="dropbox-chooser" name="selected-file" style="visibility: hidden;"/>
+				</article>
+			</section>
+		</div>
+
+		<?php include 'templates/footer.php'; ?>
+	</body>
+</html>
