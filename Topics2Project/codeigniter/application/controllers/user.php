@@ -14,7 +14,6 @@ class User extends CI_Controller {
                 'trim|required|xss_clean');
            $username = $this->input->post('username');
            $password = $this->input->post('password');
-           if ()
            /*$this->form_validation->set_rules('password', 'Password', 
              'trim|required|xss_clean|callback_check_database');*/
 		//check_database = een functie die gaat uitzoeken 
