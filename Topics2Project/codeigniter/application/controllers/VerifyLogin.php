@@ -19,6 +19,11 @@ class VerifyLogin extends CI_Controller {
 		//check_database = een functie die gaat uitzoeken 
             //of het passwoord overeenkomt met de juiste usernaam
 	}
+        
+        public function passwordRecovery()
+	{
+		$this->load->view('PasswordRecovery');
+	}
 	
 	
 }

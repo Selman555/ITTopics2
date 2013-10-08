@@ -20,7 +20,8 @@
                         </fieldset>
                       <fieldset id="btn">
                           <input type="submit" id="SubmitButton" class="submit" value="Log in">
-                            <input type="button" id="passwordRecovery" class="submit" value="Paswoord vergeten?">
+                          <input type="button" id="passwordButton" class="submit" value="Paswoord vergeten?">
+                           
                       </fieldset>
                       </fieldset>
                     </form>	
