@@ -28,8 +28,8 @@ body>header {
 	height: 15%;
 }
 
-header>a img {
-	height: 90%; /* 90% van 15% in headerWrapper */
+body>header>a>img {
+	/*height: 90%; /* 90% van 15% in headerWrapper */
 	float: left;
 }
 
