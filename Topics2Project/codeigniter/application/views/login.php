@@ -1,8 +1,8 @@
 <!DOCTYPE html />
 <html lang="nl-be">
 	<head>
-		<link rel="stylesheet" href="<?php echo base_url('styles/main.css'); ?>" type="text/css" media="screen"/>
-                <link rel="stylesheet" href="<?php echo base_url('styles/login.css'); ?>" type="text/css" media="screen"/>
+		<link rel="stylesheet" href="<?php echo base_url('styles/main.css'); ?>" />
+                <link rel="stylesheet" href="<?php echo base_url('styles/login.css'); ?>" />
 		<title>Login</title>
 	</head>
 	<body>
@@ -10,7 +10,7 @@
 		<?php include 'templates/header.php'; ?>
 
 		<div id="content">
-		  <form method="post" action="<?php echo base_url(); ?>index.php/VerifyLogin" id="login" >
+		  <form method="post" action="<?php echo base_url("user/index"); ?>" id="login" >
                       <fieldset id="geheel">
                       <fieldset id="inputsAndTekst">
                         <h1>Log in</h1>
@@ -20,8 +20,7 @@
                         </fieldset>
                       <fieldset id="btn">
                           <input type="submit" id="SubmitButton" class="submit" value="Log in">
-                          <input type="button" id="passwordButton" class="submit" value="Paswoord vergeten?">
-                           
+                          <a href="<?php echo base_url('user/passwordRecovery'); ?>">Paswoord vergeten?</a>
                       </fieldset>
                       </fieldset>
                     </form>	
