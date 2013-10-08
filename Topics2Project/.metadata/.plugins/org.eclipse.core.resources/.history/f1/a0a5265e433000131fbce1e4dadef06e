@@ -43,11 +43,6 @@ class Start extends CI_Controller {
     {
     	$this->load->view('privatefiles');
     }
-    
-    public function game()
-    {
-    	$this->load->view('todo');
-    }
 }
 
 /* End of file welcome.php */
