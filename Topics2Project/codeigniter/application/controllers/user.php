@@ -4,6 +4,7 @@
 class User extends CI_Controller {
 	function __construct() {
 		parent::__construct();
+                $this->load->model('user_model','',TRUE);
 	}
 
 	public function index()
@@ -14,25 +15,34 @@ class User extends CI_Controller {
                 'trim|required|xss_clean');
            $this->form_validation->set_rules('password', 'Password', 
              'trim|required|xss_clean|callback_verify_login');
-          if($this->form_validation->run()==FALSE){
+          /*if($this->form_validation->run()==FALSE){
               log_message('error', 'Uw heeft een verkeerd passwoord ingegeven');
           }
-          else{
-              redirect('user.php/passwordRecovery','refresh');
-          }
+          else{*/
+            // $this->load->view('todo');
+       //   }
            
 
 	}
         
-        function verify_login($password){
-            $username=$this->input->post('username');
+      public function verify_login($password){
+          if($password=='nest'){
+            return TRUE;
+          }  
+          else{
+              return FALSE;
+          }
+          
+          
+          /*$username=$this->input->post('username');
             $boolean =$this->user_model->login($username,$password);
             if($boolean){
                 return TRUE;
             }
             else{
                return FALSE;
-            }
+            }*/
+             
         }
         
         public function passwordRecovery()

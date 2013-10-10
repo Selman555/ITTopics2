@@ -38,6 +38,9 @@ class Start extends CI_Controller {
     public function login(){
     	$this->load->view('login');
     }
+    public function login2(){
+    	$this->load->view('nest');
+    }
     
     public function prive()
     {
