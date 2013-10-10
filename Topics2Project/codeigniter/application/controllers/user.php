@@ -15,33 +15,27 @@ class User extends CI_Controller {
                 'trim|required|xss_clean');
            $this->form_validation->set_rules('password', 'Password', 
              'trim|required|xss_clean|callback_verify_login');
-          /*if($this->form_validation->run()==FALSE){
+          if($this->form_validation->run()==FALSE){
               log_message('error', 'Uw heeft een verkeerd passwoord ingegeven');
           }
-          else{*/
-            // $this->load->view('todo');
-       //   }
+          else{
+            $this->load->view('todo');
+        }
            
 
 	}
         
       public function verify_login($password){
-          if($password=='nest'){
-            return TRUE;
-          }  
-          else{
-              return FALSE;
-          }
-          
-          
-          /*$username=$this->input->post('username');
+         
+        
+            $username=$this->input->post('username');
             $boolean =$this->user_model->login($username,$password);
             if($boolean){
                 return TRUE;
             }
             else{
                return FALSE;
-            }*/
+            }
              
         }
         

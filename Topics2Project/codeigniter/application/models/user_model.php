@@ -12,7 +12,7 @@
     
  function login($username,$password)
     {
-        $this->db->select('Men_Username,Men_Password');
+        $this->db->select('Mem_Username,Mem_Password');
         $this->db->from('members');
         $this->db->where('username',$username);
         $this->db->where('password',($password));
