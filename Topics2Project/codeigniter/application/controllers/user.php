@@ -15,8 +15,8 @@ class User extends CI_Controller {
                 'trim|required|xss_clean');
            $this->form_validation->set_rules('password', 'Password', 
              'trim|required|xss_clean|callback_verify_login');
-          if($this->form_validation->run()==FALSE){
-              log_message('error', 'Uw heeft een verkeerd passwoord ingegeven');
+          if(!$this->form_validation->run()){
+              log_message("De login gegevens zijn niet correct.");
           }
           else{
             $this->load->view('todo');

@@ -10,20 +10,18 @@
 		<?php include 'templates/header.php'; ?>
 
 		<div id="content">
-		  <form method="post" action="<?php echo base_url('user/index'); ?>" id="login" >
-                      <fieldset id="geheel">
-                      <fieldset id="inputsAndTekst">
-                        <h1>Log in</h1>
-                            <p>Geef hier uw gebruikersnaam en paswoord in </p>
-                            <input id="username" type="text" placeholder="Gebruikersnaam" class="tekstfield" >
-                            <input id="password" type="password" placeholder="Paswoord" class="tekstfield" >
-                        </fieldset>
-                      <fieldset id="btn">
-                          <input type="submit" id="SubmitButton" class="submit" value="Log in">
-                          <a href="<?php echo base_url('user/passwordRecovery'); ?>">Paswoord vergeten?</a>
-                      </fieldset>
-                      </fieldset>
-                    </form>	
+		  <form method="post" action="<?php echo base_url('user/index'); ?>" id="login" autocomplete="on" >
+          	<div id="inputsAndTekst">
+            	<h1>Log in</h1>
+                <p>Geef hier uw gebruikersnaam en paswoord in </p>
+                <input name="username" type="text" placeholder="Gebruikersnaam" class="tekstfield" >
+                <input name="password" type="password" placeholder="Paswoord" class="tekstfield" >
+            </div>
+            <div id="btn">
+            	<input type="submit" id="SubmitButton" class="submit" value="Log in">
+            	<a href="<?php echo base_url('user/passwordRecovery'); ?>">Paswoord vergeten?</a>
+            </div>
+          </form>	
 		</div>
 
 		<?php include 'templates/footer.php'; ?>

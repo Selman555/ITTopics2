@@ -13,10 +13,10 @@
  function login($username,$password)
     {
         $this->db->select('Mem_Username,Mem_Password');
-        $this->db->from('members');
-        $this->db->where('username',$username);
-        $this->db->where('password',($password));
+        $this->db->where('Mem_Username',$username);
+        $this->db->where('Mem_Password',$password);
         $this->db->limit(1);
+        $query = $this->db->get('members');
         
         if($query->num_rows()==1){
             return TRUE;
