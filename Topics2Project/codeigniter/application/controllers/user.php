@@ -12,14 +12,28 @@ class User extends CI_Controller {
             
            $this->form_validation->set_rules('username', 'Username', 
                 'trim|required|xss_clean');
-           $username = $this->input->post('username');
-           $password = $this->input->post('password');
-           /*$this->form_validation->set_rules('password', 'Password', 
-             'trim|required|xss_clean|callback_check_database');*/
-		//check_database = een functie die gaat uitzoeken 
-            //of het passwoord overeenkomt met de juiste usernaam
+           $this->form_validation->set_rules('password', 'Password', 
+             'trim|required|xss_clean|callback_verify_login');
+          if($this->form_validation->run()==FALSE){
+              log_message('error', 'Uw heeft een verkeerd passwoord ingegeven');
+          }
+          else{
+              redirect('user.php/passwordRecovery','refresh');
+          }
+           
 
 	}
+        
+        function verify_login($password){
+            $username=$this->input->post('username');
+            $boolean =$this->user_model->login($username,$password);
+            if($boolean){
+                return TRUE;
+            }
+            else{
+               return FALSE;
+            }
+        }
         
         public function passwordRecovery()
         {
