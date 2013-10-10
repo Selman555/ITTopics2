@@ -36,11 +36,12 @@ class Start extends CI_Controller {
 	}
 	
     public function login(){
-    	$this->load->view('login');
+        $data['validate']='';
+        $data['passwordError']='';
+        $data['var']='dontAdd';
+    	$this->load->view('login',$data);
     }
-    public function login2(){
-    	$this->load->view('nest');
-    }
+   
     
     public function prive()
     {

@@ -16,7 +16,7 @@
         $this->db->where('Mem_Username',$username);
         $this->db->where('Mem_Password',$password);
         $this->db->limit(1);
-        $query = $this->db->get('members');
+        $query = $this->db->get('members');//het ophalen van de geselecteerde members
         
         if($query->num_rows()==1){
             return TRUE;
@@ -27,7 +27,7 @@
         
     }
     
-    function sendEmail()
+    function sendEmail($gebruikersnaam,$wachtwoord,$email)
     {
 	    //email verificatie (codeigniter database inladen)
 	    $subject = 'Wachtwoord opgevraagd';
@@ -54,7 +54,17 @@
     }
      function getEmail($username)
     {
+        $this->db->select('Mem_Email');
+        $this->db->where('Mem_Username',$username);
+        $this->db->limit(1);
+        $query = $this->db->get('members');//het ophalen van de geselecteerde members
         
+        if($query->num_rows()==1){
+            return $query->result();
+        }
+        else{
+            return FALSE;
+        }
     }
 }
 ?>

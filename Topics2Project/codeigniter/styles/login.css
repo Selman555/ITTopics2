@@ -21,7 +21,7 @@ h1
 
 form
 {
-  	background-color: #CCCC99; 
+  	
 	border-bottom-color: #588c52;
 	border-right-color: #588c52;
 	border-left-color: #45d068;
@@ -55,13 +55,24 @@ input.submit
    padding: 2% 11% 0% 22%;  
    height: 5%;
    border:0;
+   background-color: #CCCC99; 
+   
   
 }
 
 #inputsAndTekst
 {
-   border:0;
+    background-color: #CCCC99; 
+   
+    
 }
+#error
+{
+    color: red;
+    
+}
+
+
 
 
 
