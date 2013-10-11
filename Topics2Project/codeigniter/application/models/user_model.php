@@ -14,7 +14,7 @@
     {
         $this->db->select('Mem_Username,Mem_Password');
         $this->db->where('Mem_Username',$username);
-        $this->db->where('Mem_Password',$password);
+        $this->db->where('Mem_Password', sha1($password));
         $this->db->limit(1);
         $query = $this->db->get('members');//het ophalen van de geselecteerde members
         
