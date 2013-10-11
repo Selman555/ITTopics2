@@ -61,7 +61,11 @@
 					</article>
 					<article>
 						<h2>Hobbies</h2>
-						hobbies hier
+						Ik heb een aantal hobbies
+                                                nl paardrijden, dwarsfluit spelen en lezen.
+                                                Ook ben ik actief lid van de harmonie Sint Aloysius te Alken.
+                                                
+                                              
 					</article>
 				</section>
 			  </li>
