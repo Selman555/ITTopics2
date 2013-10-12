@@ -10,7 +10,7 @@
 		<?php include 'templates/header.php'; ?>
 
 		<div id="content">
-		  <form method="post" action="<?php echo base_url('user/index'); ?>" id="login" autocomplete="on" >
+		  <form method="post" action="<?php echo base_url('user/passwordRecovery'); ?>" id="login" autocomplete="on" >
           	<div id="inputsAndTekst">
             	<h1>Log in</h1>
                 <p>Geef hier uw gebruikersnaam en paswoord in </p>

@@ -46,6 +46,7 @@ class User extends CI_Controller {
         public function passwordRecovery()
         {
             $this->load->library('form_validation');
+            $this->load->helper('string');  //om een random string te kunnen genereren kun de deze helper gebruken
             
            $this->form_validation->set_rules('username', 'Username', 
                 'trim|required|xss_clean');
@@ -56,17 +57,22 @@ class User extends CI_Controller {
             //het email address als er een is in een var zetten
             if ($result) {
                 $email='';
-                $passw='';
             $sess_array = array();
             foreach ($result as $row) {
                 $email=$row->Mem_Email;
-                $sess_array = array(
-                    'email'=>$row->Mem_Email
-                );
-               
             }
-            echo $email;
-            echo $passw;
+            
+           echo $email;
+            //het genereren van een nieuw passwoord voor de gebruiker
+           $password= random_string('alnum',10);
+           //het password updaten in de database
+           $this->user_model->updatePassword($username,$password);
+           //email sturen nr gebruiker
+           $this->user_model->sendEmail($username,$password,$email);
+            
+ 
+  //multiply by 100
+  
             
             
             return TRUE;

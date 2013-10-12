@@ -66,5 +66,17 @@
             return FALSE;
         }
     }
+    
+    function updatePassword($username, $password){
+        $data=array(
+           'Mem_Password'=>sha1($password) 
+        );
+        $this->db->where('Mem_Username',$username); 
+        $this->db->update('members',$data);
+      
+         
+      
+ 
+    }
 }
 ?>
