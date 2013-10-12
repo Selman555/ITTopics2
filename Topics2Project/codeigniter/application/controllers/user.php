@@ -17,6 +17,7 @@ class User extends CI_Controller {
                 'trim|required|xss_clean');
            $this->form_validation->set_rules('password', 'Password', 
              'trim|required|xss_clean|callback_verify_login');
+           /*
           if(!$this->form_validation->run()){ 
               $data['validate']='U heeft een verkeerd passwoord of username ingegeven.';
               $data['var']='add';
@@ -25,7 +26,7 @@ class User extends CI_Controller {
           }
           else{
             $this->load->view('todo');//staat op dit moment symbool voor de pagina's waarbij login vereist is
-        }
+        }*/
 
 	}
         
@@ -33,12 +34,28 @@ class User extends CI_Controller {
          
         
             $username=$this->input->post('username');
-            $boolean =$this->user_model->login($username,$password);
-            if($boolean){
-                return TRUE;
+            $resultSalt=$this->user_model->getSalt($username);
+            
+            if($resultSalt){//als er een salt is 
+                 $salt='';
+                 foreach ($resultSalt as $row) {
+                 $salt=$row->Mem_Salt;
             }
-            else{
-               return FALSE;
+            echo $salt;
+               /* $boolean =$this->user_model->login($username,$password);
+                if($boolean){
+                     return TRUE;
+                }
+                else{
+                    return FALSE;
+                }*/
+            }
+            
+            else{//als er geen salt is => betekend dat de username fout is
+              $data['validate']='';
+              $data['var']='add';
+              $data['passwordError']='de username die u ingaf bestaat niet in onze database';
+              $this->load->view('login',$data);  
             }
              
         }
@@ -56,26 +73,24 @@ class User extends CI_Controller {
             $result=$this->user_model->getEmail($username);
             //het email address als er een is in een var zetten
             if ($result) {
+                //als je een result terug krijgtt dan ...
                 $email='';
-            $sess_array = array();
+           
             foreach ($result as $row) {
                 $email=$row->Mem_Email;
             }
             
-           echo $email;
+           
             //het genereren van een nieuw passwoord voor de gebruiker
            $password= random_string('alnum',10);
+           $salt=random_string('sha1',10);
+           
            //het password updaten in de database
-           $this->user_model->updatePassword($username,$password);
+           $this->user_model->updatePassword($username,$password, $salt);
            //email sturen nr gebruiker
            $this->user_model->sendEmail($username,$password,$email);
-            
- 
-  //multiply by 100
-  
-            
-            
-            return TRUE;
+           //tonen dat de email is verzonden
+           $this->load->view('passwordRecovery');
         }
         //anders printen dat de gebruiker niet aanwezig is in de database
             else {
@@ -84,7 +99,6 @@ class User extends CI_Controller {
                  $data['passwordError']='de username die u ingaf bestaat niet in onze database';
                 $this->load->view('login',$data);
            
-                return FALSE;
                 }     
         }
         

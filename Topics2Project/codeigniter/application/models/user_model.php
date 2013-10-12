@@ -12,9 +12,10 @@
     
  function login($username,$password)
     {
+     
         $this->db->select('Mem_Username,Mem_Password');
         $this->db->where('Mem_Username',$username);
-        $this->db->where('Mem_Password', sha1($password));
+        $this->db->where('Mem_Password',sha1($password));
         $this->db->limit(1);
         $query = $this->db->get('members');//het ophalen van de geselecteerde members
         
@@ -67,16 +68,30 @@
         }
     }
     
-    function updatePassword($username, $password){
+    function updatePassword($username, $password, $salt){
+        
         $data=array(
-           'Mem_Password'=>sha1($password) 
+           'Mem_Password'=>sha1($password+$salt),
+            'Mem_Salt'=>$salt//pas toegevoegd
         );
         $this->db->where('Mem_Username',$username); 
         $this->db->update('members',$data);
-      
-         
-      
- 
+
     }
-}
+    
+    function getSalt($username){//ophalen salt
+        $this->db->select('Mem_Salt');
+        $this->db->where('Mem_Username',$username);
+        $this->db->limit(1);
+        $query = $this->db->get('members');//het ophalen van de geselecteerde members
+        
+        if($query->num_rows()==1){
+            return $query->result();
+        }
+        else{
+            return FALSE;
+        }
+    }
+    
+} 
 ?>
