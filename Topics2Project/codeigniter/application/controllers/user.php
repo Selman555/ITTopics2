@@ -9,15 +9,14 @@ class User extends CI_Controller {
 
 	public function index()
 	{
-           
-            
+
 	   $this->load->library('form_validation');
             
            $this->form_validation->set_rules('username', 'Username', 
                 'trim|required|xss_clean');
            $this->form_validation->set_rules('password', 'Password', 
              'trim|required|xss_clean|callback_verify_login');
-           /*
+         
           if(!$this->form_validation->run()){ 
               $data['validate']='U heeft een verkeerd passwoord of username ingegeven.';
               $data['var']='add';
@@ -26,37 +25,36 @@ class User extends CI_Controller {
           }
           else{
             $this->load->view('todo');//staat op dit moment symbool voor de pagina's waarbij login vereist is
-        }*/
+        }
 
 	}
         
       public function verify_login($password){
-         
-        
+
             $username=$this->input->post('username');
-            $resultSalt=$this->user_model->getSalt($username);
+          //  $resultSalt=$this->user_model->getSalt($username);
             
-            if($resultSalt){//als er een salt is 
+         /*   if($resultSalt){//als er een salt is 
                  $salt='';
                  foreach ($resultSalt as $row) {
                  $salt=$row->Mem_Salt;
             }
-            echo $salt;
-               /* $boolean =$this->user_model->login($username,$password);
+            echo $salt;*/
+                $boolean =$this->user_model->login($username,$password);
                 if($boolean){
                      return TRUE;
                 }
                 else{
                     return FALSE;
-                }*/
-            }
+                }
+          /*  }
             
             else{//als er geen salt is => betekend dat de username fout is
               $data['validate']='';
               $data['var']='add';
               $data['passwordError']='de username die u ingaf bestaat niet in onze database';
               $this->load->view('login',$data);  
-            }
+            }*/
              
         }
         
