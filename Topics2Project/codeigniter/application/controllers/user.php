@@ -11,11 +11,47 @@ class User extends CI_Controller {
 	{
 
 	   $this->load->library('form_validation');
-            
+            //het verplicht maken van username en password
            $this->form_validation->set_rules('username', 'Username', 
-                'trim|required|xss_clean');
+                'trim|required|xss_clean');   
            $this->form_validation->set_rules('password', 'Password', 
-             'trim|required|xss_clean|callback_verify_login');
+             'trim|required|xss_clean');
+           
+           //het ophalen van de salt
+           $username=$this->input->post('username');
+           $resultSalt=$this->user_model->getSalt($username);
+            
+          if($resultSalt){//als er een salt is 
+                 $salt='';
+                 foreach ($resultSalt as $row) {
+                 $salt=$row->Mem_Salt;
+                    }
+                   
+                  //het ophalen v de paswoorden en controleren login  
+               $password=$this->input->post('password');
+                $boolean =$this->user_model->login($username,$password,$salt);
+                if($boolean==TRUE){
+                    
+                   $this->load->view('todo');
+                }
+          
+                else{
+                   $data['validate']='U heeft een verkeerd passwoord  ingegeven.';
+              $data['var']='add';
+              $data['passwordError']='';
+              $this->load->view('login',$data);
+                }    
+                    
+               
+         }
+          else{//als er geen salt is => betekend dat de username fout is
+              $data['validate']='';
+              $data['var']='add';
+              $data['passwordError']='de username die u ingaf bestaat niet in onze database';
+              $this->load->view('login',$data);  
+            }
+            
+         
          
       /* if(!$this->form_validation->run()){ 
               $data['validate']='U heeft een verkeerd passwoord of username ingegeven.';
@@ -25,12 +61,14 @@ class User extends CI_Controller {
           }
           else{
             $this->load->view('todo');//staat op dit moment symbool voor de pagina's waarbij login vereist is
-        }*/
-
-	}
+       
+*/
+	
+        }
+        
         
       public function verify_login($password){
-
+        
             $username=$this->input->post('username');
            $resultSalt=$this->user_model->getSalt($username);
             
@@ -40,7 +78,7 @@ class User extends CI_Controller {
                  $salt=$row->Mem_Salt;
                     }
             echo $salt;
-              /* $boolean =$this->user_model->login($username,$password);
+             /* $boolean =$this->user_model->login($username,$password);
                 if($boolean){
                      return TRUE;
                 }
