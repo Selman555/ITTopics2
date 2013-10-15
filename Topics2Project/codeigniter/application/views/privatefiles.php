@@ -2,7 +2,7 @@
 <html lang="nl-be">
 	<head>
 		<link rel="stylesheet" href="<?php echo base_url('styles/main.css'); ?>" media="screen"/>
-		<title>Privï¿½ bestanden</title>
+		<title>Privé bestanden</title>
 		<script type="text/javascript" src="https://www.dropbox.com/static/api/1/dropins.js" id="dropboxjs"
 		data-app-key="clmhchmnj71v0t0"></script>
 	</head>

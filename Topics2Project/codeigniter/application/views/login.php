@@ -17,7 +17,7 @@
                 <input name="username" type="text" placeholder="Gebruikersnaam" class="tekstfield" required="required" >
                 <input type="submit" id="SubmitButton" class="submit" value="Log in">
                 <input name="password" type="password" placeholder="Paswoord" class="tekstfield" required="required">
-                
+                <button 
                 <?php echo $this->session->flashdata("errors"); ?>
                 <?php } else { ?>
                 U bent reeds aangemeld<br />

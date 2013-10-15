@@ -16,7 +16,6 @@
 				<li id="status">U bent aangemeld als: <?php echo $this->session->userdata('username');?></li>
 				<?php }?>
 			</ul>
-			
 		</article>
 	</section>
 	
