@@ -36,14 +36,14 @@ class User extends CI_Controller {
     public function verify_login($password)
     {    
         $username=$this->input->post('username');
-        /*$resultSalt=$this->user_model->getSalt($username);
+        /*   $resultSalt=$this->user_model->getSalt($username);
             
-        if($resultSalt){//als er een salt is 
-        	$salt='';
-            foreach ($resultSalt as $row) {
-            $salt=$row->Mem_Salt;
-        }
-        echo $salt;*/
+          if($resultSalt){//als er een salt is 
+                 $salt='';
+                 foreach ($resultSalt as $row) {
+                 $salt=$row->Mem_Salt;
+                    }
+            echo $salt;*/
         $boolean =$this->user_model->login($username,$password);
         if($boolean){
             $array=array();
@@ -87,7 +87,8 @@ class User extends CI_Controller {
             foreach ($result as $row) {
                 $email=$row->Mem_Email;
             }
-
+            
+           
             //het genereren van een nieuw passwoord voor de gebruiker
             $password= random_string('alnum', 10);
             $salt=random_string('sha1',10);
