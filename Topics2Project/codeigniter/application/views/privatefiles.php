@@ -7,12 +7,11 @@
 		data-app-key="clmhchmnj71v0t0"></script>
 	</head>
 	<body>
-		<?php include 'templates/header_online.php'; ?>
-		<?php include 'templates/status.php'; ?>
+		<?php include 'templates/header.php'; ?>
                 
 		<div id="content">
 			<section>
-				<header><h1>Privï¿½ bestanden</h1></header>
+				<header><h1>Privé bestanden</h1></header>
 				<article>
 					<p>Hier kan u al onze bestanden zoals verslagen, mock-ups, enz.</p>
 					<input type="dropbox-chooser" name="selected-file" style="visibility: hidden;"/>
@@ -20,6 +19,6 @@
 			</section>
 		</div>
 
-		<?php include 'templates/footer_online.php'; ?>
+		<?php include 'templates/footer.php'; ?>
 	</body>
 </html>

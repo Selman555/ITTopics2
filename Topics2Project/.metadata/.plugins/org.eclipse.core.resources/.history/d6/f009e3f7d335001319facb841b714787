@@ -1,0 +1,80 @@
+/* 
+    Document   : Login
+    Created on : Oct 6, 2013, 6:59:03 PM
+    Author     : AnkeA
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+
+h1
+{ 
+    text-shadow: 0 0.1em 0 rgba(255, 255, 255, .7), 0em 0.104em 0 rgba(0, 0, 0, .5);
+    text-transform: uppercase;
+    text-align: center;
+    color: #000000;
+    letter-spacing: 0.3em;
+    font-family:"Verdana, Helvetica";
+    position: relative;
+    font-size: 2em;
+}
+
+form
+{
+	border-bottom-color: #588c52;
+	border-right-color: #588c52;
+	border-left-color: #45d068;
+	border-top-color:  #45d068;
+}
+
+input.tekstfield
+{
+	margin-left: 2%;
+    width:60%;
+}
+#login
+{ 
+    padding: 12% 25% 0% 25%  
+}
+p
+{
+    font-family: "Verdana, Helvetica";
+    font-size: 1em;
+}
+
+input.submit
+{
+   width: 45%; 
+   padding: 0.4em 0.9em;
+   border-color: #588c52;
+   
+}
+#btn
+{
+   padding: 2% 11% 0% 22%;  
+   height: 5%;
+   border:0;
+   background-color: #CCCC99; 
+   
+  
+}
+
+#inputsAndTekst
+{
+    background-color: #CCCC99; 
+   
+    
+}
+#error
+{
+    color: red;
+    
+}
+
+
+
+
+
+
+
+

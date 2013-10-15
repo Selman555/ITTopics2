@@ -6,26 +6,27 @@
 		<title>Login</title>
 	</head>
 	<body>
-		<div id="headerStripe" style="background-color: #151C8A; color: #151C8A;">.</div>
-		<?php include 'templates/header_offline.php'; ?>
+		<?php include 'templates/header.php'; ?>
 
 		<div id="content">
 		<form method="post" action="<?php echo base_url('user/loginUser'); ?>" id="login" autocomplete="on" >
           	<div id="inputsAndTekst">
             	<h1>Log in</h1>
+            	<?php if (!$this->session->userdata('logged_in')) {?>
                 <p>Geef hier uw gebruikersnaam en paswoord in </p>
                 <input name="username" type="text" placeholder="Gebruikersnaam" class="tekstfield" required="required" >
+                <input type="submit" id="SubmitButton" class="submit" value="Log in">
                 <input name="password" type="password" placeholder="Paswoord" class="tekstfield" required="required">
-                 <?php echo $this->session->flashdata("errors"); ?>
-            </div>
-            <div id="btn">
-            	<input type="submit" id="SubmitButton" class="submit" value="Log in">
                 
-          
-                </div>
-          </form>
+                <?php echo $this->session->flashdata("errors"); ?>
+                <?php } else { ?>
+                U bent reeds aangemeld<br />
+                U kan zich <a href="<?php echo base_url('user/logout'); ?>">hier afmelden</a>
+                <?php }?>
             </div>
+        </form>
+        </div>
 
-		<?php include 'templates/footer_offline.php'; ?>
+		<?php include 'templates/footer.php'; ?>
 	</body>
 </html>

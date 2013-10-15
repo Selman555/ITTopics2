@@ -1,0 +1,4 @@
+<div id="status">
+    <span>Logged in as: </span>
+    <?php echo $username?>
+</div>

@@ -21,12 +21,10 @@ h1
 
 form
 {
-  	
 	border-bottom-color: #588c52;
 	border-right-color: #588c52;
 	border-left-color: #45d068;
 	border-top-color:  #45d068;
-   
 }
 
 input.tekstfield
@@ -37,39 +35,27 @@ input.tekstfield
 { 
     padding: 12% 25% 0% 25%  
 }
-p
-{
-    font-family: "Verdana, Helvetica";
-    font-size: 1em;
-}
 
 input.submit
 {
-   width: 45%; 
-   padding: 0.4em 0.9em;
-   border-color: #588c52;
+   	width: 35%; 
+   	padding: 0.4em 0.9em;
+   	border-color: #588c52;
+   	float: right;
+   	margin: 1.4% 1% 0% 0%;
    
-}
-#btn
-{
-   padding: 2% 11% 0% 22%;  
-   height: 5%;
-   border:0;
-   background-color: #CCCC99; 
-   
-  
 }
 
 #inputsAndTekst
 {
-    background-color: #CCCC99; 
-   
+   	background-color: #CCCC99; 
+	padding: 2%;
     
 }
 #error
 {
     color: red;
-    
+    border-color: red;
 }
 
 
