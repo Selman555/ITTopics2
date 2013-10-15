@@ -5,9 +5,11 @@ class User extends CI_Controller {
 	function __construct() {
 		parent::__construct();
                 $this->load->model('user_model','',TRUE);
+                 $this->load->helper(array('form'));
+
 	}
 
-	public function index()
+	public function loginUser()
 	{
 
 	   $this->load->library('form_validation');
@@ -15,85 +17,60 @@ class User extends CI_Controller {
            $this->form_validation->set_rules('username', 'Username', 
                 'trim|required|xss_clean');   
            $this->form_validation->set_rules('password', 'Password', 
-             'trim|required|xss_clean');
+             'trim|required|xss_clean|callback_verify_login');
            
            //het ophalen van de salt
-           $username=$this->input->post('username');
-           $resultSalt=$this->user_model->getSalt($username);
-            
-          if($resultSalt){//als er een salt is 
-                 $salt='';
-                 foreach ($resultSalt as $row) {
-                 $salt=$row->Mem_Salt;
-                    }
-                   
-                  //het ophalen v de paswoorden en controleren login  
-               $password=$this->input->post('password');
-                $boolean =$this->user_model->login($username,$password,$salt);
-                if($boolean==TRUE){
-                    
-                   $this->load->view('todo');
-                }
-          
-                else{
-                   $data['validate']='U heeft een verkeerd passwoord  ingegeven.';
-              $data['var']='add';
-              $data['passwordError']='';
-              $this->load->view('login',$data);
-                }    
-                    
-               
-         }
-          else{//als er geen salt is => betekend dat de username fout is
-              $data['validate']='';
-              $data['var']='add';
-              $data['passwordError']='de username die u ingaf bestaat niet in onze database';
-              $this->load->view('login',$data);  
-            }
-            
          
          
-      /* if(!$this->form_validation->run()){ 
-              $data['validate']='U heeft een verkeerd passwoord of username ingegeven.';
-              $data['var']='add';
-              $data['passwordError']='';
-              $this->load->view('login',$data);
+         
+      if(!$this->form_validation->run()){ 
+            
+          $this->session->set_flashdata("errors", validation_errors());
+              $this->load->view('login');
           }
           else{
-            $this->load->view('todo');//staat op dit moment symbool voor de pagina's waarbij login vereist is
-       
-*/
+              
+            redirect('user/index_ingelogd');
+
 	
+        }
         }
         
         
       public function verify_login($password){
         
             $username=$this->input->post('username');
-           $resultSalt=$this->user_model->getSalt($username);
+        /*   $resultSalt=$this->user_model->getSalt($username);
             
           if($resultSalt){//als er een salt is 
                  $salt='';
                  foreach ($resultSalt as $row) {
                  $salt=$row->Mem_Salt;
                     }
-            echo $salt;
-             /* $boolean =$this->user_model->login($username,$password);
+            echo $salt;*/
+              $boolean =$this->user_model->login($username,$password);
                 if($boolean){
+                    $array=array();
+                    foreach($boolean as $row)
+                    {
+                        $array= array(
+                          'username'=>$row->Mem_Username  
+                        );
+                    }
+                    $this->session->set_userdata('logged_in',$array);
                      return TRUE;
                 }
                 else{
+                    $this->form_validation->set_message('login','invalid username of password');
                     return FALSE;
-                }*/
-             
-            }
+                }
+        /*     
+           }
             else{//als er geen salt is => betekend dat de username fout is
-              $data['validate']='';
-              $data['var']='add';
-              $data['passwordError']='de username die u ingaf bestaat niet in onze database';
-              $this->load->view('login',$data);  
+              $this->form_validation->set_message('login','invalid username ');
+              return FALSE;
             }
-             
+             */
         }
         
         public function passwordRecovery()
@@ -138,8 +115,67 @@ class User extends CI_Controller {
                 }     
         }
         
+        //deel wanneer de user ingelog is
         
         
+        
+        public function index_ingelogd()
+	{
+            if ($this->session->userdata('logged_in')) 
+            {
+               
+		$this->load->view('index_ingelogd');
+            }
+            else 
+             {
+            redirect('start/index', 'refresh');
+             }
+	}
+	
+	public function leden_ingelogd()
+	{
+             if ($this->session->userdata('logged_in')) 
+             {
+                
+		$this->load->view('groepsleden_ingelogd');
+             }
+             else 
+             {
+            redirect('start/leden', 'refresh');
+             }
+	}
+	
+	
+    public function login_ingelogd()
+    {       if ($this->session->userdata('logged_in')) 
+             {
+              
+                $this->load->view('login_ingelogd');
+             }
+             else 
+             {
+            redirect('start/login', 'refresh');
+             }
+    }
+   
+    
+       public function prive()
+    {
+        if($this->session->userdata('logged_in'))
+            {//probleem
+            $session_date=$this->session->userdate('logged_in');
+            $data['username']=$session_date['username'];
+            $this->load->view('privatefiles');
+            }
+            else{
+                redirect('login','refresh');
+            } 
+    }
+    public function logout()
+    {
+        $this->session->unset_userdata('logged_in');
+        redirect('start/index','refresh');
+    } 
 }
 
 /* End of file welcome.php */

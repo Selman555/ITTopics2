@@ -16,7 +16,7 @@
 		</script>
 	</head>
 	<body>
-		<?php include 'templates/header.php'; ?>
+		<?php include 'templates/header_offline.php'; ?>
 
 		<div id="content">
 			<header><h1>Biografie Groepsleden</h1></header>
@@ -128,7 +128,7 @@
 			</ul>
 		</div>
 
-		<?php include 'templates/footer.php'; ?>
+		<?php include 'templates/footer_offline.php'; ?>
 	</body>
 </html>
 <!-- [BxSlider] = Bedrijf: BxSlider - Auteur: Steven Wanderski - Website: http://www.bxslider.com/ -->

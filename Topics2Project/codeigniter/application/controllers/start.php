@@ -22,36 +22,33 @@ class Start extends CI_Controller {
 	 */
 	public function index()
 	{
+               
 		$this->load->view('index');
+            
 	}
 	
 	public function leden()
 	{
+                
 		$this->load->view('groepsleden');
 	}
 	
 	public function todo()
 	{
+                
 		$this->load->view('todo');
+            
 	}
 	
-    public function login(){
-        $data['validate']='';
-        $data['passwordError']='';
-        $data['var']='dontAdd';
-    	$this->load->view('login',$data);
+    public function login()
+    {
+        
+    	$this->load->view('login');
+        
     }
    
     
-    public function prive()
-    {
-    	$this->load->view('privatefiles');
-    }
     
-    public function game()
-    {
-    	$this->load->view('todo');
-    }
 }
 
 /* End of file welcome.php */

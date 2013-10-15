@@ -35,7 +35,7 @@
 		</script>
 	</head>
 	<body onkeydown="onkeydown(this)">
-		<?php include 'templates/header.php'; ?>
+		<?php include 'templates/header_offline.php'; ?>
 
 		<div id="content">
 			<header><h1>PIXEL APPS</h1></header>
@@ -47,6 +47,6 @@
 			</section>
 		</div>
 
-		<?php include 'templates/footer.php'; ?>
+		<?php include 'templates/footer_offline.php'; ?>
 	</body>
 </html>

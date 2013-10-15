@@ -10,17 +10,17 @@
         parent::__construct();
     }
     
- function login($username,$password,$salt)
+ function login($username,$password)
     {
      
         $this->db->select('Mem_Username,Mem_Password');
         $this->db->where('Mem_Username',$username);
-        $this->db->where('Mem_Password',sha1($password+$salt));
+        $this->db->where('Mem_Password',sha1($password));
         $this->db->limit(1);
         $query = $this->db->get('members');//het ophalen van de geselecteerde members
         
         if($query->num_rows()==1){
-            return TRUE;
+            return $query->result();
         }
         else{
             return FALSE;
