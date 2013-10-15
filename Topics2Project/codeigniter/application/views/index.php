@@ -35,7 +35,7 @@
 		</script>
 	</head>
 	<body onkeydown="onkeydown(this)">
-		<?php include 'templates/header_offline.php'; ?>
+		<?php include 'templates/header_online.php'; ?>
 
 		<div id="content">
 			<header><h1>PIXEL APPS</h1></header>

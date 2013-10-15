@@ -54,10 +54,11 @@ class User extends CI_Controller {
                     foreach($boolean as $row)
                     {
                         $array= array(
-                          'username'=>$row->Mem_Username  
+                          'username'=>$row->Mem_Username,
+                          'logged_in'=>true
                         );
                     }
-                    $this->session->set_userdata('logged_in',$array);
+                    $this->session->set_userdata($array);
                      return TRUE;
                 }
                 else{
@@ -95,7 +96,7 @@ class User extends CI_Controller {
             
            
             //het genereren van een nieuw passwoord voor de gebruiker
-           $password= random_string('alnum',10);
+           $password= random_string('alnum', 10);
            $salt=random_string('sha1',10);
            
            //het password updaten in de database
