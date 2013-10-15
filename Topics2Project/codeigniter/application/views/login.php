@@ -15,9 +15,9 @@
             	<?php if (!$this->session->userdata('logged_in')) {?>
                 <p>Geef hier uw gebruikersnaam en paswoord in </p>
                 <input name="username" type="text" placeholder="Gebruikersnaam" class="tekstfield" required="required" >
-                <input type="submit" id="SubmitButton" class="submit" value="Log in">
+                <input type="submit" id="SubmitButton" class="submit" value="Aanmelden">
                 <input name="password" type="password" placeholder="Paswoord" class="tekstfield" required="required">
-                <button 
+                <p>Bent u uw paswoord vergeten?<input type="submit" formaction="<?php echo base_url('user/password_recovery');?>" class="submit" value="Paswoord ophalen" /></p>
                 <?php echo $this->session->flashdata("errors"); ?>
                 <?php } else { ?>
                 U bent reeds aangemeld<br />

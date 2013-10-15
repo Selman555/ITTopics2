@@ -69,7 +69,7 @@ class User extends CI_Controller {
              */
         }
         
-    public function passwordRecovery()
+    public function password_recovery()
     {
         $this->load->library('form_validation');
         $this->load->helper('string');  //om een random string te kunnen genereren kun de deze helper gebruken
