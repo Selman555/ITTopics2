@@ -9,7 +9,7 @@
 }
 
 html {
-	background-color: #c9c9c9;
+	background-color: #325895;
 	width: 100%;
 	height: 100%;
 }
@@ -60,7 +60,7 @@ body>header>section #inlog a:hover {
 #content {
 	width: 65%;
 	min-height:77%;
-	background-color: #e8e8e8;
+	background-color: #6ECFC3;
 	margin: 0 auto;
 	
 }
