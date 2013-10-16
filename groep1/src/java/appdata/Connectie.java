@@ -11,6 +11,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.SQLWarning;
 import java.sql.Statement;
+import java.util.HashMap;
+import java.util.Hashtable;
+import java.util.Vector;
 
 /**
  *
@@ -30,9 +33,7 @@ public class Connectie {
         String password = "";
        
         Connection dbCon = null;
-       
-        String query ="select count(*) from members";
-       
+      
         try {
             
             this.dbCon = DriverManager.getConnection(dbURL, username, password);
@@ -47,8 +48,8 @@ public class Connectie {
     
     public ResultSet SelectQry(String query)
     {
-        Statement stmt;
-        ResultSet rs;
+        Statement stmt = null;
+        ResultSet rs = null;
        
         try
         {
@@ -60,26 +61,35 @@ public class Connectie {
             {
                 return rs;
             }
-            
-            stmt.close();
-            rs.close();
         }
         catch(Exception e)
         {
             
         }
+        finally
+        {
+            try
+            {
+                rs.close();
+                stmt.close();
+            }
+            catch(Exception e)
+            {
+                
+            }
+        }
            
         return null;
     }
     
-    public boolean CheckLogin(String username, String Password)
+    public String CheckLogin(String username, String Password)
     {
-        Statement stmt;
-        ResultSet rs;
+        Statement stmt = null;
+        ResultSet rs = null;
         
         try
         {
-           String query = "SELECT count(*) FROM MEMBERS"
+           String query = "SELECT count(*), Mem_level FROM MEMBERS"
                         + " WHERE Mem_USERNAME = '" + username +"'"
                         + " AND Mem_Password = '" + Password + "'";
            
@@ -91,7 +101,7 @@ public class Connectie {
                int aantal = rs.getInt(1);              
                if(aantal == 1)
                {
-                   return true;
+                   return rs.getString("Mem_level");
                }
            }  
         }
@@ -99,8 +109,20 @@ public class Connectie {
         {
             
         }
+        finally
+        {
+            try
+            {
+                rs.close();
+                stmt.close();
+            }
+            catch(Exception e)
+            {
+                
+            }
+        }
             
-        return false;
+        return "";
     }
     
     public String GetSalt(String username)
@@ -128,7 +150,84 @@ public class Connectie {
         {
             
         }
+        finally
+        {
+            try
+            {
+                rs.close();
+                stmt.close();
+            }
+            catch(Exception e)
+            {
+                
+            }
+        }
         
         return null;
     }
+    
+    public String getHighScore()
+    {
+        StringBuilder sb = new StringBuilder();
+        
+        Statement stmt = null;
+        ResultSet rs = null;
+        try
+        {
+            String query = "SELECT HS_Naam, HS_Score"
+                         + " FROM highscore"
+                         + " ORDER BY HS_Score DESC";
+            
+           stmt = dbCon.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+           rs = stmt.executeQuery(query);
+           
+           boolean isfirst = true;
+           while(rs.next())
+           {   
+               if(isfirst == false)
+               {
+                   sb.append(",");
+               }
+                   
+               sb.append("{\"Naam\": \"" + rs.getString("HS_Naam") + "\", \"Score\":\"" + rs.getInt("HS_Score") +"\"}");
+               isfirst = false;
+           }
+           
+           return sb.toString();
+        }
+        catch(Exception e)
+        {
+            
+        }
+        finally
+        {
+            try
+            {
+                rs.close();
+                stmt.close();
+            }
+            catch(Exception e)
+            {
+                
+            }
+        }
+        return null;
+    }
+    
+    public void InsertHighScore(String name, int score)
+    {
+        try
+        {
+            String sql = "INSERT INTO highscore (HS_Naam, HS_Score)"
+                    + "VALUES ('" + name + "'," + score + ")";
+            
+            dbCon.createStatement().executeUpdate(sql);
+        }
+        catch(Exception e)
+        {
+            
+        }
+        
+    }
+    
 }

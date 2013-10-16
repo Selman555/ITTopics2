@@ -1,11 +1,12 @@
 /*
- * Via deze Servlet kan je de login controleren van de gebruiker parameters: username(string), password(string)
- * Je kan ook een salt opvragen van een gebruiker parameters: RequestSalt(boolean), username(string)
+ * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Enumeration;
+import java.util.Hashtable;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -16,8 +17,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author glenn_000
  */
-@WebServlet(urlPatterns = {"/Login"})
-public class Login extends HttpServlet {
+@WebServlet(urlPatterns = {"/Highscore"})
+public class Highscore extends HttpServlet {
 
     /**
      * Processes requests for both HTTP
@@ -33,71 +34,74 @@ public class Login extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/json");
         PrintWriter out = response.getWriter();
-        try 
-        {
-            appdata.Connectie c = new appdata.Connectie();
-            try
-            { 
-                c.openConnectie();
-            }
-            catch(Exception e)
-            {
-               //cannot open the connection database is gone void 
-            }
+        try {
             
-            
-            String username = "";
-            String password = "";
-            boolean RequestSalt = false;
             StringBuilder sb = new StringBuilder();
             
-            
+            Boolean getHighscore = false;
             try
             {
-                username = request.getParameter("username");
-                password = request.getParameter("password");
-                RequestSalt = Boolean.parseBoolean(request.getParameter("RequestSalt"));
+                getHighscore = Boolean.parseBoolean(request.getParameter("getHighscore"));
             }
             catch(Exception e)
             {
                 
             }
+            String name = request.getParameter("Name");
+            String score = request.getParameter("Score");
             
-            if(RequestSalt == true)
-            { 
-               sb.append("[{\"Salt\":\""+ c.GetSalt(username) +"\"}]");
-               out.println(sb.toString());
+            if(getHighscore == true)
+            {          
+                appdata.Connectie c = new appdata.Connectie();
+                try
+                {
+                    c.openConnectie();
+                    sb.append("[");
+                    sb.append(c.getHighScore());
+                    sb.append("]");
+                }
+                catch(Exception e)
+                {
+
+                }
             }
             else
             {
-            
-                if((!(username.equalsIgnoreCase(""))) && (!(password.equalsIgnoreCase(""))))
+                if(name.equalsIgnoreCase("") == false && score.equalsIgnoreCase("") == false)
                 {
-                    String getLevel = "";
                     try
                     {
-                        getLevel = c.CheckLogin(username, password);
+                        int scoreToInt = Integer.parseInt(score);
+
+                        appdata.Connectie c = new appdata.Connectie();
+                        c.openConnectie();
+                        c.InsertHighScore(name, scoreToInt);
                     }
                     catch(Exception e)
                     {
-
+                        
                     }
-
-                    if(getLevel.equalsIgnoreCase("") == false)
-                    {
-                        sb.append("[{\"login\":\"" + getLevel + "\"}]");
-                    }
-                    else
-                    {
-                       sb.append("[{\"login\":\"0\"}]");
-                    }
-
-                    out.println(sb.toString());
                 }
             }
             
             
+                       
+            out.println(sb.toString());
             
+            
+            
+            
+            
+//            /* TODO output your page here. You may use following sample code. */
+//            out.println("<!DOCTYPE html>");
+//            out.println("<html>");
+//            out.println("<head>");
+//            out.println("<title>Servlet Highscore</title>");            
+//            out.println("</head>");
+//            out.println("<body>");
+//            out.println("<h1>Servlet Highscore at " + request.getContextPath() + "</h1>");
+//            out.println("</body>");
+//            out.println("</html>");
         } finally {            
             out.close();
         }
