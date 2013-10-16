@@ -176,7 +176,8 @@ public class Connectie {
         {
             String query = "SELECT HS_Naam, HS_Score"
                          + " FROM highscore"
-                         + " ORDER BY HS_Score DESC";
+                         + " ORDER BY HS_Score DESC"
+                         + " LIMIT 10";
             
            stmt = dbCon.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
            rs = stmt.executeQuery(query);
@@ -222,12 +223,32 @@ public class Connectie {
                     + "VALUES ('" + name + "'," + score + ")";
             
             dbCon.createStatement().executeUpdate(sql);
+            DeleteLowScores();
         }
         catch(Exception e)
         {
             
+        }  
+    }
+    
+    private void DeleteLowScores()
+    {
+        try
+        {
+            String sql = "DELETE FROM highscore"
+                        +" WHERE HS_ID not in("
+                        +" select h.HS_ID from highscore AS h"
+                        +" JOIN"
+                        +"  (SELECT HS_ID FROM highscore ORDER BY HS_Score DESC LIMIT 10)"
+                        +"  AS lim"
+                        +"  on h.HS_ID = lim.HS_ID)";
+            
+            dbCon.createStatement().executeUpdate(sql);
         }
-        
+        catch(Exception e)
+        {
+            
+        }  
     }
     
 }
