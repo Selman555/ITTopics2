@@ -1,6 +1,9 @@
 <!DOCTYPE html />
 <html lang="nl-be">
 	<head>
+             <?php $user_language=$this->session->userdata('language');
+             $this->lang->load('home_form_'.$user_language,$user_language);?>
+            
 		<link rel="stylesheet" href="<?php echo base_url('styles/main.css'); ?>" 
 			type="text/css" media="screen"/>
 		<title>Hoofdpagina</title>
@@ -40,9 +43,9 @@
 		<div id="content">
 			<header><h1>PIXEL APPS</h1></header>
 			<section>
-				<header><h2>Algemeen</h2></header>
+				<header><h2><?php echo $this->lang->line('algemeen');?></h2></header>
 				<article>
-					<p>Welkom bij </p>
+					<p><?php echo $this->lang->line('inl');?> </p>
 				</article>
 			</section>
 		</div>

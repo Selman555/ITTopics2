@@ -22,8 +22,11 @@ class Start extends CI_Controller {
 	 */
 	public function index()
 	{
-               
+            if(!($this->session->userdata('language'))){
+             $this->session->set_userdata('language','nederlands');
+            }
 		$this->load->view('index');
+            
             
 	}
 	
