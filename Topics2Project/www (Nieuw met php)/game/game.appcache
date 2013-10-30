@@ -1,0 +1,17 @@
+CACHE MANIFEST
+#version 1 
+game.js
+game.html
+/game/img/backgroundGame.png
+/game/img/clouds.png
+/game/img/mushroom.png
+/game/img/platform.png
+/game/img/sprite.png
+/game/sounds/dead.wav
+/game/sounds/jump.wav
+/game/sounds/racing.wav
+/game/sounds/startscreen.mp3
+/game/sounds/highscores.mp3
+
+NETWORK:
+*

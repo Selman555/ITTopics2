@@ -251,4 +251,51 @@ public class Connectie {
         }  
     }
     
+    public String getToDo()
+    {
+        StringBuilder sb = new StringBuilder();
+        
+        Statement stmt = null;
+        ResultSet rs = null;
+        try
+        {
+            String query = "SELECT *"
+            + " FROM todo"
+            + " ORDER BY prioriteit DESC";
+            
+            stmt = dbCon.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            rs = stmt.executeQuery(query);
+            
+            boolean isfirst = true;
+            while(rs.next())
+            {
+                if(isfirst == false)
+                {
+                    sb.append(",");
+                }
+                
+                sb.append("{\"Naam\": \"" + rs.getString("naam") + "\", \"Omschrijving\":\"" + rs.getInt("omschrijving") +"\"}");
+                isfirst = false;
+            }
+            
+            return sb.toString();
+        }
+        catch(Exception e)
+        { }
+        finally
+        {
+            try
+            {
+                if(rs != null)
+                    rs.close();
+                if(stmt != null)
+                    stmt.close();
+            }
+            catch(Exception e)
+            {
+                
+            }
+        }
+        return null;
+    }
 }
