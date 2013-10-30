@@ -120,13 +120,13 @@
 	</head>
 	<body>
 		<div id="btnChangeState">
-			<input type="button" value="Wijzig status" onclick="changeState()" />
-			<input type="button" value="Wijziging klaar" onclick="changeStateReady()" />
+			<input type="button" value="Wijzig status" onclick="changeState();" />
+			<input type="button" value="Wijziging klaar" onclick="changeStateReady();" />
 		</div>
 
 		<h1>To Do</h1>
-		<div id="box1" ondrop="drop(event)" ondragover="allowDrop(event)">
-			<article id="taak1" draggable="false" ondragstart="drag(event)">
+		<div id="box1" ondrop="drop(event);" ondragover="allowDrop(event);">
+			<article id="taak1" draggable="false" ondragstart="drag(event);">
 				<h2>Taak 1 - Naam (AON)</h2>
 				<section>Omschrijving opdracht</section>
 				<section>~Door: [Naam]</section>
@@ -134,8 +134,8 @@
 		</div>
 
 		<h1>In Behandeling</h1>
-		<div id="box2" ondrop="drop(event)" ondragover="allowDrop(event)">
-			<article id="taak2" draggable="false" ondragstart="drag(event)">
+		<div id="box2" ondrop="drop(event);" ondragover="allowDrop(event);">
+			<article id="taak2" draggable="false" ondragstart="drag(event);">
 				<h2>Taak 2 - Naam (SNB)</h2>
 				<section>Omschrijving opdracht</section>
 				<section>~Door: [Naam]</section>
@@ -143,8 +143,8 @@
 		</div>
 
 		<h1>Nazicht Nodig</h1>
-		<div id="box3" ondrop="drop(event)" ondragover="allowDrop(event)">
-			<article id="taak3" draggable="false" ondragstart="drag(event)">
+		<div id="box3" ondrop="drop(event);" ondragover="allowDrop(event);">
+			<article id="taak3" draggable="false" ondragstart="drag(event);">
 				<h2>Taak 3 - Naam (SNB)</h2>
 				<section>Omschrijving opdracht</section>
 				<section>~Door: [Naam]</section>
@@ -152,8 +152,8 @@
 		</div>
 
 		<h1>In Nazicht</h1>
-		<div id="box4" ondrop="drop(event)" ondragover="allowDrop(event)">
-			<article id="taak4" draggable="false" ondragstart="drag(event)">
+		<div id="box4" ondrop="drop(event);" ondragover="allowDrop(event);">
+			<article id="taak4" draggable="false" ondragstart="drag(event);">
 				<h2>Taak 4 - Naam (AON)</h2>
 				<section>Omschrijving opdracht</section>
 				<section>~Door: [Naam]</section>
@@ -161,8 +161,8 @@
 		</div>
 
 		<h1>Klaar!</h1>
-		<div id="box5" ondrop="drop(event)" ondragover="allowDrop(event)">
-			<article id="taak5" draggable="false" ondragstart="drag(event)">
+		<div id="box5" ondrop="drop(event);" ondragover="allowDrop(event);">
+			<article id="taak5" draggable="false" ondragstart="drag(event);">
 				<h2>Taak 5 - Naam (AON)</h2>
 				<section>Omschrijving opdracht</section>
 				<section>~Door: [Naam]</section>
@@ -194,7 +194,7 @@
 						</td>
 					</tr>
 					<tr>
-						<td colspan="2"><input type="submit" value="Aanmaken" onclick="nogNietKlaar()" /></td>
+						<td colspan="2"><input type="submit" value="Aanmaken" onclick="toDoAanmaken();" /></td>
 					</tr>
 				</tbody>
 			</table>

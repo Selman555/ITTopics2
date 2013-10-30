@@ -1,14 +1,35 @@
 <!DOCTYPE html>
-<html>
+<html manifest="game.appcache">
 	<head>
 		<title>Jump the Fun!</title>
-		
+		<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+		<style type="text/css">
+			html {
+				background-color: black;
+				width: 100%;
+			}
+			body {
+				color: white;
+				font-family: Tahoma;
+				width: 80%;
+				margin: auto;
+				margin-top: 50px;
+				text-align: center;
+
+			}
+			canvas {
+				border: 1px solid white;
+			}
+			p {
+				font-size: 0.8em;
+			}
+		</style>
 	</head>
 	<body>
 		<canvas id="canvasGame">
 			Uw browser ondersteunt geen canvas. Update uw browser of installeer de laatste versie van Chrome of FireFox.
 		</canvas>
-		<script src="game.js"></script>
+		<input type="button" value="Mute Sound" onclick="muteSound();" name="btnMute" id="btnMute" />
 		<p>
 			Klik in het canvas of gebruikt de spatiebalk of pijltje omhoog om te springen
 		</p>
@@ -16,26 +37,14 @@
 			Doel: Ontwijk de blokjes door te springen.<br />
 			Wanneer een blokje aangeraakt wordt, verlies je!
 		</p>
-	</body>
-	<style type="text/css">
-		html {
-			background-color: black;
-			width: 100%;
-		}
-		body {
-			color: white;
-			font-family: Tahoma;
-			width: 80%;
-			margin: auto;
-			margin-top: 50px;
-			text-align: center;
 
-		}
-		canvas {
-			border: 1px solid white;
-		}
-		p {
-			font-size: 0.8em;
-		}
-	</style>
+		<p>
+			Speel met geluid om maximale speelplezier te krijgen.
+		</p>
+
+		<p>
+			<input type="button" value="Get Local Storage" name="btnStorage" id="btnStorage" onclick="getStorage();" />  <input type="button" value="Reset Local Storage" name="btnResetStorage" id="btnResetStorage" onclick="resetStorage();" /> 
+		</p>
+		<script src="game.js"></script>
+	</body>
 </html>

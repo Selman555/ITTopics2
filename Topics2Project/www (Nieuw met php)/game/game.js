@@ -2,45 +2,50 @@
 //-=-=-=-=-=-=-=-=-=-=-=-=-
 //BRON SPRINGEN (gedeeltelijk): http://www.williammalone.com/articles/create-html5-canvas-javascript-game-character/2/
 
-const FPS = 30; //Frames Per Second (aantal keren dat het beeld herladen per seconden)
-const fontType = "bold 1.2em Tahoma"; //Font voor aantal meters te tonen
+var FPS = 30; //Frames Per Second (aantal keren dat het beeld herladen per seconden)
+var fontType = "bold 1.2em Tahoma"; //Font voor aantal meters te tonen
 var soundStartscreen; //Geluid op het startscherm
 var soundJump; //Geluid bij het springen
 var soundDead; //Geluid bij het doodgaan
 var soundBackground; //Geluid in de achtergrond
 var soundHighscores; //Geluid bij de highscores
 var canvas; //Canvas -> worden componenten op getoond
-const canvasWidth = 900; //Breedte canvas
-const canvasHeight = 512; //Hoogte canvas
-const playerWidth = 32; //Breedte speler
-const playerHeight = 32; //Hoogste speler
-var backgroundVelocity; //Snelheid beeld dat naar links gaat
+var canvasWidth = 900; //Breedte canvas
+var canvasHeight = 512; //Hoogte canvas
+var playerWidth = 32; //Breedte speler
+var playerHeight = 32; //Hoogste speler
+
+var userNameInput = "";
+
+var imgSprite;
+var playerImg; //Afbeelding speler
+var cloudImg1; //Wolk 1 op het startscherm
+var clousImg2; //Wolk 2 op het startscherm
 var backgroundImg1; //Achtergrond 1
 var backgroundImg2; //Achtergrond 2
+var platformImg;
+
+var backgroundVelocity; //Snelheid beeld dat naar links gaat
 var backgroundPosX1; //Positie x-as achtergrond 1
 var backgroundPosY1; //Positie y-as achtergrond 1
 var backgroundPosX2; //Positie x-as achtergrond 2
 var backgroundPosY2; //Positie y-as achtergrond 2
-var cloudImg1; //Wolk 1 op het startscherm
-var clousImg2; //Wolk 2 op het startscherm
 var cloudPosX1; //Positie x wolk 1
 var cloudPosY1; //Positie y wolk 1
 var cloudPosX2; //Positie x wolk 2
 var clousPosY2; //Positie y wolk 2
-var playerImg; //Afbeelding speler
 var playerPosX; //Positie x-as speler
 var playerPosY; //Positie y-as speler
 var playerAllowJump; //Speler heeft toestemming om te springen
+var platformPosX;
+var platformPosY;
+
 var jumpVelocity; //hoogte van het springen
 var jumpState; //Status van de speler (false != springen - true = springen)
 var goDown; //Speler is omlaag aan het gaan na het springen
 var gravity; //Hoe snel een speler omlaag gaat
 var meters; //Afstand dat de speler gelopen heeft
 var userClickSpeed; //Snelheid dat een gebruiker kan kliken
-
-var platformImg;
-var platformPosX;
-var platformPosY;
 
 var dead; //Boolean -> true = dood, false != dood
 var gameover; //Boolean -> true = gameover, false != gameover
@@ -61,6 +66,11 @@ var playingHighscoreSong;
 
 var allowKeyEvent;
 var listPlatformPos;
+var allowKeyEventNavCanvas;
+var firstTime = true;
+
+var soundMuted = false;
+var listHighscores;
 
 var Debugger = function() { };
 Debugger.log = function (message) {
@@ -69,11 +79,21 @@ Debugger.log = function (message) {
 	} catch(e) {
 		console.log(e);
 	}
-}
+};
 
 window.onload = init();
 
 function init() {
+	if(localStorage.getItem("muted") !== null) {
+		if(localStorage.getItem("muted") === '0') {
+			soundMuted = false;
+			document.getElementById("btnMute").value = "Geluid aan";
+		}else if(localStorage.getItem("muted") === '1') {
+			soundMuted = true;
+			document.getElementById("btnMute").value = "Geluid uit";
+		}
+	}
+
 	soundJump = new Audio("sounds/jump.wav");
 	soundDead = new Audio("sounds/dead.wav");
 
@@ -89,6 +109,10 @@ function init() {
 
 	context2D = canvas.getContext("2d");
 	context2D.font = fontType;
+
+	imgSprite = new Image();
+	imgSprite.src = "img/sprite.png"; //AFWERKEN!!!
+
 
 	cloudImg1 = new Image();
 	cloudImg1.src = "img/clouds.png";
@@ -122,7 +146,7 @@ function init() {
 	backgroundVelocity = 10;
 
 	playerImg = new Image();
-	playerImg.src = "img/mushroom.png"
+	playerImg.src = "img/mushroom.png";
 	playerImg.width = playerWidth;
 	playerImg.height = playerHeight;
 	playerPosX = 200;
@@ -134,7 +158,6 @@ function init() {
 	platformImg.width = 28;
 	platformImg.height = 28;
 	platformPosY = canvasHeight - 45;
-	makePlatforms();
 
 	jumpHeight = 50;
 	gravity = 3;
@@ -143,6 +166,7 @@ function init() {
 
 	userClickSpeed = 1000; //1000 = 1 seconde
 	allowKeyEvent = true;
+	allowKeyEventNavCanvas = true;
 
 	meters = 0;
 	dead = false;
@@ -164,6 +188,7 @@ function init() {
 	}else if(playing) {
 		clearInterval(intervalStartscherm);
 		clearInterval(intervalHighscore);
+		makePlatforms();
 		intervalPlaying = setInterval(draw, FPS);
 	}else if(highscore) {
 		clearInterval(intervalPlaying);
@@ -172,48 +197,86 @@ function init() {
 	}
 }
 
-function drawHighscores() {
-	//Canvas leegmaken om weer op te vullen met afbeeldingen op een ander locatie
-	context2D.clearRect(0, 0, canvasWidth, canvasHeight);
+function getHighscores() {
+	 //2D array voor highscores
+	 //AANPASSEN
+	 var lengthArray = 0;
 
-	//Achtergrond tekenen
-	context2D.drawImage(backgroundImg1, backgroundPosX1, backgroundPosY1, backgroundImg1.width, backgroundImg1.height);
-	context2D.drawImage(backgroundImg2, backgroundPosX2, backgroundPosY2, backgroundImg2.width, backgroundImg2.height);
+	 if(localStorage.getItem("highscores") === null) {
+		 var scores = [
+		 				[1000, "WingedDestinyX"],
+						[900, "8BallJunkie"],
+						[800, "Selman555"],
+						[700, "AnkA"],
+						[600, "GlennT"],
+						[500, "RobbieV"],
+						[400, "StevenV"],
+						[300, "WingedDestinyY"],
+						[200, "PickaMonstrox"],
+						[100, "CharDidEmber"]
+					];
 
-	//Wolken tekenen
-	context2D.drawImage(cloudImg1, cloudPosX1, cloudPosY1, cloudImg1.width, cloudImg1.height);
-	context2D.drawImage(cloudImg2, cloudPosX2, cloudPosY2, cloudImg2.width, cloudImg2.height);
+		localStorage.setItem("highscores", JSON.stringify(scores)); //Fancy doen voor misschien extra punten
+	}
 
-	scrollCloudsStartscreen(1); //Wolken laten scrollen
+	var scores = JSON.parse(localStorage.getItem("highscores"));
+
+	scores = scores.sort(function(a,b) {
+					return b[0] - a[0]; //Kijken op 1ste kolom (0)
+			});
+
+	//Highscores tonen
+	context2D.fillText(scores[0][0] + " meter: " + scores[0][1], 150, 110);
+	context2D.fillText(scores[1][0] + " meter: " + scores[1][1], 150, 140);
+	context2D.fillText(scores[2][0] + " meter: " + scores[2][1], 150, 170);
+	context2D.fillText(scores[3][0] + " meter: " + scores[3][1], 150, 200);
+	context2D.fillText(scores[4][0] + " meter: " + scores[4][1], 150, 230);
+	context2D.fillText(scores[5][0] + " meter: " + scores[5][1], 150, 260);
+	context2D.fillText(scores[6][0] + " meter: " + scores[6][1], 150, 290);
+	context2D.fillText(scores[7][0] + " meter: " + scores[7][1], 150, 320);
+	context2D.fillText(scores[8][0] + " meter: " + scores[8][1], 150, 350);
+	context2D.fillText(scores[9][0] + " meter: " + scores[9][1], 150, 380);
+}
+
+function muteSound() {
+	if(soundMuted) {
+		soundJump.muted = false;
+		soundDead.muted = false;
+		soundBackground.muted = false;
+		soundStartscreen.muted = false;
+		soundHighscores.muted = false;
+
+		soundMuted = false;
+		localStorage.setItem("muted", "0"); //0 = muted
+	}else {
+		soundJump.muted = true;
+		soundDead.muted = true;
+		soundBackground.muted = true;
+		soundStartscreen.muted = true;
+		soundHighscores.muted = true;
+
+		soundMuted = true;
+		localStorage.setItem("muted", "1"); //1 = niet muted
+	}
 	
-	context2D.font = "bold 1.4em Tahoma";
-	context2D.fillText("Top 10 spelers", canvasWidth/2-75, 50);
-
-	context2D.font = "bold 1em Tahoma";
-	context2D.fillText("Speler 1 [NAAM]: 100 meters", 150, 110); //Doorlopen in for-lus
-	context2D.fillText("Speler 2 [NAAM]: 98 meters", 150, 140);
-	context2D.fillText("Speler 3 [NAAM]: 94 meters", 150, 170);
-	context2D.fillText("Speler 4 [NAAM]: 60 meters", 150, 200);
-	context2D.fillText("Speler 5 [NAAM]: 56 meters", 150, 230);
-	context2D.fillText("Speler 6 [NAAM]: 47 meters", 150, 260);
-	context2D.fillText("Speler 7 [NAAM]: 44 meters", 150, 290);
-	context2D.fillText("Speler 8 [NAAM]: 41 meters", 150, 320);
-	context2D.fillText("Speler 9 [NAAM]: 35 meters", 150, 350);
-	context2D.fillText("Speler 10 [NAAM]: 10 meters", 150, 380);
-
-	context2D.fillText("Druk [PIJLTJE LINKS] om naar het startscherm te gaan", 20, 475);
-	soundHighscores.play();
-
-	Debugger.log("highscores gemaakt");
+	if(localStorage.getItem("muted") === '0') {
+		soundMuted = false;
+		document.getElementById("btnMute").value = "Geluid aan";
+	}else if(localStorage.getItem("muted") === '1') {
+		soundMuted = true;
+		document.getElementById("btnMute").value = "Geluid uit";
+	}
 }
 
 function makePlatforms() {
-	//!!!VERFIJNING NODIG!!!
+	if(!firstTime)
+		var prevPlatform = 0; //Laten beginnen op 400px om de speler de tijd te geven om te beginnen
+	else
+		var prevPlatform = 400;
+	listPlatformPos = new Array();
 
-	var prevPlatform = 500; //Laten beginnen op 500px om de speler de tijd te geven om te beginnen
-
-	for(var i=0; i<10; i++) { //10 platformen maken
-		var rand = Math.floor((Math.random()*2)+1); //tussen 1 en 2 voor afstand platformen (1 = 100px, 2 = 300px)
+	for(var i=0; i<4; i++) { //4 platformen maken
+		var rand = Math.floor((Math.random()*3)+1); //tussen 1 en 3 voor afstand platformen (1 = 100px, 2 = 150px, 3 = 200px)
 		var distance;
 
 		switch(rand) {
@@ -221,6 +284,9 @@ function makePlatforms() {
 				distance = 100;
 				break;
 			case 2:
+				distance = 200;
+				break;
+			case 3:
 				distance = 300;
 				break;
 		}
@@ -235,10 +301,142 @@ function makePlatforms() {
 
 function playBgSound() {
 	if(playing && !gameover && !dead) {
-		if(!playingSong) {
-			soundBackground.play();
-			playingSong = true;
+		if(!soundMuted) {
+			if(!playingSong) {
+				soundBackground.play();
+				playingSong = true;
+			}
 		}
+	}
+}
+
+function scrollCloudsStartscreen(vel) {
+	cloudPosX1 -= vel;
+	cloudPosX2 -= vel;
+
+	if(cloudPosX1 <= -cloudImg1.width) {
+		cloudPosX1 = cloudImg1.width;
+	}else if(cloudPosX2 <= -cloudImg2.width) {
+		cloudPosX2 = cloudImg2.width;
+	}
+}
+
+function scrollPlatforms(vel) {
+	//VERFIJNEN
+	for(var i=0; i<listPlatformPos.length; i++) {
+		listPlatformPos[i] -= vel;
+
+		if(listPlatformPos[i]+platformImg.width <= 0) {
+			listPlatformPos[i] = canvasWidth;
+		}
+		if(listPlatformPos[listPlatformPos.length - 1] + platformImg.width <= 5) {
+			makePlatforms();
+		}
+		//alert(listPlatformPos[listPlatformPos.length - 1]);
+	}
+}
+
+function scrollBackground(vel) {
+	backgroundPosX1 -= vel;
+	backgroundPosX2 -= vel;
+
+	if(backgroundPosX1 <= -backgroundImg1.width) {
+		backgroundPosX1 = backgroundImg1.width-10; //-10 om een zwarte streep tussen backgrounds te voorkomen
+	}else if(backgroundPosX2 <= -backgroundImg2.width) {
+		backgroundPosX2 = backgroundImg2.width-10; //-10 om een zwarte streep tussen backgrounds te voorkomen
+	}
+}
+
+function collisionPlayer() {
+	for(var i=0; i<listPlatformPos.length; i++) { //Elke platform controleren
+	if((playerPosX >= listPlatformPos[i] && playerPosX <= listPlatformPos[i]) && //Positie x-as controleren
+	 (playerPosY+playerImg.height >= platformPosY)) { //Positie y-as controleren
+			//Collision
+			soundBackground.pause();
+			if(!soundMuted)
+				soundDead.play();
+
+			gameover = true;
+			dead = true;
+			playing = false;
+			highscore = true;
+			allowKeyEventNavCanvas = false;
+
+			//Nutteloos, maar houden om aan te tonen dat we met LocalStorage en controle op internet kunnen toepassen
+			if(!navigator.onLine) {
+				localStorage.setItem("meters", meters);
+			}
+
+			setTimeout(function() {
+				//Naam op laten geven voor highscores
+				var user = prompt("Geef een naam op\nPas op: bij een naam langer dan 25 tekens, wordt de naam afgekapt!", "");
+				if(user === null || user.trim() === "") {
+					//Geen naam opgegeven
+					user = "TeLuiVoorEenNaam";
+				}
+
+				if(user.length > 25) {
+					user = user.substr(0, 25) + "...";
+				}
+
+				var newHighscore = [meters, user];
+				var scores = JSON.parse(localStorage.getItem("highscores"));
+
+				scores.push(newHighscore);
+				//Array ordenen
+				scores = scores.sort(function(a,b) {
+					return b[0] - a[0]; //Kijken op 1ste kolom (0)
+				});
+
+				localStorage.setItem("highscores", JSON.stringify(scores)); 
+			}, 1000);
+
+			
+
+			clearInterval(intervalPlaying);
+			setTimeout(init, 1000); //Uitvoeren na 1 seconde (niet onmiddelijk van scherm overgaan)
+			Debugger.log("Speler raakt platform");
+			break;
+		}
+	}
+}
+
+function getStorage() {
+	alert("Meters: " + localStorage.getItem("meters"));
+	alert("Geluid: " + localStorage.getItem("muted") + " (0 = geluid aan, 1 = geluid uit)");
+	alert("Highscores: " + localStorage.getItem("highscores"));
+}
+
+function resetStorage() {
+	localStorage.clear();
+	alert("Local Storage gereset");
+}
+
+function draw() { //Deze wordt bij het spelen ALTIJD opgeroepen (zie het als een update-functie)
+	context2D.clearRect(0, 0, canvasWidth, canvasHeight);
+
+	context2D.drawImage(backgroundImg1, backgroundPosX1, backgroundPosY1, backgroundImg1.width, backgroundImg1.height);
+	context2D.drawImage(backgroundImg2, backgroundPosX2, backgroundPosY2, backgroundImg2.width, backgroundImg2.height);
+
+	//Wolken tekenen
+	context2D.drawImage(cloudImg1, cloudPosX1, cloudPosY1, cloudImg1.width, cloudImg1.height);
+	context2D.drawImage(cloudImg2, cloudPosX2, cloudPosY2, cloudImg2.width, cloudImg2.height);
+
+	context2D.fillText("Meters: " + meters, 30, 30);
+	drawPlatforms();
+	collisionPlayer();
+
+	if(!gameover) {
+		scrollBackground(5);
+		scrollCloudsStartscreen(7); //Wolken laten scrollen
+		if(!soundMuted)
+			playBgSound();
+		meters++;
+
+		drawPlayer();
+	}else {
+		clearInterval(intervalPlaying);
+		soundBackground.pause();
 	}
 }
 
@@ -258,7 +456,8 @@ function drawStartscreen() {
 		scrollCloudsStartscreen(1); //Wolken laten scrollen
 		
 		drawStartText(); //Startknop op het scherm tekenen
-		soundStartscreen.play();
+		if(!soundMuted)
+			soundStartscreen.play();
 
 		Debugger.log("Canvas opgevuld");
 	}
@@ -268,96 +467,12 @@ function drawStartscreen() {
 	}
 }
 
-function scrollCloudsStartscreen(vel) {
-	cloudPosX1 -= vel;
-	cloudPosX2 -= vel;
-
-	if(cloudPosX1 <= -cloudImg1.width) {
-		cloudPosX1 = cloudImg1.width;
-	}else if(cloudPosX2 <= -cloudImg2.width) {
-		cloudPosX2 = cloudImg2.width;
-	}
-}
-
-function scrollPlatforms(vel) {
-	for(var i=0; i<listPlatformPos.length; i++) {
-		listPlatformPos[i] -= vel;
-
-
-		//Onderstaande controle heeft een fout
-		if(listPlatformPos[i]+platformImg.width < 0) {
-			listPlatformPos[i] = canvasWidth;
-		}
-	}
-}
-
-function scrollBackground(vel) {
-	backgroundPosX1 -= vel;
-	backgroundPosX2 -= vel;
-
-	if(backgroundPosX1 <= -backgroundImg1.width) {
-		backgroundPosX1 = backgroundImg1.width-10; //-10 om een zwarte streep tussen backgrounds te voorkomen
-	}else if(backgroundPosX2 <= -backgroundImg2.width) {
-		backgroundPosX2 = backgroundImg2.width-10; //-10 om een zwarte streep tussen backgrounds te voorkomen
-	}
-}
-
-function collisionPlayer() {
-	for(var i=0; i<10; i++) { //Elke platform controleren
-	if((playerPosX >= listPlatformPos[i] && playerPosX <= listPlatformPos[i]) && //Positie x-as controleren
-	 (playerPosY+playerImg.height >= platformPosY)) { //Positie y-as controleren
-			//Collision
-			soundBackground.pause();
-			soundDead.play();
-
-			gameover = true;
-			dead = true;
-			playing = false;
-			highscore = true;
-
-			setTimeout(init, 4000); //Uitvoeren na 4 seconden (niet onmiddelijk van scherm overgaan)
-			Debugger.log("Speler raakt platform");
-			break;
-		}
-	}
-}
-
-function draw() { //Deze wordt bij het spelen ALTIJD opgeroepen (zie het als een update-functie)
-	context2D.clearRect(0, 0, canvasWidth, canvasHeight);
-
-	context2D.drawImage(backgroundImg1, backgroundPosX1, backgroundPosY1, backgroundImg1.width, backgroundImg1.height);
-	context2D.drawImage(backgroundImg2, backgroundPosX2, backgroundPosY2, backgroundImg2.width, backgroundImg2.height);
-
-	//Wolken tekenen
-	context2D.drawImage(cloudImg1, cloudPosX1, cloudPosY1, cloudImg1.width, cloudImg1.height);
-	context2D.drawImage(cloudImg2, cloudPosX2, cloudPosY2, cloudImg2.width, cloudImg2.height);
-
-	context2D.fillText("Meters: " + meters, 30, 30);
-	
-	drawPlatforms();
-	collisionPlayer();
-
-	if(!gameover) {
-		scrollBackground(5);
-		scrollCloudsStartscreen(7); //Wolken laten scrollen
-		playBgSound();
-		meters++;
-
-		drawPlayer();
-	}else {
-		clearInterval(intervalPlaying);
-		soundBackground.pause();
-	}
-}
-
 function drawPlayer() {
-	context2D.drawImage(playerImg, playerPosX, playerPosY, playerImg.width, playerImg.height);
-}
-
-function drawStartText() {
-	context2D.fillText("Druk [PIJLTJE RECHTS] om te spelen", canvasWidth/2-175, 400);
-	context2D.fillText("Druk [PIJLTJE OMLAAG] om de highscores te bekijken", canvasWidth/2-250, 425);
-	Debugger.log("Label gemaakt");
+	if(playing) {
+		if(!dead && !gameover) {
+			context2D.drawImage(playerImg, playerPosX, playerPosY, playerImg.width, playerImg.height);
+		}
+	}
 }
 
 function drawPlatforms() {
@@ -369,23 +484,65 @@ function drawPlatforms() {
 	Debugger.log("Platformen getekend");
 }
 
+function drawStartText() {
+	context2D.fillText("Druk [PIJLTJE RECHTS] om te spelen", canvasWidth/2-175, 400);
+	context2D.fillText("Druk [PIJLTJE OMLAAG] om de highscores te bekijken", canvasWidth/2-250, 425);
+	Debugger.log("Label gemaakt");
+}
+
+function drawHighscores() {
+	//Canvas leegmaken om weer op te vullen met afbeeldingen op een ander locatie
+	context2D.clearRect(0, 0, canvasWidth, canvasHeight);
+
+	//Achtergrond tekenen
+	context2D.drawImage(backgroundImg1, backgroundPosX1, backgroundPosY1, backgroundImg1.width, backgroundImg1.height);
+	context2D.drawImage(backgroundImg2, backgroundPosX2, backgroundPosY2, backgroundImg2.width, backgroundImg2.height);
+
+	//Wolken tekenen
+	context2D.drawImage(cloudImg1, cloudPosX1, cloudPosY1, cloudImg1.width, cloudImg1.height);
+	context2D.drawImage(cloudImg2, cloudPosX2, cloudPosY2, cloudImg2.width, cloudImg2.height);
+
+	scrollCloudsStartscreen(1); //Wolken laten scrollen
+	
+	context2D.font = "bold 1.4em Tahoma";
+	context2D.fillText("Top spelers", canvasWidth/2-75, 50);
+
+	context2D.font = "bold 1em Tahoma";
+	getHighscores();
+
+	context2D.fillText("Druk [PIJLTJE LINKS] om naar het startscherm te gaan", 20, 475);
+	if(!soundMuted)
+		soundHighscores.play();
+
+	Debugger.log("highscores gemaakt");
+}
+
 function jumping() {
-	if(!gameover && !startscreen && playing) {
-		if(!jumpState) {
-			jumpState = true;
-			allowKeyEvent = false;
-			intervalJumping = setInterval (function() {
-				playerPosY-=3;
-				drawPlayer();
+	if(playing) {
+		if(!gameover && !dead && !startscreen) {
+			if(!jumpState) {
+				jumpState = true;
+				allowKeyEvent = false;
 
-				Debugger.log("Aan het springen");
-			});
+				var i = 0; //Om setInterval te kunnen stoppen en weten wnr deze gestopt moet worden
+				intervalJumping = setInterval (function() {
+					playerPosY-=3;
+					drawPlayer();
+					
+					Debugger.log("Aan het springen");
 
+					i++;
+					if(i>=250) { //250 ms om te springen
+						clearInterval(intervalJumping);
+					}
+				});
 
-			//jumpState = true;
-			soundJump.currentTime = 0;
-			soundJump.play();
-			setTimeout(goingDown, 250); //Bepaalt hoe lang de speler kan springen (500ms)
+				if(!soundMuted) {
+					soundJump.currentTime = 0;
+					soundJump.play();
+				}
+				setTimeout(goingDown, 250); //Bepaalt hoe lang de speler kan springen (500ms)
+			}
 		}
 	}
 }
@@ -431,36 +588,39 @@ canvas.onmousedown = function() { //Wanneer de speler wil springen
 };
 
 document.body.onkeydown = function (e) {
-	if(e.keyCode == 37) { //Pijl links
-		if(highscore) {
-			startscreen = true;
-			highscore = false;
+	if(allowKeyEventNavCanvas) {
+		if(e.keyCode === 37) { //Pijl links
+			if(highscore) {
+				startscreen = true;
+				highscore = false;
 
-			soundHighscores.pause();
-			init();
+				soundHighscores.pause();
+				init();
+			}
 		}
-	}
-	else if(e.keyCode == 39) {
-		if(startscreen) { //Pijl rechts
-			startscreen = false;
-			playing = true;
+		else if(e.keyCode === 39) {
+			if(startscreen) { //Pijl rechts
+				startscreen = false;
+				playing = true;
 
-			soundStartscreen.pause();
-			init();
+				soundStartscreen.pause();
+				init();
+			}
 		}
-	}
-	else if(e.keyCode == 40) {
-		if(startscreen) { //Pijl omlaag
-			startscreen = false;
-			highscore = true;
-			
-			soundStartscreen.pause();
-			init();
+		else if(e.keyCode === 40) {
+			if(startscreen) { //Pijl omlaag
+				startscreen = false;
+				highscore = true;
+				
+				soundStartscreen.pause();
+				init();
+			}
 		}
+		else if(e.keyCode === 32 || e.keyCode === 38) { //Spatiebalk (32), pijltje omhoog (38)
+			if(allowKeyEvent)
+				jumping();
+		}
+		else return false;
 	}
-	else if(e.keyCode == 32 || e.keyCode == 38) { //Spatiebalk (32), pijltje omhoog (38)
-		if(allowKeyEvent)
-			jumping();
-	}
-	else return false;
-}
+	return false;
+};

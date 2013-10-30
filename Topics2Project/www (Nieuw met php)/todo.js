@@ -1,9 +1,16 @@
 //Bron Timeout: http://www.electrictoolbox.com/using-settimeout-javascript/
-var timeout;
 var clicked = false; //Om dubbele foutmeldingen te voorkomen
 
-function nogNietKlaar(){
+setTimeout(function() {
+	var taak1 = document.getElementById("taak1");
+	taak1.location.reload(1);
+}, 1000); //Pagina elke 1 seconde herladen om juiste gegevens te tonen
+
+
+function toDoAanmaken(){
+	//Gegevens wegschrijven naar DB via Webservice
 	alert("Dit werkt nog niet! Pas na webservice!!!");
+	window.location.reload(1);
 }
 
 
@@ -13,7 +20,6 @@ function allowDrop(ev){
 
 function drag(ev){
 	clearTimeout(timeout);
-
 	ev.dataTransfer.setData("content", ev.target.id);
 }
 
@@ -36,8 +42,8 @@ function startTimer() {
 }
 
 function changeState() {
-	startTimer();
-	clicked = true;
+	//Connectie met DB via Webservice
+	
 
 	//Dynamisch maken (Div id's worden dynamisch gemaakt)
 	var enableDragTaak1 = document.getElementById("taak1");
@@ -51,6 +57,9 @@ function changeState() {
 	enableDragTaak3.draggable = true;
 	enableDragTaak4.draggable = true;
 	enableDragTaak5.draggable = true;
+
+	clicked = true;
+	startTimer();
 }
 
 function tooLate() {
