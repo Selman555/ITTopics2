@@ -1,4 +1,11 @@
-//Bron Timeout: http://www.electrictoolbox.com/using-settimeout-javascript/
+$(document).ready = (function(){
+  $.getJSON("http://localhost:8080/Groep1/ToDos?getTodo=true",function(result){
+    $.each(result, function(i, field){
+      $("TEMP").append(field + " ");
+    });
+  });
+});
+
 var clicked = false; //Om dubbele foutmeldingen te voorkomen
 
 setTimeout(function() {
