@@ -40,15 +40,15 @@
 	<body onkeydown="onkeydown(this)">
 		<?php include 'templates/header.php'; ?>
 
-		<div id="content">
-			<header><h1>PIXEL APPS</h1></header>
-			<section>
-				<header><h2><?php echo $this->lang->line('algemeen');?></h2></header>
-				<article>
-					<p><?php echo $this->lang->line('inl');?> </p>
-				</article>
-			</section>
-		</div>
+		<section>
+                       <h1>PIXEL APPS</h1>
+		
+			<h1><?php echo $this->lang->line('algemeen');?></h1>
+			<article>
+                            <p><?php echo $this->lang->line('inl');?> </p>
+			</article>
+			
+		</section>
 
 		<?php include 'templates/footer.php'; ?>
 	</body>
