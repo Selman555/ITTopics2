@@ -14,6 +14,7 @@ import java.sql.Statement;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Vector;
+import sun.org.mozilla.javascript.internal.json.JsonParser;
 
 /**
  *
@@ -275,7 +276,21 @@ public class Connectie {
         {
             
         }
-        
         return sb.toString();
+    }
+    
+     public void InsertCms(String id, String taalcode, String content)
+    {
+        try
+        {
+            String sql = "INSERT INTO cms (text"+ taalcode +")"
+                    + "VALUES ('" + content + "')";
+            
+            dbCon.createStatement().executeUpdate(sql);
+        }
+        catch(Exception e)
+        {
+            
+        }  
     }
 }
