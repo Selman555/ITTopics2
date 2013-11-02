@@ -13,42 +13,56 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author stevenverheyen
+ * @author glenn_000
  */
-@WebServlet(urlPatterns = {"/ToDos"})
-public class ToDos extends HttpServlet {
+@WebServlet(urlPatterns = {"/cms"})
+public class cms extends HttpServlet {
+
+    /**
+     * Processes requests for both HTTP
+     * <code>GET</code> and
+     * <code>POST</code> methods.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/json");
         PrintWriter out = response.getWriter();
         try {
-            StringBuilder sb = new StringBuilder();
-            Boolean getToDo = false;
             
-            try {
-                getToDo = Boolean.parseBoolean(request.getParameter("getTodo"));
-            } catch (Exception e){ }
-
-            if (getToDo == true) {
-                appdata.Connectie c = new appdata.Connectie();
-                try {
-                    c.openConnectie();
-                    sb.append("[");
-                    sb.append(c.getToDo());
-                    sb.append("]");
-                } catch (Exception e) {
-                }
-            } else {
-                try {
-                    appdata.Connectie c = new appdata.Connectie();
-                    c.openConnectie();
-                    //c.InsertTodo("TEST 1 WEBSERVICE", "Een test via de webservice", 1, 1, "AON");
-                } catch (Exception e) {
-                }
+            appdata.Connectie c = new appdata.Connectie();
+            try
+            { 
+                c.openConnectie();
             }
-
+            catch(Exception e)
+            {
+               //cannot open the connection database is gone void 
+            }
+            String id = "";
+            String taalcode = "";
+            try
+            {
+                id = request.getParameter("id");
+                taalcode = request.getParameter("taalcode");
+            }
+            catch(Exception e)
+            {
+                
+            }
+            
+            StringBuilder sb = new StringBuilder();
+            
+            sb.append(c.getCms(id, taalcode));
+            
             out.println(sb.toString());
-        } finally {
+            
+            
+        } finally {            
             out.close();
         }
     }
