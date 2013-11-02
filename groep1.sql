@@ -2,10 +2,10 @@
 -- version 4.0.4.1
 -- http://www.phpmyadmin.net
 --
--- Host: localhost
--- Generation Time: Nov 01, 2013 at 07:24 AM
--- Server version: 5.5.31
--- PHP Version: 5.4.19
+-- Host: 127.0.0.1
+-- Generation Time: Nov 02, 2013 at 02:56 PM
+-- Server version: 5.6.11
+-- PHP Version: 5.5.3
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -19,8 +19,29 @@ SET time_zone = "+00:00";
 --
 -- Database: `groep1`
 --
-CREATE DATABASE IF NOT EXISTS `groep1` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+CREATE DATABASE IF NOT EXISTS `groep1` DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
 USE `groep1`;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `cms`
+--
+
+CREATE TABLE IF NOT EXISTS `cms` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id_website` varchar(255) COLLATE utf8_bin NOT NULL,
+  `textNL` text COLLATE utf8_bin NOT NULL,
+  `textEN` text COLLATE utf8_bin NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `cms`
+--
+
+INSERT INTO `cms` (`id`, `id_website`, `textNL`, `textEN`) VALUES
+(1, 'hoofdpagina', 'testje', 'test');
 
 -- --------------------------------------------------------
 
@@ -33,7 +54,16 @@ CREATE TABLE IF NOT EXISTS `highscore` (
   `HS_Naam` varchar(255) COLLATE utf8_bin NOT NULL,
   `HS_Score` int(11) NOT NULL,
   PRIMARY KEY (`HS_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=4 ;
+
+--
+-- Dumping data for table `highscore`
+--
+
+INSERT INTO `highscore` (`HS_ID`, `HS_Naam`, `HS_Score`) VALUES
+(1, 'Glenn', 100),
+(2, 'Steven', 50),
+(3, 'glenn2', 1000);
 
 -- --------------------------------------------------------
 
@@ -47,7 +77,8 @@ CREATE TABLE IF NOT EXISTS `members` (
   `Mem_Password` varchar(255) COLLATE utf8_bin NOT NULL,
   `Mem_Salt` varchar(255) COLLATE utf8_bin NOT NULL,
   `Mem_level` int(1) NOT NULL,
-  PRIMARY KEY (`Mem_ID`)
+  PRIMARY KEY (`Mem_ID`),
+  KEY `UsernameAndPassword` (`Mem_Username`,`Mem_Password`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='Password veld moet een hash zijn' AUTO_INCREMENT=2 ;
 
 --
@@ -55,34 +86,7 @@ CREATE TABLE IF NOT EXISTS `members` (
 --
 
 INSERT INTO `members` (`Mem_ID`, `Mem_Username`, `Mem_Password`, `Mem_Salt`, `Mem_level`) VALUES
-(1, 'Steven', 'verheyen', 'fjdqkljfsklfjqlk', 1);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `todo`
---
-
-CREATE TABLE IF NOT EXISTS `todo` (
-  `id` int(11) NOT NULL,
-  `naam` varchar(255) COLLATE utf8_bin NOT NULL,
-  `omschrijving` varchar(255) COLLATE utf8_bin NOT NULL,
-  `prioriteit` int(11) NOT NULL,
-  `doorID` int(11) NOT NULL,
-  `richting` varchar(3) COLLATE utf8_bin NOT NULL,
-  `status` int(1) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
---
--- Dumping data for table `todo`
---
-
-INSERT INTO `todo` (`id`, `naam`, `omschrijving`, `prioriteit`, `doorID`, `richting`, `status`) VALUES
-(0, 'TO DO Test Webservice DONE!', 'Een testje om gegevens uit een webservice te lezen', 1, 1, 'AON', 0),
-(1, 'Test met webserice - nazicht', 'FREAKING AWESOME!!!', 1, 1, 'AON', 2),
-(3, 'Nog een test', 'zodat jullie de layout kunnen bezichtigen TRALALALALAAAAA!!!', 1, 1, 'SNB', 0),
-(4, 'Test voor de moeder', 'met een tekst van letters', 2, 1, 'AON', 1);
+(1, 'glenn', 'testje', 'salt', 1);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
