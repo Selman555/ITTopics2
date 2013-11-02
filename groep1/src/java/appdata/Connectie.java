@@ -4,17 +4,11 @@
  */
 package appdata;
 
-import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.SQLWarning;
 import java.sql.Statement;
-import java.util.HashMap;
-import java.util.Hashtable;
-import java.util.Vector;
-import sun.org.mozilla.javascript.internal.json.JsonParser;
 
 /**
  *
