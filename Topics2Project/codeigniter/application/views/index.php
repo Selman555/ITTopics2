@@ -4,8 +4,7 @@
              <?php $user_language=$this->session->userdata('language');
              $this->lang->load('home_form_'.$user_language,$user_language);?>
             
-		<link rel="stylesheet" href="<?php echo base_url('styles/main.css'); ?>" 
-			type="text/css" media="screen"/>
+		<link rel="stylesheet" href="<?php echo base_url('styles/main.css'); ?>" type="text/css" media="screen"/>
 		<title>Hoofdpagina</title>
 		<script type="text/javascript">
 			var keysPressed = new Array();
@@ -38,18 +37,17 @@
 		</script>
 	</head>
 	<body onkeydown="onkeydown(this)">
-		<?php include 'templates/header.php'; ?>
+		<?php include('templates/header.php'); ?>
 
 		<section>
-                       <h1>PIXEL APPS</h1>
+            <h1>PIXEL APPS</h1>
 		
 			<h1><?php echo $this->lang->line('algemeen');?></h1>
 			<article>
-                            <p><?php echo $this->lang->line('inl');?> </p>
+            	<p><?php echo $this->lang->line('inl');?> </p>
 			</article>
-			
 		</section>
 
-		<?php include 'templates/footer.php'; ?>
+		<?php include('templates/footer.php'); ?>
 	</body>
 </html>

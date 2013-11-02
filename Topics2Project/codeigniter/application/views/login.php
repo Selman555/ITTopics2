@@ -8,7 +8,7 @@
 	<body>
 		<?php include 'templates/header.php'; ?>
 
-		<div id="content">
+		<section>
 		<form method="post" action="<?php echo base_url('user/loginUser'); ?>" id="login" autocomplete="on" >
           	<div id="inputsAndTekst">
             	<h1>Log in</h1>
@@ -25,7 +25,7 @@
                 <?php }?>
             </div>
         </form>
-        </div>
+        </section>
 
 		<?php include 'templates/footer.php'; ?>
 	</body>

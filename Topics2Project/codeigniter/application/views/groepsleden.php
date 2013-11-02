@@ -1,8 +1,9 @@
 <!DOCTYPE html />
 <html lang="nl-be">
 	<head>
-                <?php $user_language=$this->session->userdata('language');
-                $this->lang->load('home_form_'.$user_language,$user_language);?>
+        <?php $user_language=$this->session->userdata('language');
+        $this->lang->load('home_form_'.$user_language,$user_language);?>
+		
 		<link rel="stylesheet" href="<?php echo base_url('styles/main.css'); ?>" 
 			type="text/css" media="screen"/>
 		<link rel="stylesheet" href="<?php echo base_url('styles/other/jquery.bxslider.css'); ?>" /> <!-- [BxSlider] -->
@@ -20,8 +21,7 @@
 	<body>
 		<?php include 'templates/header.php'; ?>
 
-		<div id="content">
-			<header><h1><?php echo $this->lang->line('home');?><?php echo $this->lang->line('titelBiografie');?></h1></header>
+		<section id="content">
 			<ul class="bxslider">
 			  <li>
 			  	<section>
@@ -128,7 +128,7 @@
 				</section>
 			  </li>
 			</ul>
-		</div>
+		</section>
 
 		<?php include 'templates/footer.php'; ?>
 	</body>
