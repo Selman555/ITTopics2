@@ -58,6 +58,10 @@ class Start extends CI_Controller {
     {
     	$this->load->view('login');
     }
+    public function about()
+    {
+    	$this->load->view('about');
+    }
    
     public function getCMS($id, $taalcode) {
     	$request = new HttpRequest('http://192.168.0.251:8084/Groep1/webresources/cmspost/gettext', HttpRequest::METH_GET);
