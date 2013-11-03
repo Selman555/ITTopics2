@@ -44,7 +44,7 @@
 		
 			<h1><?php echo $this->lang->line('algemeen');?></h1>
 			<article>
-            	<p><?php echo $this->lang->line('inl');?> </p>
+            	<p><?php echo $text;?> </p>
 			</article>
 		</section>
 

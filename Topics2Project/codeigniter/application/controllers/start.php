@@ -22,35 +22,58 @@ class Start extends CI_Controller {
 	 */
 	public function index()
 	{
-            if(!($this->session->userdata('language'))){
-             $this->session->set_userdata('language','nederlands');
-            }
-		$this->load->view('index');
-            
-            
+        if(!($this->session->userdata('language'))){
+        	$this->session->set_userdata('language','nederlands');
+        }
+        $taalcode = '';
+        if($user_language=$this->session->userdata('language') == 'nederlands') {
+        	$taalcode = 'NL';
+        } else {
+        	$taalcode = 'EN';
+        }
+        $curl_instance = curl_init();
+        curl_setopt($curl_instance, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($curl_instance, CURLOPT_URL, 'http://192.168.0.251:8084/Groep1/webresources/cmspost/gettext?id=hoofdpagina&taalcode='.$taalcode);
+        
+        $data = json_decode(curl_exec($curl_instance), true);
+        
+		$this->load->view('index', $data);
+	}
+	
+	public function cmsIndex($content) {
+		
 	}
 	
 	public function leden()
 	{
-                
 		$this->load->view('groepsleden');
 	}
 	
 	public function todo()
 	{
-                
 		$this->load->view('todo');
-            
 	}
 	
     public function login()
     {
-        
     	$this->load->view('login');
-        
     }
    
-    
+    public function getCMS($id, $taalcode) {
+    	$request = new HttpRequest('http://192.168.0.251:8084/Groep1/webresources/cmspost/gettext', HttpRequest::METH_GET);
+    	$request->addQueryData(array('id' => $id, 'taalcode' => $taalcode));
+    	
+    	try {
+    		$request->send();
+    		if ($request->getResponseCode() == 200) {
+    			return $request->getResponseBody();
+    		}
+    	} catch (HttpException $ex) {
+    		return $ex;
+    	}
+    	
+    	return "";
+    }
     
 }
 

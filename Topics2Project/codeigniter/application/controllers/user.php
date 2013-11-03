@@ -35,40 +35,40 @@ class User extends CI_Controller {
                 $resultSalt=$this->user_model->getSalt($username);
             
                 if($resultSalt)
-                    {//als er een salt is 
-                        $salt='';
-                        foreach ($resultSalt as $row) 
-                        {
-                        $salt=$row->Mem_Salt;
-                        }
+                {//als er een salt is 
+                	$salt='';
+                    foreach ($resultSalt as $row) 
+                    {
+                    	$salt=$row->Mem_Salt;
+                    }
                 
-                        $boolean =$this->user_model->login($username,$password,$salt);
-                         if($boolean)
-                         {
-                            $array=array();
-                            foreach($boolean as $row)
-                            {
-                                  $array= array(
-                                  'username'=>$row->Mem_Username,
-                                  'logged_in'=>true
-                                     );
-                            }
-                            $this->session->set_userdata($array);
-       
-                            redirect('start/index');
-                        }
-                        else
+                    $boolean =$this->user_model->login($username,$password,$salt);
+                    if($boolean)
+                    {
+                    	$array=array();
+                        foreach($boolean as $row)
                         {
-                             $this->session->set_flashdata("errors", "verkeerd passwoord en/of username");
-                             $this->load->view('login');
+                        	$array= array(
+                            	'username'=>$row->Mem_Username,
+                            	'logged_in'=>true
+                            );
                         }
-                        
+                        $this->session->set_userdata($array);
+       
+                        redirect('start/index');
                     }
                     else
                     {
                         $this->session->set_flashdata("errors", "verkeerd passwoord en/of username");
-                        $this->load->view('login');
+                    	$this->load->view('login');
                     }
+                        
+	            }
+	            else
+	            {
+	            	$this->session->set_flashdata("errors", "verkeerd passwoord en/of username");
+	                $this->load->view('login');
+	            }
             }
         }
         
