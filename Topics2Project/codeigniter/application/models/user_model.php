@@ -10,12 +10,12 @@
         parent::__construct();
     }
     
- function login($username,$password,$salt)
+	function login($username,$password,$salt)
     {
      
         $this->db->select('Mem_Username,Mem_Password');
         $this->db->where('Mem_Username',$username);
-        $this->db->where('Mem_Password',sha1($password+$salt));
+        $this->db->where('Mem_Password',sha1($password.$salt));
         $this->db->limit(1);
         $query = $this->db->get('members');//het ophalen van de geselecteerde members
         
@@ -53,7 +53,7 @@
 	    $this->email->send(); //verzenden
 	    return true;
     }
-     function getEmail($username)
+    function getEmail($username)
     {
         $this->db->select('Mem_Email');
         $this->db->where('Mem_Username',$username);
@@ -71,7 +71,7 @@
     function updatePassword($username, $password, $salt){
         
         $data=array(
-           'Mem_Password'=>sha1($password+$salt),
+        	'Mem_Password'=>sha1($password+$salt),
             'Mem_Salt'=>$salt//pas toegevoegd
         );
         $this->db->where('Mem_Username',$username); 
@@ -84,13 +84,13 @@
         $this->db->select('Mem_Salt');
         $this->db->where('Mem_Username',$username);
         $this->db->limit(1);
-        $query = $this->db->get('members');//het ophalen van de geselecteerde members
+        $query = $this->db->get('members'); //het ophalen van de geselecteerde members
         
-        if($query->num_rows()==1){
+        if($query->num_rows() == 1){
             return $query->result();
         }
         else{
-            return FALSE;
+            return false;
         }
     }
     

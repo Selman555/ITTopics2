@@ -23,8 +23,8 @@ class User extends CI_Controller {
             $this->form_validation->set_rules('password', 'Password','trim|required|xss_clean');
            
              //het ophalen van de salt
-            if(!$this->form_validation->run()){ 
-        	$this->session->set_flashdata("errors", "verkeerd passwoord en/of username");
+            if(!$this->form_validation->run()) { 
+        		$this->session->set_flashdata("errors", "Gelieve alle velden in te vullen.");
                 $this->load->view('login');
             } 
             else 
@@ -59,14 +59,14 @@ class User extends CI_Controller {
                     }
                     else
                     {
-                        $this->session->set_flashdata("errors", "verkeerd passwoord en/of username");
+                        $this->session->set_flashdata("errors", "Gebruikersgegevens niet gevonden. ".$salt);
                     	$this->load->view('login');
                     }
                         
 	            }
 	            else
 	            {
-	            	$this->session->set_flashdata("errors", "verkeerd passwoord en/of username");
+	            	$this->session->set_flashdata("errors", "Salt van uw paswoord niet gevonden.");
 	                $this->load->view('login');
 	            }
             }
