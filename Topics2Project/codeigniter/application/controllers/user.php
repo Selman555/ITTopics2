@@ -59,7 +59,7 @@ class User extends CI_Controller {
                     }
                     else
                     {
-                        $this->session->set_flashdata("errors", "Gebruikersgegevens niet gevonden. ".$salt);
+                        $this->session->set_flashdata("errors", "Gebruikersgegevens niet gevonden.");
                     	$this->load->view('login');
                     }
                         
