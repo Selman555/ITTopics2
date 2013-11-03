@@ -17,6 +17,12 @@ import java.sql.Statement;
 public class Connectie {
     
     private Connection dbCon;
+    private boolean isconnectieopen;
+    
+    public Connectie()
+    {
+        isconnectieopen = false;
+    }
     
     public void openConnectie() throws Exception
     {
@@ -32,9 +38,10 @@ public class Connectie {
         try {
             
             this.dbCon = DriverManager.getConnection(dbURL, username, password);
-                   
+            this.isconnectieopen = true;       
         } catch (SQLException ex) {
             ex.printStackTrace();
+            this.isconnectieopen = false;
         } finally{
            //close connection ,stmt and resultset here
         }
@@ -273,12 +280,13 @@ public class Connectie {
         return sb.toString();
     }
     
-     public void InsertCms(String id, String taalcode, String content)
+    public void InsertCms(String id, String taalcode, String content)
     {
         try
         {
-            String sql = "INSERT INTO cms (text"+ taalcode +")"
-                    + "VALUES ('" + content + "')";
+            String sql = "UPDATE cms"
+                    + " SET text"+ taalcode +" = '" + content + "'"
+                    + " WHERE id_website = " + id;
             
             dbCon.createStatement().executeUpdate(sql);
         }
@@ -287,4 +295,25 @@ public class Connectie {
             
         }  
     }
+    
+    public void ipLogging (String ip)
+    {
+        try
+        {
+            String sql = "INSERT INTO iplogging (ipadress)"
+                    + " VALUES ('" + ip + "')";
+            
+            dbCon.createStatement().executeUpdate(sql);
+        }
+        catch(Exception e)
+        {
+            
+        }
+    }
+
+    public boolean isIsconnectieopen() {
+        return isconnectieopen;
+    }
+    
+    
 }

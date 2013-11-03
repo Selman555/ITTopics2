@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 02, 2013 at 02:56 PM
+-- Generation Time: Nov 03, 2013 at 05:02 PM
 -- Server version: 5.6.11
 -- PHP Version: 5.5.3
 
@@ -64,6 +64,27 @@ INSERT INTO `highscore` (`HS_ID`, `HS_Naam`, `HS_Score`) VALUES
 (1, 'Glenn', 100),
 (2, 'Steven', 50),
 (3, 'glenn2', 1000);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `iplogging`
+--
+
+CREATE TABLE IF NOT EXISTS `iplogging` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `ipadress` varchar(255) COLLATE utf8_bin NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=7 ;
+
+--
+-- Dumping data for table `iplogging`
+--
+
+INSERT INTO `iplogging` (`id`, `date`, `ipadress`) VALUES
+(5, '2013-11-03 16:58:58', '::1'),
+(6, '2013-11-03 16:59:49', '::1');
 
 -- --------------------------------------------------------
 
