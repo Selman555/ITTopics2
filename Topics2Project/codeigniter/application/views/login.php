@@ -11,13 +11,16 @@
 		<section>
 		<form method="post" action="<?php echo base_url('user/loginUser'); ?>" id="login" autocomplete="on" >
           	<div id="inputsAndTekst">
-            	<h1>Log in</h1>
+            	<h1>Login</h1>
             	<?php if (!$this->session->userdata('logged_in')) {?>
                 <p>Geef hier uw gebruikersnaam en paswoord in </p>
                 <input name="username" type="text" placeholder="Gebruikersnaam" class="tekstfield" required >
-                <input type="submit" id="SubmitButton" class="submit" value="Aanmelden">
-                <input name="password" type="password" placeholder="Paswoord" class="tekstfield" required >
-                <p>Bent u uw paswoord vergeten?<input type="submit" formaction="<?php echo base_url('user/password_recovery');?>" class="submit" value="Paswoord ophalen" /></p>
+                <input name="password" type="password" placeholder="Paswoord" class="tekstfield" required ></br>
+                <input type="submit" id="SubmitButton" class="submit" value="Aanmelden"></br></br></br>
+                Bent u uw paswoord vergeten?</br>
+                <div class="button">
+                <input type="submit" formaction="<?php echo base_url('user/password_recovery');?>" class="submit" value="Paswoord ophalen" />
+                </div>
                 <div id="error"> <?php echo $this->session->flashdata("errors"); ?></div>
                 <?php } else { ?>
                 U bent reeds aangemeld<br />

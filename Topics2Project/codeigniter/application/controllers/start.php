@@ -49,6 +49,12 @@ class Start extends CI_Controller {
     	$this->load->view('login');
         
     }
+    public function about()
+    {
+        
+    	$this->load->view('about');
+        
+    }
    
     
     
