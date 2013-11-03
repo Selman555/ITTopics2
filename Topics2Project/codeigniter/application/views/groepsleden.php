@@ -25,7 +25,7 @@
 			<ul class="bxslider">
 			  <li>
 			  	<section>
-					<header><h1>Steven Verheyen</h1></header>
+					<h1>Steven Verheyen</h1>
 					<article>
 						<img src="<?php echo base_url('img/Steven.png');?>" alt="Steven's foto" />
 					</article>
@@ -47,7 +47,7 @@
 			  </li>
 			  <li>
 			  	<section>
-					<header><h1>Anke Appeltans</h1></header>
+					<h1>Anke Appeltans</h1>
 					<article>
 						<img src="<?php echo base_url('img/Anke.png');?>" alt="Steven's foto" />
 					</article>
@@ -73,7 +73,7 @@
 			  </li>
 			  <li>
 			  	<section>
-					<header><h1>Glenn Thielman</h1></header>
+					<h1>Glenn Thielman</h1>
 					<article>
 						<img src="<?php echo base_url('img/Steven.png');?>" alt="Steven's foto" />
 					</article>
@@ -95,7 +95,7 @@
 			  </li>
 			  <li>
 			  	<section>
-					<header><h1>Robbie Vercammen</h1></header>
+					<h1>Robbie Vercammen</h1>
 					<article>
 						<img src="<?php echo base_url('img/Robbie.png');?>" alt="Steven's foto" />
 					</article>
