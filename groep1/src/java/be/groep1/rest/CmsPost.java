@@ -14,6 +14,8 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import appdata.Connectie;
+import org.codehaus.jettison.json.JSONException;
+import org.codehaus.jettison.json.JSONObject;
 
 /**
  * REST Web Service
@@ -44,13 +46,18 @@ public class CmsPost {
         try
         {
             c.openConnectie();
-            return c.getCms(id, taalcode);
+            String content = c.getCms(id, taalcode);
+            if (content == null || content.equals("")) {
+                content = "{ \"text\" : \"Geen tekst gevonden.\" }";
+            }
+            System.out.println("data send: "+content);
+            return content;
         }
         catch(Exception e)
         {
-            
-        }    
-        return "";
+            System.out.println("data send: { \"text\" : \"Server error, sorry.\" }");
+            return "{ \"text\" : \"Server error, sorry.\" }";
+        }
     }
 
     /**
@@ -61,17 +68,24 @@ public class CmsPost {
     @PUT
     @Path("inserttext")
     @Consumes("application/json")
-    public void putJson(@QueryParam("id") String id, @QueryParam("taalcode") String taalcode, String content) {
-        
+    public void putJson(String json) {
+
         Connectie c  = new Connectie();
         try
         {
-            c.openConnectie();
-            c.InsertCms(id, taalcode, content);
-        }
-        catch(Exception e)
-        {
+            //JSON parsen
+            JSONObject input = new JSONObject(json);
+            String id = input.getString("id");
+            String taalcode = input.getString("taalcode");
+            String content = input.getString("text");
             
-        }        
+            //Wegschrijven naar database
+            c.openConnectie();
+            c.UpdateCms(id, taalcode, content);
+        } catch (JSONException jsex) {
+            System.out.println("Could not parse json.\r\n"+jsex.getMessage());
+        } catch(Exception e) {
+            System.out.println("Exception put methode.\r\n"+e.getMessage());
+        }
     }
 }

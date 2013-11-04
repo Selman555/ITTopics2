@@ -273,18 +273,21 @@ public class Connectie {
         return sb.toString();
     }
     
-     public void InsertCms(String id, String taalcode, String content)
+     public void UpdateCms(String id, String taalcode, String content)
     {
         try
         {
-            String sql = "INSERT INTO cms (text"+ taalcode +")"
-                    + "VALUES ('" + content + "')";
+            String sql = "UPDATE cms"
+                    + " SET cms.text"+ taalcode +" = '" + content
+                    + "' WHERE cms.id_website = '"+id+"';";
+            
+            System.out.println(sql);
             
             dbCon.createStatement().executeUpdate(sql);
         }
         catch(Exception e)
         {
-            
+            System.out.println("Could not write to database.\r\n"+e.getMessage());
         }  
     }
 }
