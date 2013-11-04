@@ -48,7 +48,6 @@
 		
 			<h1><?php echo $this->lang->line('algemeen');?></h1>
 			<article>
-<<<<<<< HEAD
 				<?php if ($logged) { ?>
 				<form action="<?php echo base_url('start/cmsIndex');?>" method="post">
 					<textarea rows="20" cols="150" id="hoofdpagina" name="hoofdpagina"><?php echo str_replace("__NewLine__", "\r", $text);?></textarea><br />
@@ -58,9 +57,6 @@
 				<?php } else {?>
             	<p><?php echo str_replace("__NewLine__", "\r\n" ,$text);?></p>
             	<?php } ?>
-=======
-            	<p><?php echo $this->lang->line('inl');?> </p>
->>>>>>> dedd6ce308d042596aa22a4d0ef9afe38fe26b45
 			</article>
 		</section>
 

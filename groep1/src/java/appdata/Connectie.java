@@ -280,24 +280,15 @@ public class Connectie {
         return sb.toString();
     }
     
-<<<<<<< HEAD
      public void UpdateCms(String id, String taalcode, String content)
-=======
-    public void InsertCms(String id, String taalcode, String content)
->>>>>>> dedd6ce308d042596aa22a4d0ef9afe38fe26b45
     {
         try
         {
             String sql = "UPDATE cms"
-<<<<<<< HEAD
-                    + " SET cms.text"+ taalcode +" = '" + content
-                    + "' WHERE cms.id_website = '"+id+"';";
+            + " SET cms.text"+ taalcode +" = '" + content
+            + "' WHERE cms.id_website = '"+id+"';";
             
             System.out.println(sql);
-=======
-                    + " SET text"+ taalcode +" = '" + content + "'"
-                    + " WHERE id_website = " + id;
->>>>>>> dedd6ce308d042596aa22a4d0ef9afe38fe26b45
             
             dbCon.createStatement().executeUpdate(sql);
         }
