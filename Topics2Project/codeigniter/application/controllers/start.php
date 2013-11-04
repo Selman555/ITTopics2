@@ -22,7 +22,6 @@ class Start extends CI_Controller {
 	 */
 	public function index()
 	{
-<<<<<<< HEAD
 		//Taalinstellingen voor de gebruiker ophalen of instellen
 		if(!($this->session->userdata('language'))){
 			$this->session->set_userdata('language','nederlands');
@@ -43,7 +42,7 @@ class Start extends CI_Controller {
 			} else {
 				$taalcode = 'EN';
 			}
-			$headers = array(
+			$headers = array (
 				'Accept: application/json',
 				'Content-Type: application/json',
 			);
@@ -53,7 +52,7 @@ class Start extends CI_Controller {
 				"text" => $content
 			);
 			$curl_instance = curl_init();
-			curl_setopt($curl_instance, CURLOPT_URL, 'http://192.168.0.251:8084/Groep1/webresources/cmspost/inserttext');
+			curl_setopt($curl_instance, CURLOPT_URL, 'http://192.168.0.251:8080/Groep1/webresources/cmspost/inserttext');
 			curl_setopt($curl_instance, CURLOPT_HTTPHEADER, $headers);
 			curl_setopt($curl_instance, CURLOPT_CONNECTTIMEOUT, 10);
             curl_setopt($curl_instance, CURLOPT_RETURNTRANSFER, true);
@@ -75,43 +74,27 @@ class Start extends CI_Controller {
 			$this->session->set_flashdata("errors", "Kon uw mama's gegevens niet inlezen.");
 			$this->load->view('index');
 		}
-=======
-            if(!($this->session->userdata('language'))){
-             $this->session->set_userdata('language','nederlands');
-            }
-		$this->load->view('index');
-            
-            
->>>>>>> dedd6ce308d042596aa22a4d0ef9afe38fe26b45
 	}
 	
 	public function leden()
 	{
-                
 		$this->load->view('groepsleden');
 	}
 	
 	public function todo()
 	{
-                
 		$this->load->view('todo');
-            
 	}
 	
     public function login()
     {
-        
     	$this->load->view('login');
-        
     }
     public function about()
     {
-        
     	$this->load->view('about');
-        
     }
    
-<<<<<<< HEAD
     public function getCMS($id) {
         $taalcode = '';
         if($this->session->userdata('language') == 'nederlands') {
@@ -121,12 +104,12 @@ class Start extends CI_Controller {
         }
         $curl_instance = curl_init();
         curl_setopt($curl_instance, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($curl_instance, CURLOPT_URL, 'http://192.168.0.251:8084/Groep1/webresources/cmspost/gettext?id='.$id.'&taalcode='.$taalcode);
+        curl_setopt($curl_instance, CURLOPT_URL, 'http://192.168.0.251:8080/Groep1/webresources/cmspost/gettext?id='.$id.'&taalcode='.$taalcode);
         
         try {
         	$data = json_decode(curl_exec($curl_instance), true);
         	if ($data == null) {
-        		$data['text'] = "Nothing to see here, sorry.";
+        		$data['text'] = "Nothing to see here, sorry!";
         	}
         	return $data;
         } catch (HttpException $ex) {
@@ -134,9 +117,6 @@ class Start extends CI_Controller {
         	return $data;
         }
     }
-=======
-    
->>>>>>> dedd6ce308d042596aa22a4d0ef9afe38fe26b45
     
 }
 

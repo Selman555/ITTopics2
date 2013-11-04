@@ -50,7 +50,7 @@
 			<article>
 				<?php if ($logged) { ?>
 				<form action="<?php echo base_url('start/cmsIndex');?>" method="post">
-					<textarea rows="20" cols="150" id="hoofdpagina" name="hoofdpagina"><?php echo str_replace("__NewLine__", "\r", $text);?></textarea><br />
+					<textarea rows="20" cols="150" id="hoofdpagina" name="hoofdpagina"><?php echo str_replace("__NewLine__", "\r\n", $text);?></textarea><br />
 					<input type="submit" id="submit" value="OK" />
 				</form><br />
 				<div id="error"> <?php echo $this->session->flashdata("errors"); ?></div>

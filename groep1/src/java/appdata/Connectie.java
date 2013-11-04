@@ -270,7 +270,7 @@ public class Connectie {
            
            if(rs.next())
            {
-               sb.append("{\"text\": \"" + rs.getString(1) + "\"}");
+               sb.append("{\"text\": \"").append(rs.getString(1)).append("\"}");
            }
         }
         catch(Exception e)

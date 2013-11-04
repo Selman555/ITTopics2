@@ -46,6 +46,7 @@ public class CmsPost {
         {
             c.openConnectie();
             String content = c.getCms(id, taalcode);
+            System.out.println(content);
             if (content == null || content.equals("")) {
                 content = "{ \"text\" : \"Geen tekst gevonden.\" }";
             }
@@ -77,7 +78,7 @@ public class CmsPost {
             String id = input.getString("id");
             String taalcode = input.getString("taalcode");
             String content = input.getString("text");
-            
+            System.out.println(id + " " + taalcode + " " + content);
             //Wegschrijven naar database
             c.openConnectie();
             c.UpdateCms(id, taalcode, content);

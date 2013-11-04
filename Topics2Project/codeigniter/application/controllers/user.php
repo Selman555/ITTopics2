@@ -16,7 +16,7 @@ class User extends CI_Controller {
 
 	public function loginUser()
 	{
-			$this->iplogging();
+			//$this->iplogging();
             $this->load->library('form_validation');
             
             //het verplicht maken van username en password
@@ -156,14 +156,14 @@ class User extends CI_Controller {
         
     }
 	
-	public function iplogging()
+	/*public function iplogging()
 	{
 		$baseurl='http://localhost:8282/Groep1/Iplogging?ipadress=';
 		$ipadress=$this->input->ip_address();
 		
 		$url=$baseurl.$ipadress;
 		$this->do_post_request($url,'',null);
-	}
+	}*/
 	
 	function do_post_request($url, $data, $optional_headers = null)
 	{
