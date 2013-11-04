@@ -65,6 +65,26 @@ body>section {
 	overflow:auto;
 	border: 0.1em dashed black;
 	border-radius: 0.5em;
+        background-color: #E4F0F6;
+}
+
+@media screen and  (max-width:1024px)
+{
+    body>section 
+    {
+	width: 80%;
+        min-height: 72.2%;
+	
+    }
+}
+@media screen and  (max-height:750px) and (max-width:1024px)
+{
+   
+}
+
+@media screen and  (max-height:500px) and (max-width:1024px)
+{
+   
 }
 
 

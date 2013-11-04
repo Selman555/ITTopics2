@@ -20,5 +20,18 @@ $lang['specialiteit']="Gerelateerde Specialiteiten";
 $lang['specialiteitBericht']="Specialiteiten hier";
 $lang['hobbie']="Hobbies";
 $lang['hobbieBericht']="hobbies hier";
+$lang["aboutHoofdTitel"]="Een korte samenvatting van ons ICT Project";
+$lang["aboutOpdrachtgeverTitel"]="Voorstelling Opdrachtgever";
+$lang["aboutWaaromTitel"]="Waarom we deze opdracht gekozen hebben";
+$lang["aboutOmschrijvingTitle"]="Korte omschrijving van onze opdracht";
+$lang['loginGebruiker']="Gebruikersnaam";
+$lang['loginPassword']="Paswoord";
+$lang['loginGebruikerTitel']="Geef hier uw gebruikersnaam en paswoord in";
+$lang['loginPasswordTitel']="Bent u uw paswoord vergeten?";
+$lang['LoginbtnAanmelden']="Aanmelden";
+$lang['LoginbtnPasswoord']="Paswoord ophalen";
+$lang['loginMeldingIngelogd']="U bent reeds aangemeld";
+$lang['loginMeldingNietIngelogd']="U kan zich";
+$lang['loginMeldingNietIngelogd2']="hier afmelden";
 
 ?>

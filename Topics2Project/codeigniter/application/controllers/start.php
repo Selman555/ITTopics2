@@ -22,6 +22,7 @@ class Start extends CI_Controller {
 	 */
 	public function index()
 	{
+<<<<<<< HEAD
 		//Taalinstellingen voor de gebruiker ophalen of instellen
 		if(!($this->session->userdata('language'))){
 			$this->session->set_userdata('language','nederlands');
@@ -74,27 +75,43 @@ class Start extends CI_Controller {
 			$this->session->set_flashdata("errors", "Kon uw mama's gegevens niet inlezen.");
 			$this->load->view('index');
 		}
+=======
+            if(!($this->session->userdata('language'))){
+             $this->session->set_userdata('language','nederlands');
+            }
+		$this->load->view('index');
+            
+            
+>>>>>>> dedd6ce308d042596aa22a4d0ef9afe38fe26b45
 	}
 	
 	public function leden()
 	{
+                
 		$this->load->view('groepsleden');
 	}
 	
 	public function todo()
 	{
+                
 		$this->load->view('todo');
+            
 	}
 	
     public function login()
     {
+        
     	$this->load->view('login');
+        
     }
     public function about()
     {
+        
     	$this->load->view('about');
+        
     }
    
+<<<<<<< HEAD
     public function getCMS($id) {
         $taalcode = '';
         if($this->session->userdata('language') == 'nederlands') {
@@ -117,6 +134,9 @@ class Start extends CI_Controller {
         	return $data;
         }
     }
+=======
+    
+>>>>>>> dedd6ce308d042596aa22a4d0ef9afe38fe26b45
     
 }
 

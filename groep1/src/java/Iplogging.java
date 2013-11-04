@@ -3,10 +3,9 @@
  * and open the template in the editor.
  */
 
+import appdata.Connectie;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Enumeration;
-import java.util.Hashtable;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -17,8 +16,9 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author glenn_000
  */
-@WebServlet(urlPatterns = {"/Highscore"})
-public class Highscore extends HttpServlet {
+@WebServlet(urlPatterns = {"/Iplogging"})
+public class Iplogging extends HttpServlet {
+    private appdata.Connectie c;
 
     /**
      * Processes requests for both HTTP
@@ -32,75 +32,42 @@ public class Highscore extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/json");
+        response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         try {
-            StringBuilder sb = new StringBuilder();
-            
-            Boolean getHighscore = false;
-            try
+            if(c != null)
             {
-                getHighscore = Boolean.parseBoolean(request.getParameter("getHighscore"));
-            }
-            catch(Exception e)
-            {
-                
-            }
-            String name = request.getParameter("Name");
-            String score = request.getParameter("Score");
-            
-            if(getHighscore == true)
-            {          
-                appdata.Connectie c = new appdata.Connectie();
+              if(c.isIsconnectieopen() == false)
+              {
                 try
                 {
                     c.openConnectie();
-                    sb.append("[");
-                    sb.append(c.getHighScore());
-                    sb.append("]");
+                }
+                catch(Exception e)
+                {
+
+                }
+              }
+            }
+            else
+            {
+                c = new Connectie();
+                try
+                {
+                    c.openConnectie();
                 }
                 catch(Exception e)
                 {
 
                 }
             }
-            else
-            {
-                if(name.equalsIgnoreCase("") == false && score.equalsIgnoreCase("") == false)
-                {
-                    try
-                    {
-                        int scoreToInt = Integer.parseInt(score);
 
-                        appdata.Connectie c = new appdata.Connectie();
-                        c.openConnectie();
-                        c.InsertHighScore(name, scoreToInt);
-                    }
-                    catch(Exception e)
-                    {
-                        
-                    }
-                }
+            String ipadress = request.getParameter("ipadress");
+
+            if(ipadress.equalsIgnoreCase("") == false)
+            {
+                c.ipLogging(ipadress);
             }
-            
-            
-                       
-            out.println(sb.toString());
-            
-            
-            
-            
-            
-//            /* TODO output your page here. You may use following sample code. */
-//            out.println("<!DOCTYPE html>");
-//            out.println("<html>");
-//            out.println("<head>");
-//            out.println("<title>Servlet Highscore</title>");            
-//            out.println("</head>");
-//            out.println("<body>");
-//            out.println("<h1>Servlet Highscore at " + request.getContextPath() + "</h1>");
-//            out.println("</body>");
-//            out.println("</html>");
         } finally {            
             out.close();
         }

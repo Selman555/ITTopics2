@@ -17,6 +17,12 @@ import java.sql.Statement;
 public class Connectie {
     
     private Connection dbCon;
+    private boolean isconnectieopen;
+    
+    public Connectie()
+    {
+        isconnectieopen = false;
+    }
     
     public void openConnectie() throws Exception
     {
@@ -32,9 +38,10 @@ public class Connectie {
         try {
             
             this.dbCon = DriverManager.getConnection(dbURL, username, password);
-                   
+            this.isconnectieopen = true;       
         } catch (SQLException ex) {
             ex.printStackTrace();
+            this.isconnectieopen = false;
         } finally{
            //close connection ,stmt and resultset here
         }
@@ -273,15 +280,24 @@ public class Connectie {
         return sb.toString();
     }
     
+<<<<<<< HEAD
      public void UpdateCms(String id, String taalcode, String content)
+=======
+    public void InsertCms(String id, String taalcode, String content)
+>>>>>>> dedd6ce308d042596aa22a4d0ef9afe38fe26b45
     {
         try
         {
             String sql = "UPDATE cms"
+<<<<<<< HEAD
                     + " SET cms.text"+ taalcode +" = '" + content
                     + "' WHERE cms.id_website = '"+id+"';";
             
             System.out.println(sql);
+=======
+                    + " SET text"+ taalcode +" = '" + content + "'"
+                    + " WHERE id_website = " + id;
+>>>>>>> dedd6ce308d042596aa22a4d0ef9afe38fe26b45
             
             dbCon.createStatement().executeUpdate(sql);
         }
@@ -290,4 +306,25 @@ public class Connectie {
             System.out.println("Could not write to database.\r\n"+e.getMessage());
         }  
     }
+    
+    public void ipLogging (String ip)
+    {
+        try
+        {
+            String sql = "INSERT INTO iplogging (ipadress)"
+                    + " VALUES ('" + ip + "')";
+            
+            dbCon.createStatement().executeUpdate(sql);
+        }
+        catch(Exception e)
+        {
+            
+        }
+    }
+
+    public boolean isIsconnectieopen() {
+        return isconnectieopen;
+    }
+    
+    
 }

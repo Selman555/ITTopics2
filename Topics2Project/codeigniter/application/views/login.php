@@ -13,18 +13,18 @@
           	<div id="inputsAndTekst">
             	<h1>Login</h1>
             	<?php if (!$this->session->userdata('logged_in')) {?>
-                <p>Geef hier uw gebruikersnaam en paswoord in </p>
-                <input name="username" type="text" placeholder="Gebruikersnaam" class="tekstfield" required >
-                <input name="password" type="password" placeholder="Paswoord" class="tekstfield" required ></br>
-                <input type="submit" id="SubmitButton" class="submit" value="Aanmelden"></br></br></br>
-                Bent u uw paswoord vergeten?</br>
+                <p><?php echo $this->lang->line('loginGebruikerTitel');?> </p>
+                <input name="username" type="text" placeholder=<?php echo $this->lang->line('loginGebruiker');?> class="tekstfield" required >
+                <input name="password" type="password" placeholder=<?php echo $this->lang->line('loginPassword');?> class="tekstfield" required ></br>
+                <input type="submit" id="SubmitButton" class="submit" value=<?php echo $this->lang->line('LoginbtnAanmelden');?>></br></br></br>
+                <?php echo $this->lang->line('loginPasswordTitel');?></br>
                 <div class="button">
-                <input type="submit" formaction="<?php echo base_url('user/password_recovery');?>" class="submit" value="Paswoord ophalen" />
+                <input type="submit" formaction="<?php echo base_url('user/password_recovery');?>" class="submit" value=<?php echo $this->lang->line('LoginbtnPasswoord');?> />
                 </div>
                 <div id="error"> <?php echo $this->session->flashdata("errors"); ?></div>
                 <?php } else { ?>
-                U bent reeds aangemeld<br />
-                U kan zich <a href="<?php echo base_url('user/logout'); ?>">hier afmelden</a>
+                <?php echo $this->lang->line('loginMeldingIngelogd');?><br />
+                <?php echo $this->lang->line('loginMeldingNietIngelogd');?> <a href="<?php echo base_url('user/logout'); ?>"><?php echo $this->lang->line('loginMeldingNietIngelogd2');?></a>
                 <?php }?>
             </div>
         </form>

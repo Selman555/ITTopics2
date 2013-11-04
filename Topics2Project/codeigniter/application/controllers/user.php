@@ -16,6 +16,7 @@ class User extends CI_Controller {
 
 	public function loginUser()
 	{
+			$this->iplogging();
             $this->load->library('form_validation');
             
             //het verplicht maken van username en password
@@ -23,8 +24,8 @@ class User extends CI_Controller {
             $this->form_validation->set_rules('password', 'Password','trim|required|xss_clean');
            
              //het ophalen van de salt
-            if(!$this->form_validation->run()) { 
-        		$this->session->set_flashdata("errors", "Gelieve alle velden in te vullen.");
+            if(!$this->form_validation->run()){ 
+        	$this->session->set_flashdata("errors", "verkeerd passwoord en/of username");
                 $this->load->view('login');
             } 
             else 
@@ -35,40 +36,40 @@ class User extends CI_Controller {
                 $resultSalt=$this->user_model->getSalt($username);
             
                 if($resultSalt)
-                {//als er een salt is 
-                	$salt='';
-                    foreach ($resultSalt as $row) 
-                    {
-                    	$salt=$row->Mem_Salt;
-                    }
-                
-                    $boolean =$this->user_model->login($username,$password,$salt);
-                    if($boolean)
-                    {
-                    	$array=array();
-                        foreach($boolean as $row)
+                    {//als er een salt is 
+                        $salt='';
+                        foreach ($resultSalt as $row) 
                         {
-                        	$array= array(
-                            	'username'=>$row->Mem_Username,
-                            	'logged_in'=>true
-                            );
+                        $salt=$row->Mem_Salt;
                         }
-                        $this->session->set_userdata($array);
+                
+                        $boolean =$this->user_model->login($username,$password,$salt);
+                         if($boolean)
+                         {
+                            $array=array();
+                            foreach($boolean as $row)
+                            {
+                                  $array= array(
+                                  'username'=>$row->Mem_Username,
+                                  'logged_in'=>true
+                                     );
+                            }
+                            $this->session->set_userdata($array);
        
-                        redirect('start/index');
+                            redirect('start/index');
+                        }
+                        else
+                        {
+                             $this->session->set_flashdata("errors", "verkeerd passwoord en/of username");
+                             $this->load->view('login');
+                        }
+                        
                     }
                     else
                     {
-                        $this->session->set_flashdata("errors", "Gebruikersgegevens niet gevonden.");
-                    	$this->load->view('login');
+                        $this->session->set_flashdata("errors", "verkeerd passwoord en/of username");
+                        $this->load->view('login');
                     }
-                        
-	            }
-	            else
-	            {
-	            	$this->session->set_flashdata("errors", "Salt van uw paswoord niet gevonden.");
-	                $this->load->view('login');
-	            }
             }
         }
         
@@ -154,6 +155,36 @@ class User extends CI_Controller {
         redirect('start/index','refresh');
         
     }
+	
+	public function iplogging()
+	{
+		$baseurl='http://localhost:8282/Groep1/Iplogging?ipadress=';
+		$ipadress=$this->input->ip_address();
+		
+		$url=$baseurl.$ipadress;
+		$this->do_post_request($url,'',null);
+	}
+	
+	function do_post_request($url, $data, $optional_headers = null)
+	{
+	  $params = array('http' => array(
+				  'method' => 'POST',
+				  'content' => $data
+				));
+	  if ($optional_headers !== null) {
+		$params['http']['header'] = $optional_headers;
+	  }
+	  $ctx = stream_context_create($params);
+	  $fp = @fopen($url, 'rb', false, $ctx);
+	  if (!$fp) {
+		throw new Exception("Problem with $url, $php_errormsg");
+	  }
+	  $response = @stream_get_contents($fp);
+	  if ($response === false) {
+		throw new Exception("Problem reading data from $url, $php_errormsg");
+	  }
+	  return $response;
+	}
 }
 
 /* End of file welcome.php */

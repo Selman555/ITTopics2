@@ -12,9 +12,9 @@
 
             <section>
                 
-                <h1>Een korte samenvatting van ons ICT Project</h1>
+                <h1><?php echo $this->lang->line('aboutHoofdTitel');?></h1>
 		
-                <h1>Voorstelling Opdrachtgever</h1>
+                <h1><?php echo $this->lang->line('aboutOpdrachtgeverTitel');?></h1>
 		<article>
                     <p>Onze opdracht werd gegeven door Lommel Proving Grounds. <br/>
                        Dit bedrijf is gelegend in het bosrijke Lommel.</br><br/>
@@ -34,7 +34,7 @@
                     </p>
 		</article>
                 <article> 
-                    <h1>Waarom we deze opdracht gekozen hebben</h1>
+                    <h1><?php echo $this->lang->line('aboutWaaromTitel');?></h1>
                     <p>Onze groep heeft deze opdracht gekozen omdat:</br>
                       &nbsp;&nbsp;&nbsp;&nbsp; Het ons een interessant project leek, met veel mogelijkheid tot zelfontplooing</br>
                       &nbsp;&nbsp;&nbsp;&nbsp; Tevens vormt het voor ons ook een uitdaging om z'on groot project ingoede banen te leiden.</br>
@@ -42,7 +42,7 @@
                     </p>
                 </article>
                 
-                <h1>Korte omschrijving van onze opdracht</h1>
+                <h1><?php echo $this->lang->line('aboutOmschrijvingTitle');?></h1>
                 <article>
                     <p>
                         Het doel van dit project is het maken van een applicatie die de volgend dingen aanbiedt:<br/>
