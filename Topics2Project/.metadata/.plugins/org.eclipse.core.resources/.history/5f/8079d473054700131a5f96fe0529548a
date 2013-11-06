@@ -32,7 +32,7 @@
 						}
 					}
 					if (same == true) {
-						window.location.href = 'game/game.html';
+						window.location.href = 'application/views/game/game.html';
 					} else {
 						keysPressed = new Array();
 					}

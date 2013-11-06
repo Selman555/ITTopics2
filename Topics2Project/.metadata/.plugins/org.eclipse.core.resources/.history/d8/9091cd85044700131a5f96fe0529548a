@@ -27,8 +27,8 @@ $lang['loginPassword']="Password";
 $lang['loginGebruikerTitel']="Give your username and password";
 $lang['paswoordGebruikerTitel']="Give your username, your old password and your new password";
 $lang['loginPasswordTitel']="Forgotten your password";
-$lang['LoginbtnAanmelden']="Login";
+$lang['LoginbtnAanmelden']="Log on";
 $lang['paswoordbtnReset']="Reset";
-$lang['LoginPasswoord']="recover it here";
+$lang['LoginbtnPasswoord']="Recover password";
 
 ?>

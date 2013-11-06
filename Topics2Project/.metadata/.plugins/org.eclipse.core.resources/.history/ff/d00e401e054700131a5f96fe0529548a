@@ -32,7 +32,7 @@
 						}
 					}
 					if (same == true) {
-						window.location.href = 'game/game.html';
+						window.location.href = '<?php echo base_url('start/todo');?>';
 					} else {
 						keysPressed = new Array();
 					}
