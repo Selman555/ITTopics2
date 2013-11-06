@@ -18,6 +18,9 @@ public class Connectie {
     
     private Connection dbCon;
     private boolean isconnectieopen;
+    private final String dbURL = "jdbc:mysql://localhost:3306/groep1";
+    private final String username ="root";
+    private final String password = "";
     
     public Connectie()
     {
@@ -27,17 +30,12 @@ public class Connectie {
     public void openConnectie() throws Exception
     {
         
-        Class.forName("com.mysql.jdbc.Driver");
-        
-        String dbURL = "jdbc:mysql://localhost:3306/groep1";
-        String username ="root";
-        String password = "";
-       
+        Class.forName("com.mysql.jdbc.Driver");     
         Connection dbCon = null;
       
         try {
             
-            this.dbCon = DriverManager.getConnection(dbURL, username, password);
+            this.dbCon = DriverManager.getConnection(this.dbURL, this.username, this.password);
             this.isconnectieopen = true;       
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -47,6 +45,8 @@ public class Connectie {
         }
         
     }
+    
+
     
     public ResultSet SelectQry(String query)
     {
@@ -124,7 +124,7 @@ public class Connectie {
             }
         }
             
-        return "";
+        return "-1";
     }
     
     public String GetSalt(String username)
@@ -304,6 +304,22 @@ public class Connectie {
         {
             String sql = "INSERT INTO iplogging (ipadress)"
                     + " VALUES ('" + ip + "')";
+            
+            dbCon.createStatement().executeUpdate(sql);
+        }
+        catch(Exception e)
+        {
+            
+        }
+    }
+    
+    public void ChangePassword(String username, String Password)
+    {
+        try
+        {
+            String sql = "UPDATE members"
+            + " SET Mem_Password = '" + Password + "'"
+            + "' WHERE Mem_Username = '"+username+"'";
             
             dbCon.createStatement().executeUpdate(sql);
         }

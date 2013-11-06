@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet(urlPatterns = {"/Iplogging"})
 public class Iplogging extends HttpServlet {
-    private appdata.Connectie c;
+    private static appdata.Connectie c;
 
     /**
      * Processes requests for both HTTP
