@@ -12,6 +12,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import appdata.Connectie;
 
 /**
  *
@@ -19,6 +20,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet(urlPatterns = {"/Highscore"})
 public class Highscore extends HttpServlet {
+    private Connectie c;
 
     /**
      * Processes requests for both HTTP
@@ -35,6 +37,23 @@ public class Highscore extends HttpServlet {
         response.setContentType("text/json");
         PrintWriter out = response.getWriter();
         try {
+            if(c == null)
+            {
+                c = new Connectie();
+                if(c.isIsconnectieopen() == false)
+                {
+                    try
+                    {
+                        c.openConnectie();
+                    }
+                    catch(Exception e)
+                    {
+
+                    }
+                }
+            }
+            
+  
             StringBuilder sb = new StringBuilder();
             
             Boolean getHighscore = false;
@@ -51,10 +70,8 @@ public class Highscore extends HttpServlet {
             
             if(getHighscore == true)
             {          
-                appdata.Connectie c = new appdata.Connectie();
                 try
                 {
-                    c.openConnectie();
                     sb.append("[");
                     sb.append(c.getHighScore());
                     sb.append("]");
@@ -71,9 +88,6 @@ public class Highscore extends HttpServlet {
                     try
                     {
                         int scoreToInt = Integer.parseInt(score);
-
-                        appdata.Connectie c = new appdata.Connectie();
-                        c.openConnectie();
                         c.InsertHighScore(name, scoreToInt);
                     }
                     catch(Exception e)
