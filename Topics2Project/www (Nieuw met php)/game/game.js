@@ -1,6 +1,9 @@
 //Initialisaties variabelen
 //-=-=-=-=-=-=-=-=-=-=-=-=-
 //BRON SPRINGEN (gedeeltelijk): http://www.williammalone.com/articles/create-html5-canvas-javascript-game-character/2/
+var highscoresWebservice = new Array(10); //2D array voor 10 highscores vanuit de web service
+var webservice = false; //Controle om te zien of er gegevens uit de webservice gehaald kan worden of niet
+var scores;
 
 var FPS = 30; //Frames Per Second (aantal keren dat het beeld herladen per seconden)
 var fontType = "bold 1.2em Tahoma"; //Font voor aantal meters te tonen
@@ -93,6 +96,13 @@ function init() {
 			document.getElementById("btnMute").value = "Geluid uit";
 		}
 	}
+
+	//1D array 2D maken
+	for(var i= 0; i<10; i++) {
+		highscoresWebservice[i] = new Array(2); //Elke rij 2 kolommen geven
+	}
+
+	getHighscoresWebservice();
 
 	soundJump = new Audio("sounds/jump.wav");
 	soundDead = new Audio("sounds/dead.wav");
@@ -197,45 +207,69 @@ function init() {
 	}
 }
 
-function getHighscores() {
-	 //2D array voor highscores
-	 //AANPASSEN
-	 var lengthArray = 0;
+function getHighscoresWebservice() {
+	//Zorgen voor highscores vanuit de web service
+	    $.ajax({
+	        type       : "POST",
+	        url        : "http://localhost:8080/Groep1/Highscore?getHighscore=true",
+	        crossDomain: true,
+	        dataType   : 'json',
+	        success    : function(response) {
+	        	webservice = true;
+	            $.each(response, function(index, object){
+	            	highscoresWebservice[index][0] = object.Score;
+	            	highscoresWebservice[index][1] = object.Naam;
+	            });
+	        },
+	        error      : function() {
+            	webservice = false;
+        	}
+	    });
+}
 
-	 if(localStorage.getItem("highscores") === null) {
-		 var scores = [
-		 				[1000, "WingedDestinyX"],
-						[900, "8BallJunkie"],
-						[800, "Selman555"],
-						[700, "AnkA"],
-						[600, "GlennT"],
-						[500, "RobbieV"],
-						[400, "StevenV"],
-						[300, "WingedDestinyY"],
-						[200, "PickaMonstrox"],
-						[100, "CharDidEmber"]
-					];
+function showHighscores() {
+	var yAs = 80;
 
-		localStorage.setItem("highscores", JSON.stringify(scores)); //Fancy doen voor misschien extra punten
+	if(webservice) {
+		//Web service
+		for(var i=0; i<10; i++) {
+			yAs = yAs + 30;
+			context2D.fillText(highscoresWebservice[i][0] + " meter: " + highscoresWebservice[i][1], 150, yAs);
+		}
+	}else {
+		//Zorgen voor localStorage highscores
+		var scores;
+		 if(localStorage.getItem("highscores") === null) {
+		 	//LocalStorage highscores bestaan niet/zijn leeg
+			 scores = [
+			 				[1000, "WingedDestinyX"],
+							[900, "8BallJunkie"],
+							[800, "Selman555"],
+							[700, "AnkA"],
+							[600, "GlennT"],
+							[500, "RobbieV"],
+							[400, "StevenV"],
+							[300, "WingedDestinyY"],
+							[200, "PickaMonstrox"],
+							[100, "CharDidEmber"]
+						];
+
+			localStorage.setItem("highscores", JSON.stringify(scores)); //Fancy doen voor misschien extra punten
+		}
+
+		var scores = JSON.parse(localStorage.getItem("highscores"));
+
+		//LocalStorage
+		scores = scores.sort(function(a,b) {
+			return b[0] - a[0]; //Kijken op 1ste kolom (0)
+		});
+
+		//LocalStorage highscores tonen
+		for(var i=0; i<10; i++) {
+			yAs = yAs + 30;
+			context2D.fillText(scores[i][0] + " meter: " + scores[i][1], 150, yAs);
+		}
 	}
-
-	var scores = JSON.parse(localStorage.getItem("highscores"));
-
-	scores = scores.sort(function(a,b) {
-					return b[0] - a[0]; //Kijken op 1ste kolom (0)
-			});
-
-	//Highscores tonen
-	context2D.fillText(scores[0][0] + " meter: " + scores[0][1], 150, 110);
-	context2D.fillText(scores[1][0] + " meter: " + scores[1][1], 150, 140);
-	context2D.fillText(scores[2][0] + " meter: " + scores[2][1], 150, 170);
-	context2D.fillText(scores[3][0] + " meter: " + scores[3][1], 150, 200);
-	context2D.fillText(scores[4][0] + " meter: " + scores[4][1], 150, 230);
-	context2D.fillText(scores[5][0] + " meter: " + scores[5][1], 150, 260);
-	context2D.fillText(scores[6][0] + " meter: " + scores[6][1], 150, 290);
-	context2D.fillText(scores[7][0] + " meter: " + scores[7][1], 150, 320);
-	context2D.fillText(scores[8][0] + " meter: " + scores[8][1], 150, 350);
-	context2D.fillText(scores[9][0] + " meter: " + scores[9][1], 150, 380);
 }
 
 function muteSound() {
@@ -508,7 +542,7 @@ function drawHighscores() {
 	context2D.fillText("Top spelers", canvasWidth/2-75, 50);
 
 	context2D.font = "bold 1em Tahoma";
-	getHighscores();
+	showHighscores();
 
 	context2D.fillText("Druk [PIJLTJE LINKS] om naar het startscherm te gaan", 20, 475);
 	if(!soundMuted)
