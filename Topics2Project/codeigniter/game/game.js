@@ -180,7 +180,7 @@ function getHighscoresWebservice() {
     //Zorgen voor highscores vanuit de web service
     $.ajax({
         type: "POST",
-        url: "http://localhost/Groep1/Highscore?getHighscore=true",
+        url: "http://localhost:8181/codeigniter/game/webservice.php?getHighscore=true",
         crossDomain: true,
         dataType: 'json',
         success: function(response) {
@@ -197,7 +197,7 @@ function getHighscoresWebservice() {
 }
 
 function setHighscoresWebservice(score, name) {
-    var urlString = "http://localhost:8080/Groep1/Highscore?getHighscore=false&Name="+name+"&Score="+score;
+    var urlString = "http://localhost:8181/codeigniter/game/webservice.php?getHighscore=false&Name="+name+"&Score="+score;
     
     $.ajax({
         type: "POST",
