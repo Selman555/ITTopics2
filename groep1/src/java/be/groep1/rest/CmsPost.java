@@ -26,11 +26,41 @@ public class CmsPost {
 
     @Context
     private UriInfo context;
+    private Connectie c;
 
     /**
      * Creates a new instance of CmsPost
      */
     public CmsPost() {
+        if(c == null)
+        {
+            c = new Connectie();
+            if(c.isIsconnectieopen() == false)
+            {
+                try
+                {
+                    c.openConnectie();
+                }
+                catch(Exception e)
+                {
+
+                }
+            }
+        }
+        else
+        {
+            if(c.isIsconnectieopen() == false)
+            {
+                try
+                {
+                    c.openConnectie();
+                }
+                catch(Exception e)
+                {
+
+                }
+            }
+        }
     }
 
     /**
@@ -41,10 +71,8 @@ public class CmsPost {
     @Path("gettext")
     @Produces("application/json")
     public String getJson(@QueryParam("id") String id, @QueryParam("taalcode") String taalcode) {
-        Connectie c  = new Connectie();
         try
         {
-            c.openConnectie();
             String content = c.getCms(id, taalcode);
             if (content == null || content.equals("")) {
                 content = "{ \"text\" : \"Geen tekst gevonden.\" }";
@@ -69,7 +97,6 @@ public class CmsPost {
     @Consumes("application/json")
     public void putJson(String json) {
 
-        Connectie c  = new Connectie();
         try
         {
             //JSON parsen
@@ -79,7 +106,6 @@ public class CmsPost {
             String content = input.getString("text");
             System.out.println("Ontvangen: \r\n" + id + taalcode + " " + content);
             //Wegschrijven naar database
-            c.openConnectie();
             c.UpdateCms(id, taalcode, content);
         } catch (JSONException jsex) {
             System.out.println("Could not parse json.\r\n"+jsex.getMessage());

@@ -52,6 +52,20 @@ public class Highscore extends HttpServlet {
                     }
                 }
             }
+            else
+            {
+                if(c.isIsconnectieopen() == false)
+                {
+                    try
+                    {
+                        c.openConnectie();
+                    }
+                    catch(Exception e)
+                    {
+
+                    }
+                }
+            }
             
   
             StringBuilder sb = new StringBuilder();
