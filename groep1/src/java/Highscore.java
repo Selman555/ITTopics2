@@ -20,7 +20,7 @@ import appdata.Connectie;
  */
 @WebServlet(urlPatterns = {"/Highscore"})
 public class Highscore extends HttpServlet {
-    private Connectie c;
+    private static Connectie c;
 
     /**
      * Processes requests for both HTTP
