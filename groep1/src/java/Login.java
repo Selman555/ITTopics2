@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 
+import appdata.Connectie;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -18,6 +19,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet(urlPatterns = {"/Login"})
 public class Login extends HttpServlet {
+    private Connectie c;
 
     /**
      * Processes requests for both HTTP
@@ -35,14 +37,31 @@ public class Login extends HttpServlet {
         PrintWriter out = response.getWriter();
         try 
         {
-            appdata.Connectie c = new appdata.Connectie();
-            try
-            { 
-                c.openConnectie();
-            }
-            catch(Exception e)
+            if(c != null)
             {
-               //cannot open the connection database is gone void 
+              if(c.isIsconnectieopen() == false)
+              {
+                try
+                {
+                    c.openConnectie();
+                }
+                catch(Exception e)
+                {
+
+                }
+              }
+            }
+            else
+            {
+                c = new Connectie();
+                try
+                {
+                    c.openConnectie();
+                }
+                catch(Exception e)
+                {
+
+                }
             }
             
             

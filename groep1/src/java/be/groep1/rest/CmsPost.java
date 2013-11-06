@@ -62,7 +62,6 @@ public class CmsPost {
             }
         }
     }
-
     /**
      * Retrieves representation of an instance of be.groep1.rest.CmsPost
      * @return an instance of java.lang.String
