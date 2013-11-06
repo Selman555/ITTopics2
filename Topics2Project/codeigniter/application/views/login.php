@@ -13,11 +13,12 @@
           	<div id="inputsAndTekst">
             	<h1>Login</h1>
             	<?php if (!$this->session->userdata('logged_in')) {?>
-                <p><?php echo $this->lang->line('loginGebruikerTitel');?> </p>
+                <p><?php echo $this->lang->line('loginGebruikerTitel');?>
                 <input name="username" type="text" placeholder=<?php echo $this->lang->line('loginGebruiker');?> class="tekstfield" required >
-                <input name="password" type="password" placeholder=<?php echo $this->lang->line('loginPassword');?> class="tekstfield" required ></br>
-                <input type="submit" id="SubmitButton" class="submit" value=<?php echo $this->lang->line('LoginbtnAanmelden');?>></br></br></br>
-                <?php echo $this->lang->line('loginPasswordTitel');?></br>
+                <input name="password" type="password" placeholder=<?php echo $this->lang->line('loginPassword');?> class="tekstfield" required ><br />
+                <input type="submit" id="SubmitButton" class="submit" value=<?php echo $this->lang->line('LoginbtnAanmelden');?>>
+                </p>
+                <?php echo $this->lang->line('loginPasswordTitel');?><br />
                 <div class="button">
                 <input type="submit" formaction="<?php echo base_url('user/password_recovery');?>" class="submit" value=<?php echo $this->lang->line('LoginbtnPasswoord');?> />
                 </div>

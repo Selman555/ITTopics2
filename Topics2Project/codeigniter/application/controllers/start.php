@@ -72,7 +72,7 @@ class Start extends CI_Controller {
     			"text" => $content
     	);
     	$curl_instance = curl_init();
-    	curl_setopt($curl_instance, CURLOPT_URL, 'http://192.168.0.251:8080/Groep1/webresources/cmspost/inserttext');
+    	curl_setopt($curl_instance, CURLOPT_URL, 'http://localhost:8080/Groep1/webresources/cmspost/inserttext');
     	curl_setopt($curl_instance, CURLOPT_HTTPHEADER, $headers);
     	curl_setopt($curl_instance, CURLOPT_CONNECTTIMEOUT, 10);
     	curl_setopt($curl_instance, CURLOPT_RETURNTRANSFER, true);
@@ -101,7 +101,7 @@ class Start extends CI_Controller {
         }
         $curl_instance = curl_init();
         curl_setopt($curl_instance, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($curl_instance, CURLOPT_URL, 'http://192.168.0.251:8080/Groep1/webresources/cmspost/gettext?id='.$id.'&taalcode='.$taalcode);
+        curl_setopt($curl_instance, CURLOPT_URL, 'http://localhost:8080/Groep1/webresources/cmspost/gettext?id='.$id.'&taalcode='.$taalcode);
         
         try {
         	$data = json_decode(curl_exec($curl_instance), true);

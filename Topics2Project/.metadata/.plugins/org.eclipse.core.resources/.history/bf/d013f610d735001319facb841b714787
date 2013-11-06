@@ -1,4 +1,0 @@
-<div id="status">
-    <span>Logged in as: </span>
-    <?php echo $this->session->userdata('username');?>
-</div>

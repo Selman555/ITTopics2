@@ -6,7 +6,7 @@ $lang['prive']="Private files";
 $lang['logout']="Log out";
 $lang['login']="Login";
 $lang['algemeen']="Common";
-$lang['inl']="Welkom on our site";
+$lang['inl']="Welkom to our site";
 $lang['voorstelling']="Intro";
 $lang['leden']="Members";
 $lang['verslagen']="Papers";
@@ -21,14 +21,14 @@ $lang['specialiteitBericht']="Your specialities";
 $lang['hobbie']="Hobby's";
 $lang['hobbieBericht']="Your hobbies";
 $lang["aboutHoofdTitel"]="A short summary of our ICT Project";
-$lang["aboutOpdrachtgeverTitel"]="Our client";
-$lang["aboutWaaromTitel"]="Why did we choose this subject";
 $lang["aboutOmschrijvingTitle"]="A short summary of the content from our project ";
 $lang['loginGebruiker']="Username";
 $lang['loginPassword']="Password";
 $lang['loginGebruikerTitel']="Give your username and password";
+$lang['paswoordGebruikerTitel']="Give your username, your old password and your new password";
 $lang['loginPasswordTitel']="Forgotten your password";
 $lang['LoginbtnAanmelden']="Log_on";
+$lang['paswoordbtnReset']="Reset";
 $lang['LoginbtnPasswoord']="Get_your_password";
 
 

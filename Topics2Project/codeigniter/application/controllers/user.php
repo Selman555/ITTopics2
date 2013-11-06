@@ -27,9 +27,7 @@ class User extends CI_Controller {
             if(!$this->form_validation->run()){ 
         	$this->session->set_flashdata("errors", "verkeerd passwoord en/of username");
                 $this->load->view('login');
-            } 
-            else 
-            {
+            } else {
                 $username=$this->input->post('username');
                 $password=$this->input->post('password');
                 
