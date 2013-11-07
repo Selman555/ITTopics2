@@ -33,8 +33,11 @@ $lang['LoginPasswoord']="recover it here";
 $lang['profileTitle']="Profile overview";
 $lang['email']="Your e-mail addres";
 $lang['reset']="Change this setting";
-$lang['newemail']="New e-mail";
-$lang['newemailconfirm']="Confirm new e-mail";
-
+$lang['new']="New e-mail";
+$lang['confirm']="Confirm new e-mail";
+$lang['passwordresettitle']="Reset your password";
+$lang['passwordOld']="Old password";
+$lang['passwordNew']="New password";
+$lang['passwordConfirm']="Confirm password";
 
 ?>

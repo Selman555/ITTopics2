@@ -39,7 +39,10 @@ $lang['loginMeldingNietIngelogd2']="hier afmelden";
 $lang['profileTitle']="Profiel overzicht";
 $lang['email']="Uw e-mail adres";
 $lang['reset']="Opnieuw instellen";
-$lang['newemail']="Nieuw e-mail";
-$lang['newemailconfirm']="Confirm new e-mail";
-
+$lang['new']="Nieuw";
+$lang['confirm']="Bevestig";
+$lang['passwordresettitle']="Uw paswoord opnieuw instellen";
+$lang['passwordOld']="Oud paswoord";
+$lang['passwordNew']="Nieuw paswoord";
+$lang['passwordConfirm']="Bevestig paswoord";
 ?>

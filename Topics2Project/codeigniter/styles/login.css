@@ -42,12 +42,8 @@ input.submit
 
 #inputsAndTekst
 {       
-   
-        padding: 2em;
-        margin-left: 4em;
-        
-	
-    
+    padding: 2em;
+    margin-left: 4em;
 }
 #error
 {
@@ -58,7 +54,7 @@ input.submit
 
 body>section {
 	width: 30%;
-        min-height: 72.2%;
+    min-height: 72.2%;
 	margin: auto;
 	margin-top: 5%;
 
@@ -67,13 +63,19 @@ body>section {
 	border-radius: 0.5em;
         background-color: #E4F0F6;
 }
+input[type=email] {
+	width: 100%;
+}
+input[type=password] {
+	width: 100%;
+}
 
 @media screen and  (max-width:1024px)
 {
     body>section 
     {
-	width: 80%;
-        min-height: 72.2%;
+		width: 80%;
+	    min-height: 72.2%;
 	
     }
 }
@@ -87,6 +89,15 @@ body>section {
    
 }
 
+th {
+	text-align: left;
+	width: 30%;
+}
 
+form {
+	padding-bottom: 3%;
+	border: 0.1em dashed black;
+	border-radius: 0.5em;
+}
 
 

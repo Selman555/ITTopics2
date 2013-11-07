@@ -182,12 +182,13 @@ header nav a:hover {
     }
 }
 
+/*___________________________VALIDATION_______________________*/
 input:required:invalid, input:focus:invalid {
 	/* BRON: http://www.the-art-of-web.com/html/html5-form-validation/#.UnvuL_lWyG4 */
 	box-shadow: 3px 5px #123456;
-	background-color: #ff5544;
+	background-color: #FFFFAA;
 }
 input:required:valid {
 	box-shadow: 3px 5px #eeeeee;
-	background-color: #66ff99;
+	background-color: #CCFFBB;
 }
