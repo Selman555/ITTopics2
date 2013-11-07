@@ -38,7 +38,7 @@ class User extends CI_Controller {
                         $salt='';
                         foreach ($resultSalt as $row) 
                         {
-                        	$salt=$row->Mem_Salt;
+                        $salt=$row->Mem_Salt;
                         }
                 
                         $boolean = $this->user_model->login($username,$password,$salt);
@@ -193,48 +193,28 @@ class User extends CI_Controller {
 			$oldPass = $this->input->post('oldpass');
 			$newPass = $this->input->post('newpass');
 			$confirmPass = $this->input->post('confirmpass');
-			$username = $this->session->userdata('username');
-			$salts = $this->user_model->getSalt($username);
+			$salt = $this->user_model->getSalt($this->session->userdata('username'));
 			
-			$salt = "";
-			foreach ($salts as $onlySalt) {
-				$salt = $onlySalt->Mem_Salt;
-			}
-			
-			if($salt && $username) {
+			if($salt) {
 				$boolean = $this->user_model->login($username,$oldPass,$salt);
 				if($boolean) {
-					if (!$this->user_model->updatePassword($username,$newPass,$salt)) {
-						$this->session->set_flashdata("errors", "Uw paswoord kon niet opgeslagen worden.");
-					}
+					
 				} else {
 					$this->session->set_flashdata("errors", "Uw paswoord was niet correct.");
+					$this->load->view('profile');
 				}
 			} else {
 				$this->session->set_flashdata("errors", "U kon niet worden geauthoriseerd.");
+				$this->load->view('profile');
 			}
 		} else {
 			$this->session->set_flashdata("errors", "Kon uw gegevens niet verwerken.");
+			$this->load->view('profile');
 		}
-		$this->load->view('profile');
 	}
 	
 	public function changeEmail() {
-		if (isset($_POST)) {
-			$newEmail = $this->input->post('email');
-			$newEmailConfirm = $this->input->post('emailconfirm');
-			if ($newEmail === $newEmailConfirm) {
-				$username = $this->session->userdata('username');
-				if (!$this->user_model->updateEmail($username,$newEmail)) {
-					$this->session->set_flashdata("errors", "Uw paswoord kon niet opgeslagen worden.");
-				}
-			} else {
-				$this->session->set_flashdata("errors", "De twee e-mail adressen komen niet overeen.");
-			}
-		} else {
-			$this->session->set_flashdata("errors", "Kon uw gegevens niet verwerken.");
-		}
-		$this->load->view('profile');
+		
 	}
 }
 

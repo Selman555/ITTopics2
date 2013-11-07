@@ -22,7 +22,7 @@
 						    <tr>
 						      	<th><?php echo $this->lang->line('reset');?></th>
 						      	<td><input id="email" name="email" type="email" placeholder="<?php echo $this->lang->line('new');?>" class="tekstfield" required ></td>
-	                			<td><input id="emailconfirm" name="emailconfirm" type="email" placeholder="<?php echo $this->lang->line('confirm');?>" class="tekstfield" required ></td>
+	                			<td><input id="confirmemail" name="emailconfirm" type="email" placeholder="<?php echo $this->lang->line('confirm');?>" class="tekstfield" required ></td>
 	                			<td><input type="submit" value="<?php echo $this->lang->line('paswoordbtnReset');?>" id="resetemail" /></td>
 						    </tr>
 					    </tbody>
@@ -40,7 +40,7 @@
 						    </tr>
 						    <tr>
 						    	<th><?php echo $this->lang->line('passwordOld');?></th>
-						    	<td><input id="oldpass" name="oldpass" type="password" placeholder="<?php echo $this->lang->line('loginPassword');?>" class="tekstfield" required >
+						    	<td><input id="oldpass" name="emailconfirm" type="password" placeholder="<?php echo $this->lang->line('loginPassword');?>" class="tekstfield" required >
 	                			<td><input type="submit" value="<?php echo $this->lang->line('paswoordbtnReset');?>" id="resetpass" /></td>
 						    </tr>
 					    </tbody>

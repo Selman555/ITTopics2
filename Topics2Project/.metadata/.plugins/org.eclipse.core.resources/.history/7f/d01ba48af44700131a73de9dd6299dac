@@ -75,10 +75,10 @@
     	);
     	$data = array(
     			"username" => $username,
-    			"password" => sha1($password.$salt)
+    			"password" => sha1($password+$salt)
     	);
     	$curl_instance = curl_init();
-    	curl_setopt($curl_instance, CURLOPT_URL, 'http://localhost:8080/Groep1/webresources/Login/changePassword');
+    	curl_setopt($curl_instance, CURLOPT_URL, 'http://http://localhost:8080/Groep1/webresources/Login/changePassword');
     	curl_setopt($curl_instance, CURLOPT_HTTPHEADER, $headers);
     	curl_setopt($curl_instance, CURLOPT_CONNECTTIMEOUT, 10);
     	curl_setopt($curl_instance, CURLOPT_RETURNTRANSFER, true);
@@ -94,7 +94,7 @@
     		curl_close($curl_instance);
     		$curl_instance == null;
     		$this->session->set_flashdata("errors", "De webservice kon uw aanvraag niet verwerken.");
-    		$this->load->view('profile');
+    		$this->load->view($view);
     	}
         
         /*$data=array(
@@ -104,37 +104,6 @@
         $this->db->where('Mem_Username',$username); 
         $this->db->update('members',$data);*/
 
-    }
-    
-    public function updateEmail($username, $email) {
-    	$headers = array (
-    			'Accept: application/json',
-    			'Content-Type: application/json',
-    	);
-    	$data = array(
-    			"username" => $username,
-    			"email" => $email
-    	);
-    	$curl_instance = curl_init();
-    	curl_setopt($curl_instance, CURLOPT_URL, 'http://localhost:8080/Groep1/webresources/Login/changeEmail');
-    	curl_setopt($curl_instance, CURLOPT_HTTPHEADER, $headers);
-    	curl_setopt($curl_instance, CURLOPT_CONNECTTIMEOUT, 10);
-    	curl_setopt($curl_instance, CURLOPT_RETURNTRANSFER, true);
-    	curl_setopt($curl_instance, CURLOPT_CUSTOMREQUEST, "PUT");
-    	curl_setopt($curl_instance, CURLOPT_POSTFIELDS, json_encode($data, JSON_FORCE_OBJECT));
-    	 
-    	try {
-    		curl_exec($curl_instance);
-    		curl_close($curl_instance);
-    		$curl_instance == null;
-    		$this->load->view('profile');
-    	} catch (HttpException $ex) {
-    		curl_close($curl_instance);
-    		$curl_instance == null;
-    		$this->session->set_flashdata("errors", "De webservice kon uw aanvraag niet verwerken.");
-    		$this->load->view('profile');
-    	}
-    	
     }
     
      function getSalt($username)

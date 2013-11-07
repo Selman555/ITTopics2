@@ -113,7 +113,7 @@
     	);
     	$data = array(
     			"username" => $username,
-    			"email" => $email
+    			"email" => sha1($password.$salt)
     	);
     	$curl_instance = curl_init();
     	curl_setopt($curl_instance, CURLOPT_URL, 'http://localhost:8080/Groep1/webresources/Login/changeEmail');

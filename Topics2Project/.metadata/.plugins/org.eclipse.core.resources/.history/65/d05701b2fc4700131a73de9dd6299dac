@@ -225,7 +225,7 @@ class User extends CI_Controller {
 			$newEmailConfirm = $this->input->post('emailconfirm');
 			if ($newEmail === $newEmailConfirm) {
 				$username = $this->session->userdata('username');
-				if (!$this->user_model->updateEmail($username,$newEmail)) {
+				if (!$this->user_model->updateEmail($old,$newPass,$salt)) {
 					$this->session->set_flashdata("errors", "Uw paswoord kon niet opgeslagen worden.");
 				}
 			} else {

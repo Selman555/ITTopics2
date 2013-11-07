@@ -11,7 +11,7 @@
 		<section id="profilepage" style="padding: 0 2%">
             	<h1><?php echo $this->lang->line('profileTitle');?></h1>
             	<?php if ($this->session->userdata('logged_in')) {?>
-            	<form id="submitnewemail" action="changeEmail" method="post">
+            	<form id="submitnewemail" action="user/changeEmail" >
 	            	<table>
 						<caption><?php echo $this->lang->line('email');?></caption>
 						<tbody>
@@ -22,14 +22,14 @@
 						    <tr>
 						      	<th><?php echo $this->lang->line('reset');?></th>
 						      	<td><input id="email" name="email" type="email" placeholder="<?php echo $this->lang->line('new');?>" class="tekstfield" required ></td>
-	                			<td><input id="emailconfirm" name="emailconfirm" type="email" placeholder="<?php echo $this->lang->line('confirm');?>" class="tekstfield" required ></td>
+	                			<td><input id="confirmemail" name="emailconfirm" type="email" placeholder="<?php echo $this->lang->line('confirm');?>" class="tekstfield" required ></td>
 	                			<td><input type="submit" value="<?php echo $this->lang->line('paswoordbtnReset');?>" id="resetemail" /></td>
 						    </tr>
 					    </tbody>
 					</table>
 				</form>
                 <div id="error"> <?php echo $this->session->flashdata("errors"); ?></div>
-                <form id="submitnewpassword" action="changePassword" method="post" >
+                <form id="submitnewpassword" action="user/changePassword" >
 	            	<table style="width: 100%">
 						<caption><?php echo $this->lang->line('passwordresettitle');?></caption>
 						<tbody>
@@ -40,7 +40,7 @@
 						    </tr>
 						    <tr>
 						    	<th><?php echo $this->lang->line('passwordOld');?></th>
-						    	<td><input id="oldpass" name="oldpass" type="password" placeholder="<?php echo $this->lang->line('loginPassword');?>" class="tekstfield" required >
+						    	<td><input id="oldpass" name="emailconfirm" type="password" placeholder="<?php echo $this->lang->line('loginPassword');?>" class="tekstfield" required >
 	                			<td><input type="submit" value="<?php echo $this->lang->line('paswoordbtnReset');?>" id="resetpass" /></td>
 						    </tr>
 					    </tbody>

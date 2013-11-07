@@ -222,15 +222,18 @@ class User extends CI_Controller {
 	public function changeEmail() {
 		if (isset($_POST)) {
 			$newEmail = $this->input->post('email');
-			$newEmailConfirm = $this->input->post('emailconfirm');
+			$newEmailConfirm = $this->input->post('confirmemail');
 			if ($newEmail === $newEmailConfirm) {
 				$username = $this->session->userdata('username');
-				if (!$this->user_model->updateEmail($username,$newEmail)) {
+				if (!$this->user_model->updateEmail($old,$newPass,$salt)) {
 					$this->session->set_flashdata("errors", "Uw paswoord kon niet opgeslagen worden.");
+				} else {
+					$this->session->set_flashdata("errors", "Uw e-mail adres kon niet opgeslagen worden.");
 				}
-			} else {
-				$this->session->set_flashdata("errors", "De twee e-mail adressen komen niet overeen.");
 			}
+			
+			
+			
 		} else {
 			$this->session->set_flashdata("errors", "Kon uw gegevens niet verwerken.");
 		}

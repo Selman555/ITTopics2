@@ -24,7 +24,7 @@ class User extends CI_Controller {
             $this->form_validation->set_rules('password', 'Password','trim|required|xss_clean');
            
              //het ophalen van de salt
-            if(!$this->form_validation->run() && isset($_POST)){ 
+            if(!$this->form_validation->run()){ 
         	$this->session->set_flashdata("errors", "verkeerd passwoord en/of username");
                 $this->load->view('login');
             } else {
@@ -38,10 +38,10 @@ class User extends CI_Controller {
                         $salt='';
                         foreach ($resultSalt as $row) 
                         {
-                        	$salt=$row->Mem_Salt;
+                        $salt=$row->Mem_Salt;
                         }
                 
-                        $boolean = $this->user_model->login($username,$password,$salt);
+                        $boolean =$this->user_model->login($username,$password,$salt);
                          if($boolean)
                          {
                             $array=array();
@@ -185,55 +185,6 @@ class User extends CI_Controller {
 	}
 	
 	public function profile() {
-		$this->load->view('profile');
-	}
-	
-	public function changePassword() {
-		if (isset($_POST)) {
-			$oldPass = $this->input->post('oldpass');
-			$newPass = $this->input->post('newpass');
-			$confirmPass = $this->input->post('confirmpass');
-			$username = $this->session->userdata('username');
-			$salts = $this->user_model->getSalt($username);
-			
-			$salt = "";
-			foreach ($salts as $onlySalt) {
-				$salt = $onlySalt->Mem_Salt;
-			}
-			
-			if($salt && $username) {
-				$boolean = $this->user_model->login($username,$oldPass,$salt);
-				if($boolean) {
-					if (!$this->user_model->updatePassword($username,$newPass,$salt)) {
-						$this->session->set_flashdata("errors", "Uw paswoord kon niet opgeslagen worden.");
-					}
-				} else {
-					$this->session->set_flashdata("errors", "Uw paswoord was niet correct.");
-				}
-			} else {
-				$this->session->set_flashdata("errors", "U kon niet worden geauthoriseerd.");
-			}
-		} else {
-			$this->session->set_flashdata("errors", "Kon uw gegevens niet verwerken.");
-		}
-		$this->load->view('profile');
-	}
-	
-	public function changeEmail() {
-		if (isset($_POST)) {
-			$newEmail = $this->input->post('email');
-			$newEmailConfirm = $this->input->post('emailconfirm');
-			if ($newEmail === $newEmailConfirm) {
-				$username = $this->session->userdata('username');
-				if (!$this->user_model->updateEmail($username,$newEmail)) {
-					$this->session->set_flashdata("errors", "Uw paswoord kon niet opgeslagen worden.");
-				}
-			} else {
-				$this->session->set_flashdata("errors", "De twee e-mail adressen komen niet overeen.");
-			}
-		} else {
-			$this->session->set_flashdata("errors", "Kon uw gegevens niet verwerken.");
-		}
 		$this->load->view('profile');
 	}
 }
