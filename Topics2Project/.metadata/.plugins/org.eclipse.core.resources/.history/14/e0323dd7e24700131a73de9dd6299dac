@@ -31,10 +31,6 @@ $lang['LoginbtnAanmelden']="Login";
 $lang['paswoordbtnReset']="Reset";
 $lang['LoginPasswoord']="recover it here";
 $lang['profileTitle']="Profile overview";
-$lang['email']="Your e-mail addres";
-$lang['reset']="Change this setting";
-$lang['newemail']="New e-mail";
-$lang['newemailconfirm']="Confirm new e-mail";
 
 
 ?>

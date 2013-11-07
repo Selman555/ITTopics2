@@ -31,15 +31,11 @@ $lang['loginGebruikerTitel']="Geef hier uw gebruikersnaam en paswoord in";
 $lang['paswoordGebruikerTitel']="Geef uw gebruikersnaam, uw nieuw en uw oud paswoord in";
 $lang['loginPasswordTitel']="Bent u uw paswoord vergeten?";
 $lang['LoginbtnAanmelden']="Aanmelden";
-$lang['paswoordbtnReset']="Instellen";
+$lang['paswoordbtnReset']="Opnieuw instellen";
 $lang['LoginPasswoord']="paswoord ophalen";
 $lang['loginMeldingIngelogd']="U bent reeds aangemeld";
 $lang['loginMeldingNietIngelogd']="U kan zich";
 $lang['loginMeldingNietIngelogd2']="hier afmelden";
 $lang['profileTitle']="Profiel overzicht";
-$lang['email']="Uw e-mail adres";
-$lang['reset']="Opnieuw instellen";
-$lang['newemail']="Nieuw e-mail";
-$lang['newemailconfirm']="Confirm new e-mail";
 
 ?>
