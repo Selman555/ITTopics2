@@ -78,6 +78,25 @@ public class Login {
             System.out.println("Exception put methode.\r\n"+e.getMessage());
         }       
     }
+       
+    @PUT
+    @Path("changeEmail")
+    @Consumes("application/json")
+    public void putJson(Object content) {
+        try
+        {
+            JSONObject input = new JSONObject(content.toString());
+            String username = input.getString("username");
+            String email = input.getString("email");
+            
+            c.ChangeEmail(username, email);
+        
+        } catch (JSONException jsex) {
+            System.out.println("Could not parse json.\r\n"+jsex.getMessage());
+        } catch(Exception e) {
+            System.out.println("Exception put methode.\r\n"+e.getMessage());
+        }       
+    }
     
     @PreDestroy
     public void destroy() {

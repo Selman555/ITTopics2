@@ -333,23 +333,7 @@ public class Connectie {
             
         }
     }
-    
-    public void ChangePassword(String username, String Password)
-    {
-        try
-        {
-            String sql = "UPDATE members"
-            + " SET Mem_Password = '" + Password + "'"
-            + "' WHERE Mem_Username = '"+username+"'";
-            
-            dbCon.createStatement().executeUpdate(sql);
-        }
-        catch(Exception e)
-        {
-            
-        }
-    }
-    
+        
     public void InsertErrorLog(String pagename, String errormessage)
     {
          try
@@ -390,6 +374,38 @@ public class Connectie {
         }
         String test = sb.toString();
         return sb.toString();
+    }
+    
+    public void ChangePassword(String username, String Password)
+    {
+        try
+        {
+            String sql = "UPDATE members"
+            + " SET Mem_Password = '" + Password + "'"
+            + " WHERE Mem_Username = '"+username+"'";
+            
+            dbCon.createStatement().executeUpdate(sql);
+        }
+        catch(Exception e)
+        {
+            System.err.println("ChangePassword Query Failed!\r\n" + e.getMessage());
+        }
+    }
+    
+    public void ChangeEmail(String username, String email)
+    {
+        try
+        {
+            String sql = "UPDATE members"
+            + " SET Mem_Email = '" + email + "'"
+            + " WHERE Mem_Username = '"+username+"'";
+            
+            dbCon.createStatement().executeUpdate(sql);
+        }
+        catch(Exception e)
+        {
+            System.err.println("ChangeEmail Query Failed!\r\n" + e.getMessage());
+        }
     }
 
     public boolean isIsconnectieopen() {
