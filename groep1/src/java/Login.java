@@ -37,32 +37,7 @@ public class Login extends HttpServlet {
         PrintWriter out = response.getWriter();
         try 
         {
-            if(c != null)
-            {
-              if(c.isIsconnectieopen() == false)
-              {
-                try
-                {
-                    c.openConnectie();
-                }
-                catch(Exception e)
-                {
-
-                }
-              }
-            }
-            else
-            {
-                c = new Connectie();
-                try
-                {
-                    c.openConnectie();
-                }
-                catch(Exception e)
-                {
-
-                }
-            }
+           c = Connectie.getInstance();
             
             
             String username = "";
@@ -120,6 +95,11 @@ public class Login extends HttpServlet {
         } finally {            
             out.close();
         }
+    }
+    
+    @Override
+    public void destroy() {
+        c.closeConnection();
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

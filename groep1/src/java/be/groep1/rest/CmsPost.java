@@ -13,6 +13,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import appdata.Connectie;
+import javax.annotation.PreDestroy;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
@@ -32,35 +33,7 @@ public class CmsPost {
      * Creates a new instance of CmsPost
      */
     public CmsPost() {
-        if(c == null)
-        {
-            c = new Connectie();
-            if(c.isIsconnectieopen() == false)
-            {
-                try
-                {
-                    c.openConnectie();
-                }
-                catch(Exception e)
-                {
-
-                }
-            }
-        }
-        else
-        {
-            if(c.isIsconnectieopen() == false)
-            {
-                try
-                {
-                    c.openConnectie();
-                }
-                catch(Exception e)
-                {
-
-                }
-            }
-        }
+        c = Connectie.getInstance();
     }
     /**
      * Retrieves representation of an instance of be.groep1.rest.CmsPost
@@ -111,5 +84,10 @@ public class CmsPost {
         } catch(Exception e) {
             System.out.println("Exception put methode.\r\n"+e.getMessage());
         }
+    }
+    
+    @PreDestroy
+    public void destroy() {
+        c.closeConnection();
     }
 }

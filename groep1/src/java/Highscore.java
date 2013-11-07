@@ -37,35 +37,7 @@ public class Highscore extends HttpServlet {
         response.setContentType("text/json");
         PrintWriter out = response.getWriter();
         try {
-            if(c == null)
-            {
-                c = new Connectie();
-                if(c.isIsconnectieopen() == false)
-                {
-                    try
-                    {
-                        c.openConnectie();
-                    }
-                    catch(Exception e)
-                    {
-
-                    }
-                }
-            }
-            else
-            {
-                if(c.isIsconnectieopen() == false)
-                {
-                    try
-                    {
-                        c.openConnectie();
-                    }
-                    catch(Exception e)
-                    {
-
-                    }
-                }
-            }
+            c = Connectie.getInstance();
             
   
             StringBuilder sb = new StringBuilder();
@@ -133,6 +105,13 @@ public class Highscore extends HttpServlet {
             out.close();
         }
     }
+
+    @Override
+    public void destroy() {
+        c.closeConnection();
+    }
+    
+    
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**

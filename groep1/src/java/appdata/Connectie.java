@@ -9,6 +9,8 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -16,18 +18,37 @@ import java.sql.Statement;
  */
 public class Connectie {
     
+    private static Connectie connectie;
+    
     private Connection dbCon;
     private boolean isconnectieopen;
     private final String dbURL = "jdbc:mysql://localhost:3306/groep1";
     private final String username ="root";
     private final String password = "";
     
-    public Connectie()
+    private Connectie()
     {
         isconnectieopen = false;
     }
     
-    public void openConnectie() throws Exception
+    public static Connectie getInstance()
+    {
+        if(connectie == null)
+        {
+            connectie = new Connectie();
+            try
+            {
+                connectie.openConnectie();
+            }
+            catch(Exception e)
+            {
+                System.out.println("Can't create connection with DB");
+            }
+        }
+        return connectie;
+    }
+    
+    private void openConnectie() throws Exception
     {
         
         Class.forName("com.mysql.jdbc.Driver");     
@@ -328,9 +349,61 @@ public class Connectie {
             
         }
     }
+    
+    public void InsertErrorLog(String pagename, String errormessage)
+    {
+         try
+        {
+            String sql = "INSERT INTO errorlogging (err_page, err_message)"
+                    + " VALUES ('" + pagename + "', '" +errormessage+ "')";
+            
+            dbCon.createStatement().executeUpdate(sql);
+        }
+        catch(Exception e)
+        {
+            
+        }
+    }
+    
+    public String getErrorlog()
+    {
+        StringBuilder sb = new StringBuilder();
+        
+        Statement stmt = null;
+        ResultSet rs = null;
+        try
+        {
+            String query = "SELECT err_page, err_message"
+                         + " FROM errorlogging";
+            
+           stmt = dbCon.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+           rs = stmt.executeQuery(query);
+           
+           while(rs.next())
+           {
+               sb.append("{\"page\": \"" + rs.getString("err_page") + "\", \"message\":\"" + rs.getString("err_message") +"\"}");
+           }
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+        String test = sb.toString();
+        return sb.toString();
+    }
 
     public boolean isIsconnectieopen() {
         return isconnectieopen;
+    }
+    
+    public void closeConnection()
+    {
+        try {
+            this.dbCon.close();
+        } 
+        catch (SQLException ex) {
+            Logger.getLogger(Connectie.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     
