@@ -7,6 +7,8 @@ class Start extends CI_Controller {
 		if(!($this->session->userdata('language'))){
 			$this->session->set_userdata('language','nederlands');
 		}
+		$this->load->helper(array('form'));
+		$this->load->library('form_validation'); //Post data validatie
 	}
 
 	public function index()
@@ -16,11 +18,14 @@ class Start extends CI_Controller {
 	}
 
 	public function cmsIndex() {
-		if (isset($_POST['hoofdpagina'])) {
+		$this->form_validation->set_rules('hoofdpagina', 'hoofdpagina','trim|required|xss_clean|callback_verify_xss');
+		 
+		if($this->form_validation->run()){
 			$this->setCMS('hoofdpagina', $_POST['hoofdpagina'], 'index');
 		} else {
 			$this->session->set_flashdata("errors", "Kon gegevens niet inlezen.");
-			$this->load->view('index');
+			$data['text'] = "Injecting scripts is not allowed. Try again without any scripts.";
+			$this->load->view('index', $data);
 		}
 	}
 	
@@ -45,12 +50,19 @@ class Start extends CI_Controller {
     }
     public function cmsAboutOpdrachtgever() 
     {
-    	if (isset($_POST['aboutpagina'])) {
+    	$this->form_validation->set_rules('aboutpagina', 'aboutpagina','trim|required|xss_clean|callback_verify_xss');
+		 
+		if($this->form_validation->run()){
     		$this->setCMS('aboutpagina', $_POST['aboutpagina'], 'about');
     	} else {
-    		$this->session->set_flashdata("errors", "Kon gegevens niet inlezen.");
-    		$this->load->view('about');
+    		$this->session->set_flashdata("errors", "Er bevindt zich ongeldige code in het tekstveld.");
+    		$data['text'] = "Injecting scripts is not allowed. Try again without any scripts.";
+    		$this->load->view('about', $data);
     	}
+    }
+    
+    public function verify_xss($content) {
+		return stristr($content, "<script");
     }
    
     public function setCMS($id, $content, $view)
@@ -106,7 +118,7 @@ class Start extends CI_Controller {
         try {
         	$data = json_decode(curl_exec($curl_instance), true);
         	if ($data == null) {
-        		$data['text'] = "Nothing to see here, sorry!";
+        		$data['text'] = "Something went wrong while ";
         	}
         	return $data;
         } catch (HttpException $ex) {

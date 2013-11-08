@@ -4,8 +4,9 @@
 class User extends CI_Controller {
 	function __construct() {
 		parent::__construct();
-                $this->load->model('user_model','',TRUE);
-                 $this->load->helper(array('form'));
+            $this->load->model('user_model','',TRUE);
+			$this->load->helper(array('form', 'string'));
+			$this->load->library('form_validation'); //Post data validatie
 
 	}
 	
@@ -17,14 +18,13 @@ class User extends CI_Controller {
 	public function loginUser()
 	{
 			$this->iplogging();
-            $this->load->library('form_validation');
             
             //het verplicht maken van username en password
             $this->form_validation->set_rules('username', 'Username','trim|required|xss_clean');   
             $this->form_validation->set_rules('password', 'Password','trim|required|xss_clean');
            
              //het ophalen van de salt
-            if(!$this->form_validation->run() && isset($_POST)){ 
+            if(!$this->form_validation->run()){ 
         	$this->session->set_flashdata("errors", "verkeerd passwoord en/of username");
                 $this->load->view('login');
             } else {
@@ -72,10 +72,7 @@ class User extends CI_Controller {
         }
         
     public function password_recovery()
-    {
-        $this->load->library('form_validation');
-        $this->load->helper('string');  //dient om een random string te kunnen genereren 
-            
+    {            
         $this->form_validation->set_rules('username', 'Username', 'trim|required|xss_clean');
          
         if(!$this->form_validation->run())
@@ -189,7 +186,11 @@ class User extends CI_Controller {
 	}
 	
 	public function changePassword() {
-		if (isset($_POST)) {
+		$this->form_validation->set_rules('oldpass', 'newPass','trim|required|xss_clean');
+		$this->form_validation->set_rules('newpass', 'oldPass','trim|required|xss_clean');
+		$this->form_validation->set_rules('confirmpass', 'confirmPass','trim|required|xss_clean');
+		 
+		if($this->form_validation->run()){
 			$oldPass = $this->input->post('oldpass');
 			$newPass = $this->input->post('newpass');
 			$confirmPass = $this->input->post('confirmpass');
@@ -214,13 +215,16 @@ class User extends CI_Controller {
 				$this->session->set_flashdata("errors", "U kon niet worden geauthoriseerd.");
 			}
 		} else {
-			$this->session->set_flashdata("errors", "Kon uw gegevens niet verwerken.");
+			$this->session->set_flashdata("errors", "Gelieve alle velden met een geldige waarde in te vullen.");
 		}
 		$this->load->view('profile');
 	}
 	
 	public function changeEmail() {
-		if (isset($_POST)) {
+		$this->form_validation->set_rules('email', 'email','trim|required|xss_clean|valid_email');
+		$this->form_validation->set_rules('emailconfirm', 'emailConfirm','trim|required|xss_clean|valid_email');
+		 
+		if($this->form_validation->run()){
 			$newEmail = $this->input->post('email');
 			$newEmailConfirm = $this->input->post('emailconfirm');
 			if ($newEmail === $newEmailConfirm) {
@@ -232,7 +236,7 @@ class User extends CI_Controller {
 				$this->session->set_flashdata("errors", "De twee e-mail adressen komen niet overeen.");
 			}
 		} else {
-			$this->session->set_flashdata("errors", "Kon uw gegevens niet verwerken.");
+			$this->session->set_flashdata("errors", "Gelieve alle velden met een geldige waarde in te vullen.");
 		}
 		$this->load->view('profile');
 	}
