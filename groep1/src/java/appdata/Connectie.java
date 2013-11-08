@@ -296,7 +296,7 @@ public class Connectie {
         }
         catch(Exception e)
         {
-            
+            e.printStackTrace();
         }
         return sb.toString();
     }

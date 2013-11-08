@@ -100,6 +100,6 @@ public class Login {
     
     @PreDestroy
     public void destroy() {
-        c.closeConnection();
+        //c.closeConnection();
     }
 }

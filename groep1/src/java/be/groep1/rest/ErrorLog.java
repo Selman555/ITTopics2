@@ -72,6 +72,6 @@ public class ErrorLog {
     
     @PreDestroy
     public void destroy() {
-        c.closeConnection();
+        //c.closeConnection();
     }
 }
