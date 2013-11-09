@@ -141,16 +141,9 @@ class User extends CI_Controller {
         redirect('start/index','refresh');
     }
     
-    public function language()
+    public function language($taal)
     {
-        if($this->input->post('language')=='nederlands')
-        {
-            $this->session->set_userdata('language','nederlands');
-        }
-        else if($this->input->post('language')=='english')
-        {
-            $this->session->set_userdata('language','english');
-        }
+        $this->session->set_userdata('language',$taal);
         
         redirect('start/index','refresh');
         

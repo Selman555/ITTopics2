@@ -86,7 +86,7 @@ class User_model extends CI_Model {
     			"password" => sha1($password.$salt)
     	);
 
-    	return putRequest($data, 'Login/changePassword');
+    	return $this->putRequest($data, 'Login/changePassword');
     }
     
     /**
@@ -102,7 +102,7 @@ class User_model extends CI_Model {
     			"username" => $username,
     			"email" => $email
     	);
-    	return putRequest($data, 'Login/changeEmail');
+    	return $this->putRequest($data, 'Login/changeEmail');
     }
     
     /**

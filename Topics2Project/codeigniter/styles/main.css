@@ -20,7 +20,7 @@ body>section {
 	width: 70%;
 	margin: auto;
 	margin-top: 5%;
-	margin-bottom: 7%;
+	margin-bottom: 80px;
 
 	overflow: auto;
 	border: 0.1em dashed black;
@@ -40,12 +40,12 @@ footer {
 
 	background-color: #191b1a;
 	color: white;
-	height: 10%;
+	max-height: 70px;
 	font-size: 0.9em;
 }
 footer section:nth-child(1) {
 	float: left;
-	width: 30%;
+	width: 70%;
 	margin-left: 2%;
 }
 
@@ -133,8 +133,8 @@ header nav a:hover {
 @media screen and  (max-width:1024px)
 {
 	body>header {
-		height: 35%;
-		font-size: 0.8em;
+		height: 0;
+		font-size: 1em;
 	}
 	body>section {
 		margin-top: 8%;
@@ -148,9 +148,8 @@ header nav a:hover {
     header nav a {
 		display: block;
 		width: 80%;
-		height: 0%;
 		margin: 0.5% 7% 0.5% 11%;
-		padding: 0.5% 1% 5% 1%;
+		padding: 0.5% 1% 3% 1%;
 		border-radius: 0.5em;
     }
     header a img {
@@ -167,27 +166,6 @@ header nav a:hover {
 	header nav a:nth-child(5) {
 		text-align: right;
 	}
-}
-
-@media screen and (max-width:500px)
-{
-	body>header {
-		height: 20%;
-	}
-}
-
-@media screen and (max-height:750px) and (max-width:1024px)
-{
-    body>header {
-    	height:30%;
-    }
-}
-
-@media screen and  (max-height:500px) and (max-width:1024px)
-{
-    body>header {
-    	height:35%;
-    }
 }
 
 /*___________________________VALIDATION_______________________*/

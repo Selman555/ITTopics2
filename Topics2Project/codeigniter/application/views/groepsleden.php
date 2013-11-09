@@ -1,4 +1,4 @@
-<!DOCTYPE html />
+<!DOCTYPE html>
 <html lang="nl-be">
 	<head>
         <?php $user_language=$this->session->userdata('language');

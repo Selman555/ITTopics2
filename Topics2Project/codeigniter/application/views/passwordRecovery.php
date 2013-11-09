@@ -1,4 +1,4 @@
-<!DOCTYPE html />
+<!DOCTYPE html>
 <html lang="nl-be">
 	<head>
 		<link rel="stylesheet" href="<?php echo base_url('styles/main.css'); ?>" />
