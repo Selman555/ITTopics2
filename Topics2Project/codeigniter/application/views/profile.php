@@ -39,9 +39,9 @@
 						    </tr>
 						    <tr>
 						      	<th><?php echo $this->lang->line('reset');?></th>
-						      	<td><input name="email" type="email" placeholder="<?php echo $this->lang->line('new');?>" class="tekstfield"
+						      	<td><input name="email" type="email" placeholder="<?php echo $this->lang->line('mailNew');?>" class="tekstfield"
 						      		id="email" required ></td>
-	                			<td><input name="emailconfirm" type="email" placeholder="<?php echo $this->lang->line('confirm');?>" class="tekstfield"
+	                			<td><input name="emailconfirm" type="email" placeholder="<?php echo $this->lang->line('mailConfirm');?>" class="tekstfield"
 	                				id="emailconfirm"required oninput="checkEmail(this)" ></td>
 	                			<td><input type="submit" value="<?php echo $this->lang->line('paswoordbtnReset');?>" id="resetemail" /></td>
 						    </tr>
@@ -60,8 +60,8 @@
 						<tbody>
 						    <tr>
 						      	<th><?php echo $this->lang->line('reset');?></th>
-						      	<td><input id="newpass" name="newpass" type="password" placeholder="<?php echo $this->lang->line('new');?>" class="tekstfield" required >
-	                			<td><input id="confirmpass" name="confirmpass" type="password" placeholder="<?php echo $this->lang->line('confirm');?>" class="tekstfield"
+						      	<td><input id="newpass" name="newpass" type="password" placeholder="<?php echo $this->lang->line('passwordNew');?>" class="tekstfield" required >
+	                			<td><input id="confirmpass" name="confirmpass" type="password" placeholder="<?php echo $this->lang->line('passwordConfirm');?>" class="tekstfield"
 	                			required oninput="checkPassword(this)" >
 						    </tr>
 						    <tr>

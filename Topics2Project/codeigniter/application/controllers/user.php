@@ -7,6 +7,11 @@ class User extends CI_Controller {
             $this->load->model('user_model','',TRUE);
 			$this->load->helper(array('form', 'string'));
 			$this->load->library('form_validation'); //Post data validatie
+			if ($this->session->userdata('language') == 'nederlands') {
+				$this->lang->load("profile","nederlands");
+			} else {
+				$this->lang->load("profile","english");
+			}
 
 	}
 	
@@ -132,7 +137,7 @@ class User extends CI_Controller {
     
     public function logout()
     {
-        $this->session->unset_userdata('logged_in');
+        $this->session->destroy();
         redirect('start/index','refresh');
     }
     
@@ -206,18 +211,18 @@ class User extends CI_Controller {
 				$boolean = $this->user_model->login($username,$oldPass,$salt);
 				if($boolean) {
 					if ($this->user_model->updatePassword($username,$newPass,$salt)) {
-						$data['donePass'] = "Uw paswoord is veranderd.";
+						$data['donePass'] = $this->lang->line('passwordChanged');
 					} else {
-						$data ['errorsPass'] = "De webservice kon uw aanvraag niet verwerken";
+						$data ['errorsPass'] = $this->lang->line('webserviceError');
 					}
 				} else {
-					$data['errorsPass'] = "Uw paswoord was niet correct.";
+					$data['errorsPass'] = $this->lang->line('passwordIncorrect');
 				}
 			} else {
-				$data['errorsPass'] = "U kon niet worden geauthoriseerd.";
+				$data['errorsPass'] = $this->lang->line('unauthorized');
 			}
 		} else {
-			$data['errorsPass'] = "Gelieve alle velden met een geldige waarde in te vullen.";
+			$data['errorsPass'] = $this->lang->line('fieldsIncorrect');
 		}
 		$this->load->view('profile',$data);
 	}
@@ -232,15 +237,15 @@ class User extends CI_Controller {
 			if ($newEmail === $newEmailConfirm) {
 				$username = $this->session->userdata('username');
 				if ($this->user_model->updateEmail($username,$newEmail)) {
-					$data['doneMail'] = "Uw e-mail adres is veranderd.";
+					$data['doneMail'] = $this->lang->line('emailChanged');
 				} else {
-					$data ['errorsMail'] = "De webservice kon uw aanvraag niet verwerken";
+					$data ['errorsMail'] = $this->lang->line('webserviceError');
 				}
 			} else {
-				$data['errorsMail'] = "De twee e-mail adressen komen niet overeen.";
+				$data['errorsMail'] = $this->lang->line('emailMatch');
 			}
 		} else {
-			$data['errorsMail'] = "Gelieve alle velden met een geldige waarde in te vullen.";
+			$data['errorsMail'] = $this->lang->line('fieldsIncorrect');
 		}
 		$this->load->view('profile', $data);
 	}

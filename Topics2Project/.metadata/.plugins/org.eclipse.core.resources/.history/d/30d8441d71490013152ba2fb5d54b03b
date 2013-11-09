@@ -1,0 +1,58 @@
+<?php
+
+$lang['home']="Home";
+$lang['about']="Over ons";
+$lang['prive']="Priv� bestanden";
+$lang['logout']="Afmelden";
+$lang['login']="Aanmelden";
+$lang['password']="Paswoord opnieuw instellen";
+$lang['algemeen']="Algemeen";
+$lang['inl']="Welkom bij";
+$lang['voorstelling']="Voortelling";
+$lang['leden']="Leden";
+$lang['verslagen']="Verslagen";
+$lang['to do']="Te doen";
+$lang['priveBestandBericht']="Hier kan u al onze bestanden zoals verslagen, mock-ups, enz.";
+$lang['titelLeden']="PixelApps - Groepsleden";
+$lang['titelBiografie']="Biografie Groepsleden";
+$lang['functie']="Functies";
+$lang['functieBericht']="Functie hier";
+$lang['specialiteit']="Gerelateerde Specialiteiten";
+$lang['specialiteitBericht']="Specialiteiten hier";
+$lang['hobbie']="Hobbies";
+$lang['hobbieBericht']="hobbies hier";
+$lang["aboutHoofdTitel"]="Een korte samenvatting van ons ICT Project";
+$lang["aboutOpdrachtgeverTitel"]="Voorstelling Opdrachtgever";
+$lang["aboutWaaromTitel"]="Waarom we deze opdracht gekozen hebben";
+$lang["aboutOmschrijvingTitle"]="Korte omschrijving van onze opdracht";
+$lang['loginGebruiker']="Gebruikersnaam";
+$lang['loginPassword']="Paswoord";
+$lang['loginGebruikerTitel']="Geef hier uw gebruikersnaam en paswoord in";
+$lang['paswoordGebruikerTitel']="Geef uw gebruikersnaam, uw nieuw en uw oud paswoord in";
+$lang['loginPasswordTitel']="Bent u uw paswoord vergeten?";
+$lang['LoginbtnAanmelden']="Aanmelden";
+$lang['paswoordbtnReset']="Instellen";
+$lang['LoginPasswoord']="paswoord ophalen";
+$lang['loginMeldingIngelogd']="U bent reeds aangemeld";
+$lang['loginMeldingNietIngelogd']="U kan zich";
+$lang['loginMeldingNietIngelogd2']="hier afmelden";
+$lang['profileTitle']="Profiel overzicht";
+$lang['email']="Uw e-mail adres";
+$lang['reset']="Opnieuw instellen";
+$lang['new']="Nieuw";
+$lang['confirm']="Bevestig";
+$lang['passwordresettitle']="Uw paswoord opnieuw instellen";
+$lang['passwordOld']="Oud paswoord";
+$lang['passwordNew']="Nieuw paswoord";
+$lang['passwordConfirm']="Bevestig paswoord";
+
+//Profielpagina meldingen
+$lang['emailchanged']="Uw e-mail adres is veranderd.";
+$lang['passwordChanged']="Uw paswoord is veranderd.";
+$lang['webserviceError']="De webservice kon uw aanvraag niet verwerken";
+$lang['passwordIncorrect']="Uw paswoord was niet correct.";
+$lang['passwordMatch']="De paswoorden komen niet overeen.";
+$lang['emailMatch']="De e-mail adressen komen niet overeen.";
+$lang['unauthorized']="U kon niet worden geauthoriseerd.";
+$lang['fieldsIncorrect']="Gelieve alle velden met een geldige waarde in te vullen.";
+?>

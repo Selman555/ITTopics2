@@ -4,6 +4,7 @@ class Start extends CI_Controller {
 	function __construct() {
 		parent::__construct();
 		//Taalinstellingen voor de gebruiker ophalen of instellen
+		$this->load->model('user_model');
 		if(!($this->session->userdata('language'))){
 			$this->session->set_userdata('language','nederlands');
 		}
@@ -18,15 +19,19 @@ class Start extends CI_Controller {
 	}
 
 	public function cmsIndex() {
-		$this->form_validation->set_rules('hoofdpagina', 'hoofdpagina','trim|required|xss_clean|callback_verify_xss');
+		$this->form_validation->set_rules('hoofdpagina', 'hoofdpagina','callback_verify_xss|xss_clean|required|trim');
 		 
 		if($this->form_validation->run()){
-			$this->setCMS('hoofdpagina', $_POST['hoofdpagina'], 'index');
+			$content = $this->input->post('hoofdpagina');
+			$data['text'] = $content;
+			$this->session->set_flashdata("errors", "Saved!");
+			
+			$this->setCMS('hoofdpagina', $content, 'index');
 		} else {
-			$this->session->set_flashdata("errors", "Kon gegevens niet inlezen.");
-			$data['text'] = "Injecting scripts is not allowed. Try again without any scripts.";
-			$this->load->view('index', $data);
+			$this->session->set_flashdata("errors", "Kon gegevens niet wegschrijven.");
+			$data['text'] = "Save failed. Make sure you aren't accidently injecting scripts.";
 		}
+		$this->load->view('index', $data);
 	}
 	
 	public function leden()
@@ -50,19 +55,23 @@ class Start extends CI_Controller {
     }
     public function cmsAboutOpdrachtgever() 
     {
-    	$this->form_validation->set_rules('aboutpagina', 'aboutpagina','trim|required|xss_clean|callback_verify_xss');
+    	$this->form_validation->set_rules('aboutpagina', 'aboutpagina','callback_verify_xss|xss_clean|required|trim');
 		 
 		if($this->form_validation->run()){
-    		$this->setCMS('aboutpagina', $_POST['aboutpagina'], 'about');
+			$content = $this->input->post('aboutpagina');
+			$data['text'] = $content;
+			$this->session->set_flashdata("errors", "Saved!");
+			
+    		$this->setCMS('aboutpagina', $content, 'about');
     	} else {
-    		$this->session->set_flashdata("errors", "Er bevindt zich ongeldige code in het tekstveld.");
-    		$data['text'] = "Injecting scripts is not allowed. Try again without any scripts.";
-    		$this->load->view('about', $data);
+    		$this->session->set_flashdata("errors", "Kon gegevens niet wegschrijven.");
+    		$data['text'] = "Save failed. Make sure you aren't accidently injecting scripts.";
     	}
+    	$this->load->view('about', $data);
     }
     
     public function verify_xss($content) {
-		return stristr($content, "<script");
+		return !stristr($content, "<script");
     }
    
     public function setCMS($id, $content, $view)
@@ -74,34 +83,13 @@ class Start extends CI_Controller {
     	} else {
     		$taalcode = 'EN';
     	}
-    	$headers = array (
-    			'Accept: application/json',
-    			'Content-Type: application/json',
-    	);
     	$data = array(
     			"id" => $id,
     			"taalcode" => $taalcode,
     			"text" => $content
     	);
-    	$curl_instance = curl_init();
-    	curl_setopt($curl_instance, CURLOPT_URL, 'http://localhost:8080/Groep1/webresources/cmspost/inserttext');
-    	curl_setopt($curl_instance, CURLOPT_HTTPHEADER, $headers);
-    	curl_setopt($curl_instance, CURLOPT_CONNECTTIMEOUT, 10);
-    	curl_setopt($curl_instance, CURLOPT_RETURNTRANSFER, true);
-    	curl_setopt($curl_instance, CURLOPT_CUSTOMREQUEST, "PUT");
-    	curl_setopt($curl_instance, CURLOPT_POSTFIELDS, json_encode($data, JSON_FORCE_OBJECT));
-    		
-    	try {
-    		curl_exec($curl_instance);
-    		curl_close($curl_instance);
-    		$curl_instance == null;
-    		$this->load->view($view, $data);
-    	} catch (HttpException $ex) {
-    		curl_close($curl_instance);
-    		$curl_instance == null;
-    		$this->session->set_flashdata("errors", "De webservice kon uw aanvraag niet verwerken.");
-    		$this->load->view($view);
-    	}
+    	
+    	return $this->user_model->putRequest($data, 'cmspost/inserttext');
     }
     
     public function getCMS($id) {
@@ -111,20 +99,8 @@ class Start extends CI_Controller {
         } else {
         	$taalcode = 'EN';
         }
-        $curl_instance = curl_init();
-        curl_setopt($curl_instance, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($curl_instance, CURLOPT_URL, 'http://localhost:8080/Groep1/webresources/cmspost/gettext?id='.$id.'&taalcode='.$taalcode);
         
-        try {
-        	$data = json_decode(curl_exec($curl_instance), true);
-        	if ($data == null) {
-        		$data['text'] = "Something went wrong while ";
-        	}
-        	return $data;
-        } catch (HttpException $ex) {
-        	$data['text'] = $ex;
-        	return $data;
-        }
+        return $this->user_model->getRequest('cmspost/gettext?id='.$id.'&taalcode='.$taalcode);
     }
     
 }

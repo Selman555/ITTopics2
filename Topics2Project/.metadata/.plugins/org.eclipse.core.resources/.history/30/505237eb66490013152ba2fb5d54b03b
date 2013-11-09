@@ -1,0 +1,52 @@
+<?php
+
+$lang['home']="Home";
+$lang['about']="About";
+$lang['prive']="Private files";
+$lang['logout']="Log out";
+$lang['login']="Login";
+$lang['algemeen']="Common";
+$lang['inl']="Welkom to our site";
+$lang['voorstelling']="Intro";
+$lang['leden']="Members";
+$lang['verslagen']="Papers";
+$lang['to do']="To Do's";
+$lang['priveBestandBericht']="You can find all our files like rapports, mockups, etz on this site";
+$lang['titelLeden']="PixelApps - Teammembers";
+$lang['titelBiografie']="Biography Members";
+$lang['functie']="Functions";
+$lang['functieBericht']="Put your function here";
+$lang['specialiteit']="Specialities";
+$lang['specialiteitBericht']="Your specialities";
+$lang['hobbie']="Hobby's";
+$lang['hobbieBericht']="Your hobbies";
+$lang["aboutHoofdTitel"]="A short summary of our ICT Project";
+$lang["aboutOmschrijvingTitle"]="A short summary of the content from our project ";
+$lang['loginGebruiker']="Username";
+$lang['loginPassword']="Password";
+$lang['loginGebruikerTitel']="Give your username and password";
+$lang['paswoordGebruikerTitel']="Give your username, your old password and your new password";
+$lang['loginPasswordTitel']="Forgotten your password";
+$lang['LoginbtnAanmelden']="Login";
+$lang['paswoordbtnReset']="Reset";
+$lang['LoginPasswoord']="recover it here";
+$lang['profileTitle']="Profile overview";
+$lang['email']="Your e-mail addres";
+$lang['reset']="Change this setting";
+$lang['new']="New e-mail";
+$lang['confirm']="Confirm new e-mail";
+$lang['passwordresettitle']="Reset your password";
+$lang['passwordOld']="Old password";
+$lang['passwordNew']="New password";
+$lang['passwordConfirm']="Confirm password";
+
+//Profielpagina meldingen
+$lang['emailChanged']="Your e-mail address has been updated.";
+$lang['passwordChanged']="Your password has been updated.";
+$lang['webserviceError']="The webservice could not process your request";
+$lang['passwordIncorrect']="Your password was incorrect.";
+$lang['passwordMatch']="The password fields did not match.";
+$lang['emailMatch']="The e-mail addresses did not match.";
+$lang['unauthorized']="You could not be authorized.";
+$lang['fieldsIncorrect']="Please fill in all fields with valid values.";
+?>

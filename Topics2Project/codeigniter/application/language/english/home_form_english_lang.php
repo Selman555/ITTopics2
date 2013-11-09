@@ -1,5 +1,4 @@
 <?php
-
 $lang['home']="Home";
 $lang['about']="About";
 $lang['prive']="Private files";
@@ -33,11 +32,10 @@ $lang['LoginPasswoord']="recover it here";
 $lang['profileTitle']="Profile overview";
 $lang['email']="Your e-mail addres";
 $lang['reset']="Change this setting";
-$lang['new']="New e-mail";
-$lang['confirm']="Confirm new e-mail";
+$lang['mailNew']="New e-mail";
+$lang['mailConfirm']="Confirm new e-mail";
 $lang['passwordresettitle']="Reset your password";
 $lang['passwordOld']="Old password";
 $lang['passwordNew']="New password";
 $lang['passwordConfirm']="Confirm password";
-
 ?>

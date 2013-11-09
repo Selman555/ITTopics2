@@ -1,0 +1,111 @@
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+
+class Start extends CI_Controller {
+	function __construct() {
+		parent::__construct();
+		//Taalinstellingen voor de gebruiker ophalen of instellen
+		$this->load->model('user_model');
+		if(!($this->session->userdata('language'))){
+			$this->session->set_userdata('language','nederlands');
+		}
+		$this->load->helper(array('form'));
+		$this->load->library('form_validation'); //Post data validatie
+	}
+
+	public function index()
+	{		
+        $data = $this->getCMS('hoofdpagina');
+		$this->load->view('index', $data);
+	}
+
+	public function cmsIndex() {
+		$this->form_validation->set_rules('hoofdpagina', 'hoofdpagina','trim|required|xss_clean|callback_verify_xss');
+		 
+		if($this->form_validation->run()){
+			$this->setCMS('hoofdpagina', $_POST['hoofdpagina'], 'index');
+		} else {
+			$this->session->set_flashdata("errors", "Kon gegevens niet inlezen.");
+			$data['text'] = "Injecting scripts is not allowed. Try again without any scripts.";
+			$this->load->view('index', $data);
+		}
+	}
+	
+	public function leden()
+	{
+		$this->load->view('groepsleden');
+	}
+	
+	public function todo()
+	{
+		$this->load->view('todo');
+	}
+	
+    public function login()
+    {
+    	$this->load->view('login');
+    }
+    public function about()
+    {
+    	$data = $this->getCMS('aboutpagina');
+    	$this->load->view('about', $data);
+    }
+    public function cmsAboutOpdrachtgever() 
+    {
+    	$this->form_validation->set_rules('aboutpagina', 'aboutpagina','trim|required|xss_clean|callback_verify_xss');
+		 
+		if($this->form_validation->run()){
+    		$this->setCMS('aboutpagina', $_POST['aboutpagina'], 'about');
+    	} else {
+    		$this->session->set_flashdata("errors", "Er bevindt zich ongeldige code in het tekstveld.");
+    		$data['text'] = "Injecting scripts is not allowed. Try again without any scripts.";
+    		$this->load->view('about', $data);
+    	}
+    }
+    
+    public function verify_xss($content) {
+		return stristr($content, "<script");
+    }
+   
+    public function setCMS($id, $content, $view)
+    {
+    	$content = str_replace(array("\r\n", "\r"), "__NewLine__", $content);
+    	$taalcode = '';
+    	if($this->session->userdata('language') == 'nederlands') {
+    		$taalcode = 'NL';
+    	} else {
+    		$taalcode = 'EN';
+    	}
+    	$data = array(
+    			"id" => $id,
+    			"taalcode" => $taalcode,
+    			"text" => $content
+    	);
+    	
+    	if ($this->user_model->putRequest($data, 'cmspost/inserttext')) {
+    		$this->session->set_flashdata('errors','Saved');
+    	} else {
+    		$this->session->set_flashdata('errors', 'Webservice could not process your request');
+    	}
+    	$this->load->view($view);
+    }
+    
+    public function getCMS($id) {
+        $taalcode = '';
+        if($this->session->userdata('language') == 'nederlands') {
+        	$taalcode = 'NL';
+        } else {
+        	$taalcode = 'EN';
+        }
+        
+        if (!($data = $this->user_model->getRequest('cmspost/gettext?id='.$id.'&taalcode='.$taalcode))) {
+        	$this->session->set_flashdata('errors','The webservice could not process your request');
+        } else {
+        	return $data;
+        }
+
+    }
+    
+}
+
+/* End of file welcome.php */
+/* Location: ./application/controllers/welcome.php */
