@@ -205,19 +205,21 @@ class User extends CI_Controller {
 			if($salt && $username) {
 				$boolean = $this->user_model->login($username,$oldPass,$salt);
 				if($boolean) {
-					if (!$this->user_model->updatePassword($username,$newPass,$salt)) {
-						$this->session->set_flashdata("errors", "Uw paswoord kon niet opgeslagen worden.");
+					if ($this->user_model->updatePassword($username,$newPass,$salt)) {
+						$data['donePass'] = "Uw paswoord is veranderd.";
+					} else {
+						$data ['errorsPass'] = "De webservice kon uw aanvraag niet verwerken";
 					}
 				} else {
-					$this->session->set_flashdata("errors", "Uw paswoord was niet correct.");
+					$data['errorsPass'] = "Uw paswoord was niet correct.";
 				}
 			} else {
-				$this->session->set_flashdata("errors", "U kon niet worden geauthoriseerd.");
+				$data['errorsPass'] = "U kon niet worden geauthoriseerd.";
 			}
 		} else {
-			$this->session->set_flashdata("errors", "Gelieve alle velden met een geldige waarde in te vullen.");
+			$data['errorsPass'] = "Gelieve alle velden met een geldige waarde in te vullen.";
 		}
-		$this->load->view('profile');
+		$this->load->view('profile',$data);
 	}
 	
 	public function changeEmail() {
@@ -229,16 +231,18 @@ class User extends CI_Controller {
 			$newEmailConfirm = $this->input->post('emailconfirm');
 			if ($newEmail === $newEmailConfirm) {
 				$username = $this->session->userdata('username');
-				if (!$this->user_model->updateEmail($username,$newEmail)) {
-					$this->session->set_flashdata("errors", "Uw paswoord kon niet opgeslagen worden.");
+				if ($this->user_model->updateEmail($username,$newEmail)) {
+					$data['doneMail'] = "Uw e-mail adres is veranderd.";
+				} else {
+					$data ['errorsMail'] = "De webservice kon uw aanvraag niet verwerken";
 				}
 			} else {
-				$this->session->set_flashdata("errors", "De twee e-mail adressen komen niet overeen.");
+				$data['errorsMail'] = "De twee e-mail adressen komen niet overeen.";
 			}
 		} else {
-			$this->session->set_flashdata("errors", "Gelieve alle velden met een geldige waarde in te vullen.");
+			$data['errorsMail'] = "Gelieve alle velden met een geldige waarde in te vullen.";
 		}
-		$this->load->view('profile');
+		$this->load->view('profile', $data);
 	}
 }
 

@@ -1,0 +1,79 @@
+/* 
+    Document   : Login
+    Created on : Oct 6, 2013, 6:59:03 PM
+    Author     : AnkeA
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+
+h1
+{ 
+    text-align: center;
+}
+
+input.submit
+{  
+   	width: 80%; 
+   	padding: 0.4em 0.9em;
+}
+#error
+{
+    color: red;
+    border-color: red;
+}
+
+
+body>section {
+	width: 30%;
+    min-height: 72.2%;
+	margin: auto;
+	margin-top: 5%;
+
+	border: 0.1em dashed black;
+	border-radius: 0.5em;
+}
+body>section input[type="email"] {
+	width: 100%;
+}
+body>section input[type="password"]{
+	width: 95%;
+}
+body>section tr:nth-child(2)>td:nth-child(3) {
+	text-align: center;
+	vertical-align: middle;
+}
+
+
+@media screen and  (max-width:1024px)
+{
+    body>section 
+    {
+		width: 80%;
+	    min-height: 72.2%;
+	
+    }
+}
+@media screen and  (max-height:750px) and (max-width:1024px)
+{
+   
+}
+
+@media screen and  (max-height:500px) and (max-width:1024px)
+{
+   
+}
+
+th {
+	text-align: left;
+	width: 30%;
+}
+
+body>section form {
+	padding-bottom: 3%;
+	border: 0.1em dashed black;
+	border-radius: 0.5em;
+	background-color: #E4F0F6;
+}
+
+

@@ -88,13 +88,11 @@
     	try {
     		curl_exec($curl_instance);
     		curl_close($curl_instance);
-    		$curl_instance == null;
-    		$this->load->view('profile');
+    		return true;
     	} catch (HttpException $ex) {
     		curl_close($curl_instance);
     		$curl_instance == null;
-    		$this->session->set_flashdata("errors", "De webservice kon uw aanvraag niet verwerken.");
-    		$this->load->view('profile');
+    		return false;
     	}
         
         /*$data=array(
@@ -127,12 +125,11 @@
     		curl_exec($curl_instance);
     		curl_close($curl_instance);
     		$curl_instance == null;
-    		$this->load->view('profile');
+    		return true;
     	} catch (HttpException $ex) {
     		curl_close($curl_instance);
     		$curl_instance == null;
-    		$this->session->set_flashdata("errors", "De webservice kon uw aanvraag niet verwerken.");
-    		$this->load->view('profile');
+    		return false;
     	}
     	
     }

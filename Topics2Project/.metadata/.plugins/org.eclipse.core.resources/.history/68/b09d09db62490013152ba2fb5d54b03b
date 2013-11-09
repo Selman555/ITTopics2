@@ -1,0 +1,155 @@
+<?php class User_model extends CI_Model {
+
+    var $title   = '';
+    var $content = '';
+    var $date    = '';
+
+    function __construct()
+    {
+        // Call the Model constructor
+        parent::__construct();
+    }
+    
+ function login($username,$password,$salt)
+    {
+     
+        $this->db->select('Mem_Username,Mem_Password');
+        $this->db->where('Mem_Username',$username);
+        $this->db->where('Mem_Password',sha1($password.$salt));
+        $this->db->limit(1);
+        $query = $this->db->get('members');//het ophalen van de geselecteerde members
+        
+        if($query->num_rows()==1){
+            return $query->result();
+        }
+        else{
+            return FALSE;
+        }
+        
+    }
+    
+    function sendEmail($gebruikersnaam,$wachtwoord,$email)
+    {
+	    //email verificatie (codeigniter database inladen)
+	    $subject = 'Wachtwoord opgevraagd';
+	    $message = '
+				<b>Beste '.$gebruikersnaam.',</b><br />
+				<br />
+				U ben uw wachtwoord vergeten, en daarom sturen we u de volgende gegevens:<br />
+				<br />
+				Gebruikersnaam - '.$gebruikersnaam.'<br />
+				Wachtwoord - '.$wachtwoord.'<br />
+				<br />
+				<br />
+				Indien u uw wachtwoord niet heeft opgevraagd mag u deze mail negeren
+				';
+	    $this->load->library('email');
+	    $config['mailtype'] = 'html'; //mailopmaak defini�ren
+	    $this->email->initialize($config); //instelling uit de $config[] array halen+
+	    $this->email->from('topics2.groep1@gmail.com', 'Topics2 - Groep 1'); //verzender groep 1
+	    $this->email->to($email); //ontvanger
+	    $this->email->subject($subject); //onderwerp toevoegen
+	    $this->email->message($message); //bericht toevoegen
+	    $this->email->send(); //verzenden
+	    return true;
+    }
+     function getEmail($username)
+    {
+        $this->db->select('Mem_Email');
+        $this->db->where('Mem_Username',$username);
+        $this->db->limit(1);
+        $query = $this->db->get('members');//het ophalen van de geselecteerde members
+        
+        if($query->num_rows()==1){
+            return $query->result();
+        }
+        else{
+            return FALSE;
+        }
+    }
+    
+    function updatePassword($username, $password, $salt){
+    	$headers = array (
+    			'Accept: application/json',
+    			'Content-Type: application/json',
+    	);
+    	$data = array(
+    			"username" => $username,
+    			"password" => sha1($password.$salt)
+    	);
+    	$curl_instance = curl_init();
+    	curl_setopt($curl_instance, CURLOPT_URL, 'http://localhost:8080/Groep1/webresources/Login/changePassword');
+    	curl_setopt($curl_instance, CURLOPT_HTTPHEADER, $headers);
+    	curl_setopt($curl_instance, CURLOPT_CONNECTTIMEOUT, 10);
+    	curl_setopt($curl_instance, CURLOPT_RETURNTRANSFER, true);
+    	curl_setopt($curl_instance, CURLOPT_CUSTOMREQUEST, "PUT");
+    	curl_setopt($curl_instance, CURLOPT_POSTFIELDS, json_encode($data, JSON_FORCE_OBJECT));
+    	
+    	try {
+    		curl_exec($curl_instance);
+    		curl_close($curl_instance);
+    		$curl_instance == null;
+    		$this->load->view('profile');
+    	} catch (HttpException $ex) {
+    		curl_close($curl_instance);
+    		$curl_instance == null;
+    		$this->session->set_flashdata("errors", "De webservice kon uw aanvraag niet verwerken.");
+    		$this->load->view('profile');
+    	}
+        
+        /*$data=array(
+           'Mem_Password'=>sha1($password+$salt),
+            'Mem_Salt'=>$salt//pas toegevoegd
+        );
+        $this->db->where('Mem_Username',$username); 
+        $this->db->update('members',$data);*/
+
+    }
+    
+    public function updateEmail($username, $email) {
+    	$headers = array (
+    			'Accept: application/json',
+    			'Content-Type: application/json',
+    	);
+    	$data = array(
+    			"username" => $username,
+    			"email" => $email
+    	);
+    	$curl_instance = curl_init();
+    	curl_setopt($curl_instance, CURLOPT_URL, 'http://localhost:8080/Groep1/webresources/Login/changeEmail');
+    	curl_setopt($curl_instance, CURLOPT_HTTPHEADER, $headers);
+    	curl_setopt($curl_instance, CURLOPT_CONNECTTIMEOUT, 10);
+    	curl_setopt($curl_instance, CURLOPT_RETURNTRANSFER, true);
+    	curl_setopt($curl_instance, CURLOPT_CUSTOMREQUEST, "PUT");
+    	curl_setopt($curl_instance, CURLOPT_POSTFIELDS, json_encode($data, JSON_FORCE_OBJECT));
+    	 
+    	try {
+    		curl_exec($curl_instance);
+    		curl_close($curl_instance);
+    		$curl_instance == null;
+    	} catch (HttpException $ex) {
+    		curl_close($curl_instance);
+    		$curl_instance == null;
+    	}
+    	
+    }
+    
+     function getSalt($username)
+    {
+        $this->db->select('Mem_Salt');
+        $this->db->where('Mem_Username',$username);
+        $this->db->limit(1);
+        $query = $this->db->get('members');//het ophalen van de geselecteerde members
+        
+        if($query->num_rows()==1){
+            return $query->result();
+        }
+        else{
+            return FALSE;
+        }
+    }
+    
+    
+    
+} 
+?>
