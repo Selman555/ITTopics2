@@ -1,5 +1,5 @@
-<!DOCTYPE html />
-<html lang="nl-be">
+<!DOCTYPE HTML>
+<html lang="NL-be">
 	<head>
         <?php $user_language=$this->session->userdata('language');
         $this->lang->load('home_form_'.$user_language,$user_language);
@@ -7,7 +7,7 @@
         if ($this->session->userdata('logged_in')) {
 			$logged = true;
 		}?>
-            
+		
 		<link rel="stylesheet" href="<?php echo base_url('styles/main.css'); ?>" type="text/css" media="screen"/>
 		<title>Hoofdpagina</title>
 		<script type="text/javascript">

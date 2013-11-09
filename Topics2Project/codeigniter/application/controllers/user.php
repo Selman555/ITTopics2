@@ -137,7 +137,7 @@ class User extends CI_Controller {
     
     public function logout()
     {
-        $this->session->destroy();
+        $this->session->sess_destroy();
         redirect('start/index','refresh');
     }
     

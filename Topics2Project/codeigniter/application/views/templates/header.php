@@ -1,5 +1,6 @@
 <header>
-    <?php $user_language=$this->session->userdata('language');$this->lang->load('home_form_'.$user_language,$user_language);?>
+    <?php $user_language=$this->session->userdata('language');
+    $this->lang->load('home_form_'.$user_language,$user_language);?>
 	
 	<nav>
 	    <a href="<?php echo base_url(); ?>" ><?php echo $this->lang->line('home');?></a>               	    
@@ -13,5 +14,5 @@
         <a href="<?php echo base_url('user/login'); ?>" ><?php echo $this->lang->line('login');?></a>
         <?php }?>
 	</nav>
-	<a href="<?php echo base_url('start/index'); ?>"><img src="<?php echo base_url('img/Ford logo.jpg'); ?>" alt="logo" /></a>
+	<a href="<?php echo base_url('start/index'); ?>"><img src="<?php echo base_url('img/Ford_Logo.jpg'); ?>" alt="logo" /></a>
 </header>
