@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Machine: 127.0.0.1
--- Genereertijd: 10 nov 2013 om 13:40
+-- Genereertijd: 10 nov 2013 om 14:03
 -- Serverversie: 5.6.11
 -- PHP-versie: 5.5.3
 
@@ -69,6 +69,27 @@ INSERT INTO `highscore` (`HS_ID`, `HS_Naam`, `HS_Score`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Tabelstructuur voor tabel `iplogging`
+--
+
+CREATE TABLE IF NOT EXISTS `iplogging` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `ipadress` varchar(255) COLLATE utf8_bin NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=7 ;
+
+--
+-- Gegevens worden uitgevoerd voor tabel `iplogging`
+--
+
+INSERT INTO `iplogging` (`id`, `date`, `ipadress`) VALUES
+(5, '2013-11-03 16:58:58', '::1'),
+(6, '2013-11-03 16:59:49', '::1');
+
+-- --------------------------------------------------------
+
+--
 -- Tabelstructuur voor tabel `members`
 --
 
@@ -87,7 +108,35 @@ CREATE TABLE IF NOT EXISTS `members` (
 --
 
 INSERT INTO `members` (`Mem_ID`, `Mem_Username`, `Mem_Password`, `Mem_Email`, `Mem_Salt`, `Mem_level`) VALUES
-(1, 'Robbie', '99d87a7e84cd122af96a045d85bfd857fe50013c', 'freestylerstyler760@hotmail.com', 'c31wewg4zf', 1);
+(1, 'Robbie', '99d87a7e84cd122af96a045d85bfd857fe50013c', 'freestylerstyler760@hotmail.com', 'c31wewg4zf', 1),
+(2, 'selman555', '622651d5760a0a3613216328f09734a5f3266c27', 'robbie.vercammen@gmail.com', 'gPq05LBDi5', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Tabelstructuur voor tabel `todo`
+--
+
+CREATE TABLE IF NOT EXISTS `todo` (
+  `id` int(11) NOT NULL,
+  `naam` varchar(255) COLLATE utf8_bin NOT NULL,
+  `omschrijving` varchar(255) COLLATE utf8_bin NOT NULL,
+  `prioriteit` int(11) NOT NULL,
+  `doorID` int(11) NOT NULL,
+  `richting` varchar(3) COLLATE utf8_bin NOT NULL,
+  `status` int(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Gegevens worden uitgevoerd voor tabel `todo`
+--
+
+INSERT INTO `todo` (`id`, `naam`, `omschrijving`, `prioriteit`, `doorID`, `richting`, `status`) VALUES
+(0, 'TO DO Test Webservice DONE! VOOR 8BALLJUNKIE', 'Een testje om gegevens uit een webservice te lezen', 1, 1, 'AON', 0),
+(1, 'Test met webserice - nazicht', 'FREAKING AWESOME!!!', 1, 1, 'AON', 2),
+(3, 'Nog een test', 'zodat jullie de layout kunnen bezichtigen TRALALALALAAAAA!!!', 1, 1, 'SNB', 0),
+(4, 'Test voor de moeder', 'met een tekst van letters', 2, 1, 'AON', 1);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
