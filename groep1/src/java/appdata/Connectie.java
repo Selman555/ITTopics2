@@ -416,7 +416,7 @@ public class Connectie {
         ResultSet rs = null;
         try
         {
-            String query = "SELECT *"
+            String query = "SELECT naam, omschrijving"
             + " FROM todo"
             + " ORDER BY prioriteit DESC";
             
@@ -431,14 +431,16 @@ public class Connectie {
                     sb.append(",");
                 }
                 
-                sb.append("{\"Naam\": \"" + rs.getString("naam") + "\", \"Omschrijving\":\"" + rs.getInt("omschrijving") +"\"}");
+                sb.append("{\"Naam\": \"" + rs.getString("naam") + "\", \"Omschrijving\":\"" + rs.getString("omschrijving") +"\"}");
                 isfirst = false;
             }
             
             return sb.toString();
         }
         catch(Exception e)
-        { }
+        { 
+            e.printStackTrace();
+        }
         finally
         {
             try
