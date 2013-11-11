@@ -72,6 +72,14 @@ class User_model extends CI_Model {
                     Met vriendelijke groeten<br/>
                     '.$name.'';
         $this->load->library('email');
+        $config['protocol']    = 'smtp';
+        $config['smtp_host']    = 'ssl://smtp.gmail.com';
+        $config['smtp_port']    = '465';
+        $config['smtp_timeout'] = '7';
+        $config['smtp_user']    = 'topics2.groep1@gmail.com';
+        $config['smtp_pass']    = 'azerQSDF';
+        $config['charset']    = 'utf-8';
+        $config['validation'] = TRUE; // bool whether to validate email or not
         $config['mailtype'] = 'html';               
         $this->email->initialize($config); 
         $this->email->from($email, $name);
