@@ -427,6 +427,53 @@ public class Connectie {
          return "[{\"email\":\"null\"}]";
     }
     
+    public String getPunten()
+    {
+        StringBuilder sb = new StringBuilder();
+        Statement stmt = null;
+        ResultSet rs = null;
+        try
+        {
+           String sql = "SELECT naam, punt_behaald, punt_mogelijk, omschrijving"
+                   + " FROM punten"; 
+           
+           stmt = dbCon.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+           rs = stmt.executeQuery(sql);
+           
+           sb.append("[");
+           boolean isfirst = true;
+            while(rs.next())
+            {
+                if(isfirst == false)
+                {
+                    sb.append(",");
+                }
+                    sb.append("{\"naam\":\"" + rs.getString("naam") + "\""
+                      + ",\"puntbehaald\":\""+ rs.getInt("punt_behaald") +"\""
+                      + ",\"puntmogelijk\":\""+ rs.getInt("punt_mogelijk") +"\""
+                      + ",\"omschrijving\":\""+ rs.getString("omschrijving") +"\"}");
+                isfirst = false;
+           }
+           sb.append("]");
+           return sb.toString();
+        }
+        catch(Exception e)
+        {
+          System.err.println("getPunten failed\r\n" + e.getMessage());  
+        }
+        finally
+        {
+            try {
+                rs.close();
+                stmt.close();
+            } catch (Exception e) {
+               System.err.println("Kon statement en Resultset niet afsluiten \r\n" + e.getMessage());  
+            }
+            
+        }
+         return "";
+    }
+    
     public void ChangeEmail(String username, String email)
     {
         try
