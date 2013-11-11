@@ -8,5 +8,6 @@ $lang['passwordMatch']="The password fields did not match.";
 $lang['emailMatch']="The e-mail addresses did not match.";
 $lang['unauthorized']="You could not be authorized.";
 $lang['fieldsIncorrect']="Please fill in all fields with valid values.";
-
+//Contactpagina meldingen
+$lang['ContactError']="The reCAPTCHA wasn't entered correctly. Try it again, please.";
 ?>

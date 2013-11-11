@@ -55,6 +55,7 @@ class Start extends CI_Controller {
     }
      public function contact()
     {
+         
         $data['error'] = $this->lang->line('');
         $this->load->view('contact',$data);
     }

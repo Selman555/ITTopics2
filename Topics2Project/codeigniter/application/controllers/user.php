@@ -249,29 +249,49 @@ class User extends CI_Controller {
 		$this->load->view('profile', $data);
 	}
          public function ContactUs(){
-           $this->form_validation->set_rules('name','Name','trim|required|xss_clean');
-           $this->form_validation->set_rules('email','Email','trim|required|xss_clean');       
-           $this->form_validation->set_rules('message','Message','trim|required|xss_clean');
+           
+            
+               $this->form_validation->set_rules('name','Name','trim|required|xss_clean');
+               $this->form_validation->set_rules('email','Email','trim|required|xss_clean');       
+               $this->form_validation->set_rules('message','Message','trim|required|xss_clean');
         
-           if($this->form_validation->run()){
-               $name = $this->input->post('name');
-               $email = $this->input->post('email');
-               $message = $this->input->post('message');
+               $this->load->helper('recaptchalib');
+               $privatekey = "6LeWDeoSAAAAAHokC_BO35HtzBg8ZMivJUupf7bb";
+               $resp= recaptcha_check_answer($privatekey, 
+                    $_SERVER["REMOTE_ADDR"], 
+                    $_POST["recaptcha_challenge_field"],
+                    $_POST["recaptcha_response_field"]);
                
-               $verzonden=$this->user_model->sendEmailContact($name,$email,$message); 
-                  if($verzonden==true){
-                        $this->load->view('contactVerzonden');
+              
+               if($this->form_validation->run()){
+                    if (!$resp->is_valid) { 
+                        $data['error'] = $this->lang->line('ContactError');
+                        $this->load->view('contact',$data); 
                     }
-                  else{
-                        $data['error'] = $this->lang->line('webserviceError');
-                         $this->load->view('contact',$data);  
+                    else{
+                     $name = $this->input->post('name');
+                     $email = $this->input->post('email');
+                     $message = $this->input->post('message');
+               
+                    $verzonden=$this->user_model->sendEmailContact($name,$email,$message); 
+                           
+                        if($verzonden==true){
+                             $this->load->view('contactVerzonden');
+                         }
+                        else{
+                             $data['error'] = $this->lang->line('webserviceError');
+                             $this->load->view('contact',$data);  
+                         }
                     }
-   
-           }
-           else{
-                $data['error'] = $this->lang->line('fieldsIncorrect');
-                 $this->load->view('contact',$data);
                 }
+              else{
+                    $data['error'] = $this->lang->line('fieldsIncorrect');
+                     $this->load->view('contact',$data);
+                } 
+               
+                  
+         
+          
 
         }
          public function contactVerzonden()

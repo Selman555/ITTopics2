@@ -28,6 +28,16 @@
                         <label><?php echo $this->lang->line('ContactMessage');?></label>
                         <textarea name="message" placeholder="Type Here"></textarea><br/>
                         <p><?php print_r($error);?></p>
+                       
+                        
+                              <?php 
+                                $this->load->helper('recaptchalib');
+                                 $publickey = "6LeWDeoSAAAAABra6x4Byum5xTJnlNlqEZkgS6eo";
+                                 echo recaptcha_get_html($publickey);
+                             
+                              ?>
+                        
+                        
                         <input id="submit" name="submit" type="submit" value="Submit">
         
                     </form>

@@ -47,5 +47,6 @@ $lang['ContactMessage']="Message";
 //contactverzonden
 $lang['ContactMessage']="Your message has been send to us";
 $lang['ContactMessage2']=" Thank you for contacting";
+//message contact
 
 ?>

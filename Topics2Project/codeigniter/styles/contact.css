@@ -19,13 +19,14 @@ input, textarea {
         border-radius:0.5em;
 }
 textArea{
-   margin-left: 5em;
-   height:20em;
+   height:10em;
 }
 input:focus, textarea:focus {
     border:0.1em solid #97d6eb;
     
 }
+
+
 
 #submit {
     width:10em;
@@ -57,16 +58,25 @@ body>section {
 @media screen and  (max-width:1024px)
 {
     body>section {
-		width: 70%;
-	    min-height: 72.2%;
+        width: 80%;
+        min-height: 72.2%;
 	
     }
+   input, textarea {
+	width:33em;
+	height:0.8em;
+	padding:0.6em;
+	margin-top:0em;
+	font-size:0.9em;
    
-textArea{
-   margin-left: 5em;
-   height:10em;
+    }
+    textArea{
+        
+         height:8em;
+       
 	
-}
+     }
+     
 
     
 }
