@@ -78,7 +78,15 @@ public class Login {
             System.out.println("Exception put methode.\r\n"+e.getMessage());
         }       
     }
-       
+    
+    @GET
+    @Path("getEmail")
+    @Consumes("application/json")
+    public String getEmail(@QueryParam("username") String username){
+        return c.getEmail(username);
+    }
+    
+    
     @PUT
     @Path("changeEmail")
     @Consumes("application/json")

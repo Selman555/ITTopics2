@@ -13,20 +13,22 @@ class User_model extends CI_Model {
     
 	function login($username,$password,$salt)
     {
-     
-        $this->db->select('Mem_Username,Mem_Password');
-        $this->db->where('Mem_Username',$username);
-        $this->db->where('Mem_Password',sha1($password.$salt));
-        $this->db->limit(1);
-        $query = $this->db->get('members');//het ophalen van de geselecteerde members
+		$json = $this->getRequest('Login/checkLogin?username='.$username.'&password='.sha1($password.$salt));
+		return ($json[0]["level"]);
+	
+	
+        //$this->db->select('Mem_Username,Mem_Password');
+        //$this->db->where('Mem_Username',$username);
+        //$this->db->where('Mem_Password',sha1($password.$salt));
+        //$this->db->limit(1);
+        //$query = $this->db->get('members');//het ophalen van de geselecteerde members
         
-        if($query->num_rows()==1){
-            return $query->result();
-        }
-        else{
-            return FALSE;
-        }
-        
+        //if($query->num_rows()==1){
+        //    return $query->result();
+        //}
+        //else{
+        //    return FALSE;
+        //}
     }
     
     function sendEmail($gebruikersnaam,$wachtwoord,$email)
@@ -58,17 +60,20 @@ class User_model extends CI_Model {
     
     function getEmail($username)
     {
-        $this->db->select('Mem_Email');
-        $this->db->where('Mem_Username',$username);
-        $this->db->limit(1);
-        $query = $this->db->get('members');//het ophalen van de geselecteerde members
+		$json = $this->getRequest('Login/getEmail?username='.$username);
+		return ($json[0]["email"]);
+	
+        //$this->db->select('Mem_Email');
+        //$this->db->where('Mem_Username',$username);
+        //$this->db->limit(1);
+        //$query = $this->db->get('members');//het ophalen van de geselecteerde members
         
-        if($query->num_rows()==1){
-            return $query->result();
-        }
-        else{
-            return FALSE;
-        }
+        //if($query->num_rows()==1){
+        //    return $query->result();
+        //}
+        //else{
+        //    return FALSE;
+        //}
     }
     
     /**
@@ -112,17 +117,19 @@ class User_model extends CI_Model {
      */
     function getSalt($username)
     {
-        $this->db->select('Mem_Salt');
-        $this->db->where('Mem_Username',$username);
-        $this->db->limit(1);
-        $query = $this->db->get('members');//het ophalen van de geselecteerde members
-        
-        if($query->num_rows()==1){
-            return $query->result();
-        }
-        else{
-            return false;
-        }
+		$json = $this->getRequest('Login/getSalt?username='.$username);
+		return ($json[0]["Salt"]);
+		
+        //$this->db->select('Mem_Salt');
+        //$this->db->where('Mem_Username',$username);
+        //$this->db->limit(1);
+        //$query = $this->db->get('members');//het ophalen van de geselecteerde members
+        //if($query->num_rows()==1){
+        //    return $query->result();
+        //}
+        //else{
+        //    return false;
+        //}
     }
     
     function getRequest($path) {

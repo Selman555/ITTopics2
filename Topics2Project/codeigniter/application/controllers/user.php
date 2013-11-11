@@ -38,25 +38,30 @@ class User extends CI_Controller {
                 
                 $resultSalt=$this->user_model->getSalt($username);
             
-                if($resultSalt)
+                if($resultSalt != "null")
                     {//als er een salt is 
-                        $salt='';
-                        foreach ($resultSalt as $row) 
-                        {
-                        	$salt=$row->Mem_Salt;
-                        }
+                        //$salt='';
+                        //foreach ($resultSalt as $row) 
+                        //{
+                        //	$salt=$row->Mem_Salt;
+                        //}
                 
-                        $boolean = $this->user_model->login($username,$password,$salt);
-                         if($boolean)
+                        $boolean = $this->user_model->login($username,$password,$resultSalt);
+                         if($boolean == 1)
                          {
                             $array=array();
-                            foreach($boolean as $row)
-                            {
-                                  $array= array(
-                                  'username'=>$row->Mem_Username,
-                                  'logged_in'=>true
-                                     );
-                            }
+							$array= array(
+							  'username'=>$username,
+							  'logged_in'=>true
+								 );
+								 
+                            //foreach($boolean as $row)
+                            //{
+                            //      $array= array(
+							//	  'username'=>username,
+                            //      'logged_in'=>true
+                            //         );
+                            //}
                             $this->session->set_userdata($array);
        
                             redirect('start/index');
@@ -90,16 +95,17 @@ class User extends CI_Controller {
             //het ophalen van het emial address
              $username=$this->input->post('username');
              $result=$this->user_model->getEmail($username);
-        
+			
              //het email address als er een is in een var zetten
-             if ($result) 
+             if ($result != "null") 
               {
-                $email='';
+                $email=$result;
+				
        
-                foreach ($result as $row) 
-                {
-                    $email=$row->Mem_Email;
-                }
+                //foreach ($result as $row) 
+                //{
+                //    $email=$row->Mem_Email;
+                //}
 
                  //het genereren van een nieuw passwoord voor de gebruiker
                 $password= random_string('alnum', 10);

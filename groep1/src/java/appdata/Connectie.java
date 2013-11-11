@@ -392,6 +392,41 @@ public class Connectie {
         }
     }
     
+    public String getEmail(String username)
+    {
+        Statement stmt = null;
+        ResultSet rs = null;
+        try
+        {
+           String sql = "SELECT Mem_Email"
+                   + " FROM members"
+                   + " WHERE Mem_Username='" + username + "'"; 
+           
+           stmt = dbCon.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+           rs = stmt.executeQuery(sql);
+           
+           if(rs.next())
+           {
+              return "[{\"email\":\"" + rs.getString("Mem_Email") + "\"}]";
+           }
+        }
+        catch(Exception e)
+        {
+          System.err.println("Get email Failed!\r\n" + e.getMessage());  
+        }
+        finally
+        {
+            try {
+                rs.close();
+                stmt.close();
+            } catch (Exception e) {
+               System.err.println("Kon statement en Resultset niet afsluiten \r\n" + e.getMessage());  
+            }
+            
+        }
+         return "[{\"email\":\"null\"}]";
+    }
+    
     public void ChangeEmail(String username, String email)
     {
         try
