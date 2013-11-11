@@ -11,4 +11,6 @@ $lang['fieldsIncorrect']="Gelieve alle velden met een geldige waarde in te vulle
 $lang['ContactError']="De reCAPTCHA is niet goed ingegeven. Gelieve opnieuw te proberen";
 //passwordrecovery pagina meldeingen
 $lang['PasswordError']="Uw email adres bevindt zich niet in onze database";
+//loginpagina meldingen
+$lang['loginError']="Verkeerd paswoord of gebruikersnaam";
 ?>

@@ -17,12 +17,13 @@ class User extends CI_Controller {
 	
 	public function login()
 	{
-		$this->load->view('login');
+            $data['error']="";
+            $this->load->view('login',$data);
 	}
 
 	public function loginUser()
 	{
-			$this->iplogging();
+            $this->iplogging();
             
             //het verplicht maken van username en password
             $this->form_validation->set_rules('username', 'Username','trim|required|xss_clean');   
@@ -30,8 +31,8 @@ class User extends CI_Controller {
            
              //het ophalen van de salt
             if(!$this->form_validation->run()){ 
-        	$this->session->set_flashdata("errors", "verkeerd passwoord en/of username");
-                $this->load->view('login');
+        	 $data['error']=$this->lang->line('fieldsIncorrect');
+                 $this->load->view('login',$data);
             } else {
                 $username=$this->input->post('username');
                 $password=$this->input->post('password');
@@ -44,7 +45,7 @@ class User extends CI_Controller {
                         $boolean = $this->user_model->login($username,$password,$resultSalt);
                          if($boolean == 1)
                          {
-                            $array=array();
+                          
                             $array= array(
                                     'username'=>$username,
                                     'logged_in'=>true
@@ -56,15 +57,15 @@ class User extends CI_Controller {
                         }
                         else
                         {
-                             $this->session->set_flashdata("errors", "verkeerd passwoord en/of username");
-                             $this->load->view('login');
+                             $data['error']=$this->lang->line('loginError');
+                             $this->load->view('login',$data);
                         }
                         
                     }
                     else
                     {
-                        $this->session->set_flashdata("errors", "verkeerd passwoord en/of username");
-                        $this->load->view('login');
+                        $data['error']=$this->lang->line('fieldsIncorrect');
+                        $this->load->view('login',$data);
                     }
             }
         }
