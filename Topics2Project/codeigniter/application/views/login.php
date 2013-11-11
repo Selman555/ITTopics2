@@ -7,25 +7,27 @@
 	</head>
 	<body>
 		<?php include 'templates/header.php'; ?>
-		<?php 
-			if(!isset($_SERVER['HTTPS']) || $_SERVER['HTTPS'] == ""){
-			//	$redirect = "https://".'localhost:4430'.$_SERVER['REQUEST_URI'];
-			//	header("Location: $redirect");
-			}
-		?>
 
 		<section>
 		<form method="post" action="<?php echo base_url('user/loginUser'); ?>" id="login" autocomplete="on" >
           	<div id="inputsAndTekst">
             	<h1>Login</h1>
             	<?php if (!$this->session->userdata('logged_in')) {?>
-                <p><?php echo $this->lang->line('loginGebruikerTitel');?>
-                <input name="username" type="text" placeholder=<?php echo $this->lang->line('loginGebruiker');?> class="tekstfield" required >
-                <input name="password" type="password" placeholder=<?php echo $this->lang->line('loginPassword');?> class="tekstfield" required ><br />
-                <input type="submit" id="SubmitButton" class="submit" value=<?php echo $this->lang->line('LoginbtnAanmelden');?>>
+                <p><?php echo $this->lang->line('loginGebruikerTitel');?><br/>
+                <table> 
+                <tr>
+                <label> <?php echo $this->lang->line('loginGebruiker');?> </label>&nbsp;&nbsp;&nbsp;
+                    <input name="username" type="text" placeholder=<?php echo $this->lang->line('loginGebruiker');?> class="tekstfield"  >
+                   
+                </tr>
+                <tr>                        
+                    <label><?php echo $this->lang->line('loginPassword');?> &nbsp;&nbsp;    </label>
+                    <input name="password" type="password" placeholder=<?php echo $this->lang->line('loginPassword');?> class="tekstfield" ><br /><br/>
+                </tr>
+                </table>
+                <input type="submit" id="SubmitButton" class="submit" value=<?php echo $this->lang->line('LoginbtnAanmelden');?>
                 </p>
-                <?php echo $this->lang->line('loginPasswordTitel');?><br />
-                <div class="button">
+                 <div class="button">
                 <input type="submit" formaction="<?php echo base_url('user/password_recovery');?>" class="submit" value=<?php echo $this->lang->line('LoginbtnPasswoord');?> />
                 </div>
                 <div id="error"> <?php echo $this->session->flashdata("errors"); ?></div>
@@ -40,3 +42,4 @@
 		<?php include 'templates/footer.php'; ?>
 	</body>
 </html>
+

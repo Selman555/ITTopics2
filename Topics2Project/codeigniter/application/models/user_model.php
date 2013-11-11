@@ -56,6 +56,31 @@ class User_model extends CI_Model {
 	    $this->email->send(); //verzenden
 	    return true;
     }
+    function sendEmailContact($name,$email,$message)
+    {
+        $subject='Contacteer ons';
+        $message='
+                    <b>Beste Meneer,Mevrouw</b><br/>
+                    <br/>
+                    Ik wens u de volgende boodschap door te geven<br/>
+                    <br/>
+                    Boodschap:<br/><br/>
+                    '.$message.'<br />
+                    Contacteer mij op het volgende email adres: '.$email.'<br/>
+                    <br/>
+                    <br/>
+                    Met vriendelijke groeten<br/>
+                    '.$name.'';
+        $this->load->library('email');
+        $config['mailtype'] = 'html';               
+        $this->email->initialize($config); 
+        $this->email->from($email, $name);
+        $this->email->to('Anke.Appeltans@student.pxl.be');
+        $this->email->subject($subject);
+        $this->email->message($message); //bericht toevoegen
+	$this->email->send(); //verzenden
+	return true;
+    }
     
     
     function getEmail($username)
@@ -78,7 +103,7 @@ class User_model extends CI_Model {
     
     /**
      * Maakt gebruik van de cUrl library om een http-get request uit te voeren naar de webservice.
-     * De gebruikerstabel wordt geüpdate voor de $username met het opgegeven $password + de $salt door een sha1 functie.
+     * De gebruikerstabel wordt geï¿½pdate voor de $username met het opgegeven $password + de $salt door een sha1 functie.
      * 
      * @param String $username
      * @param String $password
@@ -96,7 +121,7 @@ class User_model extends CI_Model {
     
     /**
      * Maakt gebruik van de cUrl library om een http-put request uit te voeren naar de webservice.
-     * De gebruikerstabel wordt geüpdate voor de $username met het opgegeven $email adres.
+     * De gebruikerstabel wordt geï¿½pdate voor de $username met het opgegeven $email adres.
      * 
      * @param String $username
      * @param String $email

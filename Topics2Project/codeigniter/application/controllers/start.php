@@ -53,6 +53,10 @@ class Start extends CI_Controller {
     	$data = $this->getCMS('aboutpagina');
     	$this->load->view('about', $data);
     }
+     public function contact()
+    {
+        $this->load->view('contact');
+    }
     public function cmsAboutOpdrachtgever() 
     {
     	$this->form_validation->set_rules('aboutpagina', 'aboutpagina','callback_verify_xss|xss_clean|required|trim');

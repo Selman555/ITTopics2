@@ -19,11 +19,16 @@ h1
     font-size: 1.5em;
 }
 
-
-
-input.tekstfield
+input[placeholder="Gebruikersnaam"]
 {
-    width:80%;
+     width:65%;
+   
+}
+input[placeholder="Username"]
+{
+     margin-left: 2.5em;
+     width:65%;
+   
 }
 
 
@@ -31,13 +36,11 @@ input.submit
 {  
    	width: 40%; 
    	padding: 0.4em 0.9em;
-        
-   	
-   	
-   	
+        margin-left: 6em;
+  	
 }
 .button{
-    margin-top: 0.5em;
+    margin-top: 0.1em;
 }
 
 #inputsAndTekst
@@ -67,7 +70,8 @@ input[type=email] {
 	width: 100%;
 }
 input[type=password] {
-	width: 100%;
+	width: 65%;
+        margin-left: 3em;
 }
 
 @media screen and  (max-width:1024px)

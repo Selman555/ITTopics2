@@ -45,4 +45,5 @@ $lang['passwordresettitle']="Uw paswoord opnieuw instellen";
 $lang['passwordOld']="Oud paswoord";
 $lang['passwordNew']="Nieuw paswoord";
 $lang['passwordConfirm']="Bevestig paswoord";
+$lang['LoginbtnPasswoord']="Paswoord&nbsp;vergeten?"
 ?>

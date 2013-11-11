@@ -5,7 +5,7 @@
 	<nav>
 	    <a href="<?php echo base_url(); ?>" ><?php echo $this->lang->line('home');?></a>               	    
         <a href="<?php echo base_url('start/about'); ?>" ><?php echo $this->lang->line('about');?></a> 
-        <a href="#">Contact</a>
+        <a href="<?php echo base_url('start/contact'); ?>">Contact</a>
         <a href="<?php echo base_url('start/leden'); ?>"><?php echo $this->lang->line('leden');?></a>
     	<?php if ($this->session->userdata('logged_in')) {?>
         <a href="<?php echo base_url('user/prive'); ?>" ><?php echo $this->lang->line('prive');?></a>

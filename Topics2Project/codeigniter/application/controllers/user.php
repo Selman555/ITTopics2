@@ -248,6 +248,29 @@ class User extends CI_Controller {
 		}
 		$this->load->view('profile', $data);
 	}
+         public function ContactUs(){
+           $this->form_validation->set_rules('name','Name','trim|required|xss_clean');
+           $this->form_validation->set_rules('email','Email','trim|required|xss_clean');       
+           $this->form_validation->set_rules('message','Message','trim|required|xss_clean');
+        
+           if($this->form_validation->run()){
+               $name = $this->input->post('name');
+               $email = $this->input->post('email');
+               $message = $this->input->post('message');
+               
+              $this->user_model->sendEmailContact($name,$email,$message); 
+               
+               
+               
+           }
+           else{
+               $this->load->view('start','contact');
+           }
+           
+           
+           
+           
+        }
 }
 
 /* End of file welcome.php */
