@@ -17,20 +17,8 @@
                 <h1><?php echo $this->lang->line('ContactTitel');?></h1>
                
                 <article>
-                    <form method="post" action="<?php echo base_url('user/ContactUs'); ?>">
-
-                        <label><?php echo $this->lang->line('ContactName');?></label>
-                        <input name="name" placeholder="Type Here">
-            
-                        <label><?php echo $this->lang->line('ContactEmail');?></label>
-                        <input name="email" type="email" placeholder="Type Here">
-            
-                        <label><?php echo $this->lang->line('ContactMessage');?></label>
-                        <textarea name="message" placeholder="Type Here"></textarea><br/>
-                        <p><?php print_r($error);?></p>
-                        <input id="submit" name="submit" type="submit" value="Submit">
-        
-                    </form>
+                    <?php echo $this->lang->line('ContactMessage');?><br/>
+                    <?php echo $this->lang->line('ContactMessage2');?>
                 </article>
                 
            </section>

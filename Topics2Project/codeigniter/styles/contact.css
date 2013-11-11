@@ -38,6 +38,9 @@ input:focus, textarea:focus {
 #submit:hover {
     opacity:.9;
 }
+p{
+    color: red;
+}
 
 body>section {
 	width: 30%;

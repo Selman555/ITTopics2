@@ -38,5 +38,14 @@ $lang['passwordresettitle']="Reset your password";
 $lang['passwordOld']="Old password";
 $lang['passwordNew']="New password";
 $lang['passwordConfirm']="Confirm password";
-$lang['LoginbtnPasswoord']="Password&nbsp;forgotten?"
+$lang['LoginbtnPasswoord']="Password&nbsp;forgotten?";
+//contact page
+$lang['ContactTitel']="Contact us";
+$lang['ContactName']="Name";
+$lang['ContactEmail']="Email";
+$lang['ContactMessage']="Message";
+//contactverzonden
+$lang['ContactMessage']="Your message has been send to us";
+$lang['ContactMessage2']=" Thank you for contacting";
+
 ?>

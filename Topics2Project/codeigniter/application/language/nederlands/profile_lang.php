@@ -8,4 +8,5 @@ $lang['passwordMatch']="De paswoorden komen niet overeen.";
 $lang['emailMatch']="De e-mail adressen komen niet overeen.";
 $lang['unauthorized']="U kon niet worden geauthoriseerd.";
 $lang['fieldsIncorrect']="Gelieve alle velden met een geldige waarde in te vullen.";
+
 ?>

@@ -8,7 +8,7 @@
              	$logged = true;
              }?>
              <link rel="stylesheet" href="<?php echo base_url('styles/main.css'); ?>" type="text/css" media="screen"/>
-             <title>Hoofdpagina</title>
+             <title>About</title>
         </head>
 	
         <body>

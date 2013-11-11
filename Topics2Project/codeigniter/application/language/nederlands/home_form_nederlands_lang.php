@@ -45,5 +45,13 @@ $lang['passwordresettitle']="Uw paswoord opnieuw instellen";
 $lang['passwordOld']="Oud paswoord";
 $lang['passwordNew']="Nieuw paswoord";
 $lang['passwordConfirm']="Bevestig paswoord";
-$lang['LoginbtnPasswoord']="Paswoord&nbsp;vergeten?"
+$lang['LoginbtnPasswoord']="Paswoord&nbsp;vergeten?";
+$lang['ContactTitel']="Contacteer ons";
+$lang['ContactName']="Naam";
+$lang['ContactEmail']="Email";
+$lang['ContactMessage']="Boodschap";
+//contactverzonden
+$lang['ContactMessage']="Uw boodschap werd naar ons gestuurd";
+$lang['ContactMessage2']="Dank u voor ons te contacteren";
+
 ?>

@@ -55,8 +55,10 @@ class Start extends CI_Controller {
     }
      public function contact()
     {
-        $this->load->view('contact');
+        $data['error'] = $this->lang->line('');
+        $this->load->view('contact',$data);
     }
+   
     public function cmsAboutOpdrachtgever() 
     {
     	$this->form_validation->set_rules('aboutpagina', 'aboutpagina','callback_verify_xss|xss_clean|required|trim');

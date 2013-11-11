@@ -258,19 +258,26 @@ class User extends CI_Controller {
                $email = $this->input->post('email');
                $message = $this->input->post('message');
                
-              $this->user_model->sendEmailContact($name,$email,$message); 
-               
-               
-               
+               $verzonden=$this->user_model->sendEmailContact($name,$email,$message); 
+                  if($verzonden==true){
+                        $this->load->view('contactVerzonden');
+                    }
+                  else{
+                        $data['error'] = $this->lang->line('webserviceError');
+                         $this->load->view('contact',$data);  
+                    }
+   
            }
            else{
-               $this->load->view('start','contact');
-           }
-           
-           
-           
-           
+                $data['error'] = $this->lang->line('fieldsIncorrect');
+                 $this->load->view('contact',$data);
+                }
+
         }
+         public function contactVerzonden()
+    {
+        $this->load->view('contactVerzonden');
+    }
 }
 
 /* End of file welcome.php */
