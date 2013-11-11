@@ -67,7 +67,7 @@ class User_model extends CI_Model {
                     Boodschap:<br/><br/>
                     '.$message.'<br />
                     Contacteer mij op het volgende email adres: '.$email.'<br/>
-                    <br/>
+                    <br/>0
                     <br/>
                     Met vriendelijke groeten<br/>
                     '.$name.'';
@@ -148,6 +148,7 @@ class User_model extends CI_Model {
      * @param String $username
      * @return boolean succes
      */
+   
     function getSalt($username)
     {
 		$json = $this->getRequest('Login/getSalt?username='.$username);

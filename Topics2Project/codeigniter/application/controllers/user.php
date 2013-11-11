@@ -39,29 +39,17 @@ class User extends CI_Controller {
                 $resultSalt=$this->user_model->getSalt($username);
             
                 if($resultSalt != "null")
-                    {//als er een salt is 
-                        //$salt='';
-                        //foreach ($resultSalt as $row) 
-                        //{
-                        //	$salt=$row->Mem_Salt;
-                        //}
+                    {
                 
                         $boolean = $this->user_model->login($username,$password,$resultSalt);
                          if($boolean == 1)
                          {
                             $array=array();
-							$array= array(
-							  'username'=>$username,
-							  'logged_in'=>true
-								 );
+                            $array= array(
+                                    'username'=>$username,
+                                    'logged_in'=>true
+					);
 								 
-                            //foreach($boolean as $row)
-                            //{
-                            //      $array= array(
-							//	  'username'=>username,
-                            //      'logged_in'=>true
-                            //         );
-                            //}
                             $this->session->set_userdata($array);
        
                             redirect('start/index');
@@ -81,48 +69,49 @@ class User extends CI_Controller {
             }
         }
         
-    public function password_recovery()
-    {            
-        $this->form_validation->set_rules('username', 'Username', 'trim|required|xss_clean');
+    public function Password_recovery()
+    {   $data['error']='';      
+        $this->load->view('passwordRecovery',$data);
+       
+    }
+    public function setPassword()
+    {
+       
+         $this->form_validation->set_rules('username', 'Username', 'trim|required|xss_clean');
+         $this->form_validation->set_rules('email','Email','trim|required|xss_clean');
          
         if(!$this->form_validation->run())
         { 
-             $this->session->set_flashdata("errors", "verkeerde username");
-             $this->load->view('login');
+             $data['error']=$this->lang->line('fieldsIncorrect');
+             $this->load->view('passwordRecovery',$data);
         } 
         else 
         {
             //het ophalen van het emial address
              $username=$this->input->post('username');
+             $email=$this->input->post('email');
              $result=$this->user_model->getEmail($username);
 			
              //het email address als er een is in een var zetten
-             if ($result != "null") 
-              {
-                $email=$result;
-				
-       
-                //foreach ($result as $row) 
-                //{
-                //    $email=$row->Mem_Email;
-                //}
-
-                 //het genereren van een nieuw passwoord voor de gebruiker
+             if ($result==$email) 
+              {		
+                //het genereren van een nieuw passwoord voor de gebruiker
                 $password= random_string('alnum', 10);
                 //genereren van een random int
-                $salt=random_string('sha1',10);
+                $salt=$this->user_model->getSalt($username);
            
                 //het password updaten in de database
                 $this->user_model->updatePassword($username,$password, $salt);
+                
                 //email sturen nr gebruiker
                 $this->user_model->sendEmail($username,$password,$email);
                 //tonen dat de email is verzonden
-                $this->load->view('passwordRecovery');
+                $this->load->view('passwordRecoverySucceeded');
             } 
             else 
             { //anders printen dat de gebruiker niet aanwezig is in de database
-               $this->session->set_flashdata("errors", "verkeerde username");
-               $this->load->view('login');
+                $data['error']=$this->lang->line('PasswordError');
+                $this->load->view('passwordRecovery',$data);
             }     
         }
     }
@@ -294,10 +283,7 @@ class User extends CI_Controller {
           
 
         }
-         public function contactVerzonden()
-    {
-        $this->load->view('contactVerzonden');
-    }
+      
 }
 
 /* End of file welcome.php */

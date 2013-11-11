@@ -172,7 +172,7 @@ header nav a:hover {
 input:required:invalid, input:focus:invalid {
 	/* BRON: http://www.the-art-of-web.com/html/html5-form-validation/#.UnvuL_lWyG4 */
 	box-shadow: 3px 5px #123456;
-	background-color: #FFFFAA;
+	background-color: White;
 }
 input:required:valid {
 	box-shadow: 3px 5px #eeeeee;
