@@ -42,7 +42,7 @@
 						<tbody>
 							<tr>
 						    	<th>E-mail</th>
-						        <td colspan="3"><?php echo $this->session->userdata('email');?></td>
+						        <td colspan="3"><?php echo $email; ?></td>
 						    </tr>
 						    <tr>
 						      	<th><?php echo $this->lang->line('reset');?></th>

@@ -13,22 +13,14 @@ class User_model extends CI_Model {
     
 	function login($username,$password,$salt)
     {
-		$json = $this->getRequest('Login/checkLogin?username='.$username.'&password='.sha1($password.$salt));
+		$json = $this->getRequest('webresources/Login/checkLogin?username='.$username.'&password='.sha1($password.$salt));
 		return ($json[0]["level"]);
-	
-	
-        //$this->db->select('Mem_Username,Mem_Password');
-        //$this->db->where('Mem_Username',$username);
-        //$this->db->where('Mem_Password',sha1($password.$salt));
-        //$this->db->limit(1);
-        //$query = $this->db->get('members');//het ophalen van de geselecteerde members
-        
-        //if($query->num_rows()==1){
-        //    return $query->result();
-        //}
-        //else{
-        //    return FALSE;
-        //}
+    }
+    
+    function getTasks()
+    {
+    	$json = $this->getRequest('Punten');
+    	return $json;
     }
     
     function sendEmail($gebruikersnaam,$wachtwoord,$email)
@@ -104,20 +96,8 @@ class User_model extends CI_Model {
     
     function getEmail($username)
     {
-		$json = $this->getRequest('Login/getEmail?username='.$username);
+		$json = $this->getRequest('webresources/Login/getEmail?username='.$username);
 		return ($json[0]["email"]);
-	
-        //$this->db->select('Mem_Email');
-        //$this->db->where('Mem_Username',$username);
-        //$this->db->limit(1);
-        //$query = $this->db->get('members');//het ophalen van de geselecteerde members
-        
-        //if($query->num_rows()==1){
-        //    return $query->result();
-        //}
-        //else{
-        //    return FALSE;
-        //}
     }
     
     /**
@@ -135,7 +115,7 @@ class User_model extends CI_Model {
     			"password" => sha1($password.$salt)
     	);
 
-    	return $this->putRequest($data, 'Login/changePassword');
+    	return $this->putRequest($data, 'webresources/Login/changePassword');
     }
     
     /**
@@ -151,7 +131,7 @@ class User_model extends CI_Model {
     			"username" => $username,
     			"email" => $email
     	);
-    	return $this->putRequest($data, 'Login/changeEmail');
+    	return $this->putRequest($data, 'webresources/Login/changeEmail');
     }
     
     /**
@@ -162,19 +142,9 @@ class User_model extends CI_Model {
    
     function getSalt($username)
     {
-		$json = $this->getRequest('Login/getSalt?username='.$username);
+		$json = $this->getRequest('webresources/Login/getSalt?username='.$username);
 		return ($json[0]["Salt"]);
-		
-        //$this->db->select('Mem_Salt');
-        //$this->db->where('Mem_Username',$username);
-        //$this->db->limit(1);
-        //$query = $this->db->get('members');//het ophalen van de geselecteerde members
-        //if($query->num_rows()==1){
-        //    return $query->result();
-        //}
-        //else{
-        //    return false;
-        //}
+		return true;
     }
     
     function getRequest($path) {
@@ -184,7 +154,7 @@ class User_model extends CI_Model {
     	);
     	$curl_instance = curl_init();
         curl_setopt($curl_instance, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($curl_instance, CURLOPT_URL, 'http://localhost:8080/Groep1/webresources/'.$path);
+        curl_setopt($curl_instance, CURLOPT_URL, 'http://localhost:8080/Groep1/'.$path);
         
         try {
         	$data = json_decode(curl_exec($curl_instance), true);
@@ -200,7 +170,7 @@ class User_model extends CI_Model {
     			'Content-Type: application/json',
     	);
     	$curl_instance = curl_init();
-    	curl_setopt($curl_instance, CURLOPT_URL, 'http://localhost:8080/Groep1/webresources/'.$path);
+    	curl_setopt($curl_instance, CURLOPT_URL, 'http://localhost:8080/Groep1/'.$path);
     	curl_setopt($curl_instance, CURLOPT_HTTPHEADER, $headers);
     	curl_setopt($curl_instance, CURLOPT_CONNECTTIMEOUT, 10);
     	curl_setopt($curl_instance, CURLOPT_RETURNTRANSFER, true);

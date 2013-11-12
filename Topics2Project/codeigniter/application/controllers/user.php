@@ -42,7 +42,7 @@ class User extends CI_Controller {
 			if ($resultSalt != "null") {
 				
 				$boolean = $this->user_model->login ( $username, $password, $resultSalt );
-				if ($boolean == 1) {
+				if ($boolean) {
 					
 					$array = array (
 							'username' => $username,
@@ -155,7 +155,9 @@ class User extends CI_Controller {
 	}
 	
 	public function profile() {
-		$this->load->view ( 'profile' );
+		$data['tasks'] = $this->user_model->getTasks();
+		$data['email'] = $this->user_model->getEmail($this->session->userdata('username'));
+		$this->load->view ( 'profile', $data );
 	}
 	
 	public function changePassword() {
