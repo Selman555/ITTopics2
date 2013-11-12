@@ -2,7 +2,7 @@
 
 $lang['home']="Home";
 $lang['about']="Over ons";
-$lang['prive']="Priv� bestanden";
+$lang['prive']="Priv&eacute bestanden";
 $lang['logout']="Afmelden";
 $lang['login']="Aanmelden";
 $lang['password']="Paswoord opnieuw instellen";

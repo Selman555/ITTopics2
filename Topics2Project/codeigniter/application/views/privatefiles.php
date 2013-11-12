@@ -19,15 +19,13 @@
 			}
 		?>
                 
-		<div id="content">
 			<section>
-				<header><h1><?php echo $this->lang->line('prive');?></h1></header>
+				<h1><?php echo $this->lang->line('prive');?></h1>
 				<article>
 					<p><?php echo $this->lang->line('priveBestandBericht');?></p>
 					<input type="dropbox-chooser" name="selected-file" style="visibility: hidden;"/>
 				</article>
 			</section>
-		</div>
 
 		<?php include 'templates/footer.php'; ?>
 	</body>
