@@ -34,21 +34,31 @@ class User_model extends CI_Model {
     function sendEmail($gebruikersnaam,$wachtwoord,$email)
     {
 	    //email verificatie (codeigniter database inladen)
-	    $subject = 'Wachtwoord opgevraagd';
+	    $subject = 'Pixel Apps - Aanmeldgegevens';
 	    $message = '
 				<b>Beste '.$gebruikersnaam.',</b><br />
 				<br />
-				U ben uw wachtwoord vergeten, en daarom sturen we u de volgende gegevens:<br />
+				U heeft gevraagd om uw wachtwoord te herstellen.<br />
+				Met volgende gegevens kan u zich aanmelden.
 				<br />
 				Gebruikersnaam - '.$gebruikersnaam.'<br />
 				Wachtwoord - '.$wachtwoord.'<br />
 				<br />
 				<br />
-				Indien u uw wachtwoord niet heeft opgevraagd mag u deze mail negeren
+				U kan uw oud wachtwoord herstellen op de profielpagina. De link bevind zich onderaan op de pagina.<br />
+				Indien u uw wachtwoord niet heeft opgevraagd mag u deze mail negeren.
 				';
-	    $this->load->library('email');
-	    $config['mailtype'] = 'html'; //mailopmaak defini�ren
-	    $this->email->initialize($config); //instelling uit de $config[] array halen+
+	    $config = Array(
+	    		'protocol'  => 'smtp',
+	    		'smtp_host' => 'ssl://smtp.googlemail.com',
+	    		'smtp_port' => '465',
+	    		'smtp_user' => 'topics2.groep1@gmail.com',
+	    		'smtp_pass' => 'azerQSDF',
+	    		'mailtype'  => 'html',
+	    		'starttls'  => true,
+	    		'newline'   => "\r\n"
+	    );
+	    $this->load->library('email', $config);
 	    $this->email->from('topics2.groep1@gmail.com', 'Topics2 - Groep 1'); //verzender groep 1
 	    $this->email->to($email); //ontvanger
 	    $this->email->subject($subject); //onderwerp toevoegen
@@ -60,30 +70,31 @@ class User_model extends CI_Model {
     {
         $subject='Contacteer ons';
         $message='
-                    <b>Beste Meneer,Mevrouw</b><br/>
+                    <b>Beste Meneer, Mevrouw</b><br/>
                     <br/>
-                    Ik wens u de volgende boodschap door te geven<br/>
+                    Hierbij brengen we u op de hoogte van het volgende:<br/>
                     <br/>
                     Boodschap:<br/><br/>
                     '.$message.'<br />
-                    Contacteer mij op het volgende email adres: '.$email.'<br/>
+                    Contacteer ons op het volgende email adres: '.$email.'<br/>
                     <br/>0
                     <br/>
                     Met vriendelijke groeten<br/>
                     '.$name.'';
         
         $config = Array(
-        	'protocol' => 'smtp',
-        	'smtp_host' => 'ssl://smtp.gmail.com',
-        	'smtp_port' => '465',
-        	'smtp_user' => 'topics2.groep1@gmail.com',
-        	'smtp_pass' => 'azerQSDF',
-        	'charset' => 'utf-8',
-        	'mailtype' => 'html'
-        );
+	    		'protocol'  => 'smtp',
+	    		'smtp_host' => 'ssl://smtp.googlemail.com',
+	    		'smtp_port' => '465',
+	    		'smtp_user' => 'topics2.groep1@gmail.com',
+	    		'smtp_pass' => 'azerQSDF',
+	    		'mailtype'  => 'html',
+	    		'starttls'  => true,
+	    		'newline'   => "\r\n"
+	    );
         $this->load->library('email', $config); 
-        $this->email->from($email, $name);
-        $this->email->to('Anke.Appeltans@student.pxl.be');
+        $this->email->from('topics2.groep1@gmail.com', 'Topics2 - Groep 1'); //verzender groep 1
+	    $this->email->to($email); //ontvanger
         $this->email->subject($subject);
         $this->email->message($message); //bericht toevoegen
 	$this->email->send(); //verzenden
