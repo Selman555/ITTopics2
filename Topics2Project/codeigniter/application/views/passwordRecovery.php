@@ -25,8 +25,8 @@
                                 <input name="username" type="text" placeholder=<?php echo $this->lang->line('loginGebruiker');?> class="tekstfield" required="true"  >
                              </tr>
                              <tr>                        
-                                <label>Email &nbsp;&nbsp;    </label>
-                                <input name="email" type="text" placeholder="Email" class="tekstfield" required="true"  ><br /><br/>
+                                <label><?php echo $this->lang->line('loginEmail');?> &nbsp;&nbsp;    </label>
+                                <input name="email" type="text" placeholder="<?php echo $this->lang->line('loginEmail');?>" class="tekstfield" required="true"  ><br /><br/>
                             </tr>
                         </table>
                         <p><?php print_r($error);?></p>
