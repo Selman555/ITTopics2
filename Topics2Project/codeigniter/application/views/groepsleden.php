@@ -4,6 +4,7 @@
         <?php $user_language=$this->session->userdata('language');
         $this->lang->load('home_form_'.$user_language,$user_language);?>
 		
+		<meta charset="UTF-8">
 		<link rel="stylesheet" href="<?php echo base_url('styles/main.css'); ?>" 
 			type="text/css" media="screen"/>
 		<link rel="stylesheet" href="<?php echo base_url('styles/other/jquery.bxslider.css'); ?>" /> <!-- [BxSlider] -->

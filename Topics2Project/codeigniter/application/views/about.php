@@ -7,6 +7,8 @@
              if ($this->session->userdata('logged_in')) {
              	$logged = true;
              }?>
+             
+             <meta charset="UTF-8">
              <link rel="stylesheet" href="<?php echo base_url('styles/main.css'); ?>" type="text/css" media="screen"/>
              <title>About</title>
         </head>
@@ -24,7 +26,7 @@
 						<input type="submit" id="submit" value="OK" /><div id="error"> <?php echo $this->session->flashdata("errors"); ?></div>
 					</form>
 					<?php } else {?>
-	            	<p><?php echo str_replace("__NewLine__", "\r\n" ,$text);?></p>
+	            	<?php echo str_replace("__NewLine__", "\r\n" ,$text);?>
 	            	<?php } ?>
             	</article>    
             </section>

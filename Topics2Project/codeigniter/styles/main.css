@@ -58,7 +58,7 @@ footer ul li {
 
 footer ul li a {
 	color: #004499;
-	display: block-inline;
+	display: inline-block;
 }
 
 footer ul li a:hover {

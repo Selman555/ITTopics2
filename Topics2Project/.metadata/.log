@@ -5104,3 +5104,6 @@ Binding(CTRL+SHIFT+H,
 		,,true),null),
 	org.eclipse.ui.defaultAcceleratorConfiguration,
 	org.eclipse.php.ui.phpEditorScope,,,system)
+
+!ENTRY org.eclipse.php.debug.core 4 4 2013-11-12 21:03:56.427
+!MESSAGE The debug port 10000 is in use. Please select a different port for the debugger.

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
+		<meta charset="UTF-8">
 		<title>To Do's</title>
 		<link rel="stylesheet" href="<?php echo base_url('styles/todo.css'); ?>" 
 			type="text/css" media="screen"/>

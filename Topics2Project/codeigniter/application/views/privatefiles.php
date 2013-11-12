@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html lang="nl-be">
 	<head>
-                <?php $user_language=$this->session->userdata('language');
-                $this->lang->load('home_form_'.$user_language,$user_language);?>
+        <?php $user_language=$this->session->userdata('language');
+        $this->lang->load('home_form_'.$user_language,$user_language);?>
+		
+		<meta charset="UTF-8">
 		<link rel="stylesheet" href="<?php echo base_url('styles/main.css'); ?>" media="screen"/>
 		<title><?php echo $this->lang->line('prive');?></title>
 		<script type="text/javascript" src="https://www.dropbox.com/static/api/1/dropins.js" id="dropboxjs"

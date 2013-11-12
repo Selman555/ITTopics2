@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="nl-be">
 	<head>
+		<meta charset="UTF-8">
 		<link rel="stylesheet" href="<?php echo base_url('styles/main.css'); ?>" />
         <link rel="stylesheet" href="<?php echo base_url('styles/profile.css'); ?>" />
 		<title>Profile</title>
-		<script language='javascript' type='text/javascript'>
+		<script type='text/javascript'>
 		//__________BRON: http://stackoverflow.com/questions/13865146/html5-validation-and-field-comparison
 		function checkPassword(input) {
 			if (input.value != document.getElementById('newpass').value) {
@@ -48,7 +49,7 @@
 						      	<td><input name="email" type="email" placeholder="<?php echo $this->lang->line('mailNew');?>" class="tekstfield"
 						      		id="email" required ></td>
 	                			<td><input name="emailconfirm" type="email" placeholder="<?php echo $this->lang->line('mailConfirm');?>" class="tekstfield"
-	                				id="emailconfirm"required oninput="checkEmail(this)" ></td>
+	                				id="emailconfirm" required oninput="checkEmail(this)" ></td>
 	                			<td><input type="submit" value="<?php echo $this->lang->line('paswoordbtnReset');?>" id="resetemail" /></td>
 						    </tr>
 						    <?php if (isset($errorsMail)) {?>
