@@ -1,0 +1,67 @@
+<html>
+    <head>
+        <title>To Do's</title>
+        <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+        <script type="text/javascript" src="js/todo.js"></script>
+        <link rel="stylesheet" type="text/css" href="css/todo.css" />
+    </head>
+    <body onload="webservice();">
+        <h1>To Do</h1>
+        <div id="todo"></div>
+
+        <h1>In Behandeling</h1>
+        <div id="behandeling"></div>
+
+        <h1>Nazicht Nodig</h1>
+        <div id="nazicht"></div>
+
+        <h1>In Nazicht</h1>
+        <div id="innazicht"></div>
+
+        <h1>Klaar!</h1>
+        <div id="klaar"></div>
+
+        <input type="button" value="Herlaad" onClick="cleanElements();" />
+
+        <form action="WEBSERVICE.php" method="POST">
+            <h1>Maak Opdracht</h1>
+            <table>
+                <tbody>
+                    <tr>
+                        <td>Naam:</td>
+                        <td><input type="text" name="naam" placeholder="Naam To Do" /></td>
+                    </tr>
+                    <tr>
+                        <td>Omschrijving:</td>
+                        <td><input type="text" name="omschrijving" placeholder="Omschrijving To Do" /></td>
+                    </tr>
+                    <tr>
+                        <td>Richting:</td>
+                        <td>
+                            <select name="richting">
+                                <option>AON</option>
+                                <option>SNB</option>
+                                <option>SWM</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Prioriteit:</td>
+                        <td>
+                            <select name="prioriteit">
+                                <option>Zeer hoog</option>
+                                <option>Hoog</option>
+                                <option>Matig</option>
+                                <option>Laag</option>
+                                <option>Zeer laag</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"><input type="submit" value="Aanmaken" /></td>
+                    </tr>
+                </tbody>
+            </table>
+        </form>
+    </body>
+</html>
