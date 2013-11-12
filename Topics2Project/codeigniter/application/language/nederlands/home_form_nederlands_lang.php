@@ -53,5 +53,7 @@ $lang['ContactMessage']="Boodschap";
 //contactverzonden
 $lang['ContactMessage']="Uw boodschap werd naar ons gestuurd";
 $lang['ContactMessage2']="Dank u voor ons te contacteren";
+//password recovery
+$lang['loginEmail']='Email adres';
 
 ?>
