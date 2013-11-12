@@ -111,19 +111,22 @@ header a img {
 }
 
 header nav a:nth-child(1) {
-	background-color: #3b3386;
+	background-color: #d10111;
 }
 header nav a:nth-child(2) {
-	background-color: #d10111;
+	background-color: #ef6f01;
 }
 header nav a:nth-child(3) {
 	background-color: #76b715;
 }
 header nav a:nth-child(4) {
-	background-color: #ef6f01;
+	background-color: #3b3386;
 }
 header nav a:nth-child(5) {
-	background-color: #af6f01;
+	background-color: #6F00FF;
+}
+header nav a:nth-child(6) {
+	background-color: #8F00FF;
 }
 
 header nav a:hover {

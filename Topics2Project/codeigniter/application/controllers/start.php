@@ -15,6 +15,9 @@ class Start extends CI_Controller {
 	public function index()
 	{		
         $data = $this->getCMS('hoofdpagina');
+        if ($data['text'] == null) {
+        	$data['text'] = $this->lang->line ( 'webserviceError' );
+        }
 		$this->load->view('index', $data);
 	}
 
@@ -52,6 +55,9 @@ class Start extends CI_Controller {
     public function about()
     {
     	$data = $this->getCMS('aboutpagina');
+    	if ($data['text'] == null) {
+    		$data['text'] = $this->lang->line ( 'webserviceError' );
+    	}
     	$this->load->view('about', $data);
     }
      public function contact()
@@ -97,7 +103,7 @@ class Start extends CI_Controller {
     			"text" => $content
     	);
     	
-    	return $this->user_model->putRequest($data, 'cmspost/inserttext');
+    	return $this->user_model->putRequest($data, 'webresources/cmspost/inserttext');
     }
     
     public function getCMS($id) {
@@ -108,7 +114,7 @@ class Start extends CI_Controller {
         	$taalcode = 'EN';
         }
         
-        return $this->user_model->getRequest('cmspost/gettext?id='.$id.'&taalcode='.$taalcode);
+        return $this->user_model->getRequest('webresources/cmspost/gettext?id='.$id.'&taalcode='.$taalcode);
     }
     
 }
