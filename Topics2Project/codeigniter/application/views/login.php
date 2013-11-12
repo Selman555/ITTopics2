@@ -14,20 +14,22 @@
 			<div id="inputsAndTekst">
 				<h1>Login</h1>
                         <?php echo $this->lang->line('loginGebruikerTitel');?><br />
-				<br />
 				<table>
 					<tr>
-						<td><label> <?php echo $this->lang->line('loginGebruiker');?> </label>&nbsp;&nbsp;&nbsp;
-							<input name="username" type="text"
-							placeholder="<?php echo $this->lang->line('loginGebruiker');?>"
-							class="tekstfield" /></td>
+						<td>
+							<label> <?php echo $this->lang->line('loginGebruiker');?> </label>
+						</td>
+						<td>
+							<input name="username" type="text" placeholder="<?php echo $this->lang->line('loginGebruiker');?>" />
+						</td>
 					</tr>
 					<tr>
-						<td><label><?php echo $this->lang->line('loginPassword');?> &nbsp;&nbsp;    </label>
-							<input name="password" type="password"
-							placeholder=<?php echo $this->lang->line('loginPassword');?>
-							class="tekstfield" /><br />
-						<br /></td>
+						<td>
+							<label> <?php echo $this->lang->line('loginPassword');?> </label>
+						</td>
+						<td>
+							<input name="password" type="password" placeholder="<?php echo $this->lang->line('loginPassword');?>" />
+						</td>
 					</tr>
 				</table>
 				<p><?php print_r($error);?> </p>

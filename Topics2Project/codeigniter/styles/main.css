@@ -1,3 +1,4 @@
+/*________________________ALGEMEEN_______________________*/
 html {
 	position: relative;
 	width: 100%;
@@ -177,4 +178,10 @@ input:required:invalid, input:focus:invalid {
 input:required:valid {
 	box-shadow: 3px 5px #eeeeee;
 	background-color: #CCFFBB;
+}
+
+#error
+{
+    color: red;
+    border-color: red;
 }
