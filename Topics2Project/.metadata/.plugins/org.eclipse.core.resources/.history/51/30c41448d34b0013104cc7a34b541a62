@@ -1,0 +1,105 @@
+/* 
+    Document   : Login
+    Created on : Oct 6, 2013, 6:59:03 PM
+    Author     : AnkeA
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+
+h1
+{ 
+    
+    text-align: left;
+    letter-spacing: 0.1em;
+    font-family: Tahoma;
+    position: relative;
+     
+    margin-top: 4em;
+    font-size: 1.5em;
+}
+p{
+    color:red;
+}
+
+input[placeholder="Gebruikersnaam"]
+{
+     width:65%;
+   
+}
+input[placeholder="Username"]
+{
+     margin-left: 2.5em;
+     width:65%;
+   
+}
+input[placeholder="Email"]
+{
+     margin-left: 2.5em;
+     width:65%;
+   
+}
+
+
+
+button{
+    margin-top: 0.1em;
+    width: 40%;
+    height:2.4em;
+   	padding: 0.4em 0.9em;
+    margin-left: 6em;
+}
+
+#inputsAndTekst
+{       
+    padding: 2em;
+    margin-left: 4em;
+}
+
+body>section {
+	width: 30%;
+    min-height: 72.2%;
+	margin: auto;
+	margin-top: 5%;
+
+	overflow:auto;
+	border: 0.1em dashed black;
+	border-radius: 0.5em;
+        background-color: #E4F0F6;
+}
+input[type=text] {
+	width: 100%;
+}
+input[type=password] {
+	width: 100%;
+}
+
+@media screen and  (max-width:1024px)
+{
+    body>section 
+    {
+		width: 80%;
+	    min-height: 72.2%;
+	
+    }
+}
+@media screen and  (max-height:750px) and (max-width:1024px)
+{
+   
+}
+
+@media screen and  (max-height:500px) and (max-width:1024px)
+{
+   
+}
+
+th {
+	text-align: left;
+	width: 30%;
+}
+
+form {
+	padding-bottom: 3%;
+	border: 0.1em dashed black;
+	border-radius: 0.5em;
+}
