@@ -22,6 +22,18 @@ class User_model extends CI_Model {
     	$json = $this->getRequest('Punten');
     	return $json;
     }
+	
+	function getErrorlogs()
+	{
+		$json = $this->getRequest('webresources/ErrorLoging/GetLog');
+		return $json;
+	}
+	
+	function getIpLogging()
+	{
+		$json = $this->getRequest('webresources/ErrorLoging/getIpLog');
+		return $json;
+	}
     
     function sendEmail($gebruikersnaam,$wachtwoord,$email)
     {

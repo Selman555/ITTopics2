@@ -247,6 +247,11 @@ class User extends CI_Controller {
 			$this->load->view ( 'contact', $data );
 		}
 	}
+	public function Errorlogging() {
+		$data ['error'] = $this->user_model->getErrorlogs();
+		$data ['iplog'] = $this->user_model->getIpLogging();
+		$this->load->view ( 'errorlogging', $data );
+	}
 }
 
 /* End of file welcome.php */
