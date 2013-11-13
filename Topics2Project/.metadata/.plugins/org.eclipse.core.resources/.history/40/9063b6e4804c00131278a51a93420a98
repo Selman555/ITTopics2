@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <link rel="stylesheet" href="<?php echo base_url('styles/main.css'); ?>" />
 <link rel="stylesheet"
-	href="<?php echo base_url('styles/login.css'); ?>" />
+	href="<?php echo base_url('styles/passwordRecovery.css'); ?>" />
 <title>Paswoord instellen</title>
 </head>
 <body>
@@ -24,12 +24,18 @@
 				<h1>Paswoord recovery</h1>
 				<table>
 					<tr>
-						<td><label> <?php echo $this->lang->line('loginGebruiker');?> </label></td>
-						<td><input name="username" type="text" placeholder=<?php echo $this->lang->line('loginGebruiker');?> class="tekstfield" required /></td>
+						<td><label> <?php echo $this->lang->line('loginGebruiker');?> </label>
+						</td>
+						<td><input name="username" type="text"
+							placeholder=<?php echo $this->lang->line('loginGebruiker');?>
+							class="tekstfield" required /></td>
 					</tr>
 					<tr>
-						<td><label><?php echo $this->lang->line('loginEmail');?></label></td>
-						<td><input name="email" type="text" placeholder="<?php echo $this->lang->line('loginEmail');?>" class="tekstfield" required /></td>
+						<td><label><?php echo $this->lang->line('loginEmail');?> &nbsp;&nbsp;    </label>
+						</td>
+						<td><input name="email" type="text"
+							placeholder="<?php echo $this->lang->line('loginEmail');?>"
+							class="tekstfield" required /></td>
 					</tr>
 				</table>
 				<p><?php print_r($error);?></p>

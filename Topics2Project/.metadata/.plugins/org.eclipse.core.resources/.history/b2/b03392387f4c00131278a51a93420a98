@@ -124,5 +124,5 @@ class Start extends CI_Controller {
     
 }
 
-/* End of file start.php */
-/* Location: ./application/controllers/start.php */
+/* End of file welcome.php */
+/* Location: ./application/controllers/welcome.php */

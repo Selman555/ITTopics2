@@ -1,0 +1,91 @@
+label {
+    display:block;
+    margin-top:1.1em;
+    letter-spacing:0.1em;
+}
+
+
+input, textarea {
+	width:33em;
+	height:1em;
+	background:#efefef;
+	border:0.1em solid #dedede;
+	padding:0.6em;
+	margin-top:0.1em;
+	font-size:0.9em;
+	color:#3a3a3a;
+         -moz-border-radius:0.5em;
+        -webkit-border-radius:0.5em;
+        border-radius:0.5em;
+}
+textArea{
+   height:10em;
+}
+input:focus, textarea:focus {
+    border:0.1em solid #97d6eb;
+    
+}
+
+
+
+#submit {
+    width:10em;
+    height:3em;
+    margin-left: 13em;
+    background-color: #2B6882;
+    color: white;
+}
+
+#submit:hover {
+    opacity:.9;
+}
+p{
+    color: red;
+}
+
+body>section {
+	width: 30%;
+        min-height: 72.2%;
+	margin: auto;
+	margin-top: 5%;
+
+	overflow:auto;
+	border: 0.1em dashed black;
+	border-radius: 0.5em;
+        
+}
+
+@media screen and  (max-width:1024px)
+{
+    body>section {
+        width: 80%;
+        min-height: 72.2%;
+	
+    }
+   input, textarea {
+	width:33em;
+	height:0.8em;
+	padding:0.6em;
+	margin-top:0em;
+	font-size:0.9em;
+   
+    }
+    textArea{
+        
+         height:8em;
+       
+	
+     }
+     
+
+    
+}
+@media screen and  (max-height:750px) and (max-width:1024px)
+{
+   
+}
+
+@media screen and  (max-height:500px) and (max-width:1024px)
+{
+   
+}
