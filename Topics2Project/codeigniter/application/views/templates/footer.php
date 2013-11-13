@@ -5,7 +5,7 @@
 	<section>
      <article>
        <ul>
-         <li> | <a href="index">Home</a></li>
+         <li> | <a href="<?php echo base_url(); ?>">Home</a></li>
          <li> | <a href="http://www.ford.be/" target="_blank">Ford</a></li>
          <li> | <a href="#">About</a></li>
          <li> | <a href="#">Voorstelling</a></li>
@@ -14,6 +14,7 @@
          </a></li>
          <li> | <a href="<?php echo base_url('start/leden'); ?>">Leden</a></li>
          <li><a href="#">Verslagen</a> | </li>
+         <li><a href="<?php echo base_url('start/tasks');?>">To do's</a> | </li>
          <li><a href="<?php echo base_url('start/todo'); ?>">To Do's</a></li>
          <?php if ($this->session->userdata('logged_in')) {?>
          <li> | <a href="<?php echo base_url('user/profile'); ?>">Profile</a></li>

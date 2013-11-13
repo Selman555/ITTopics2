@@ -60,11 +60,16 @@ class Start extends CI_Controller {
     	}
     	$this->load->view('about', $data);
     }
-     public function contact()
+    
+    public function contact()
     {
-         
         $data['error'] = $this->lang->line('');
         $this->load->view('contact',$data);
+    }
+    
+    public function tasks() {
+    	$data['tasks'] = $this->user_model->getTasks();
+    	$this->load->view('tasks', $data);
     }
    
     public function cmsAboutOpdrachtgever() 
