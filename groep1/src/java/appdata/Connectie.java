@@ -333,6 +333,43 @@ public class Connectie {
             
         }
     }
+    
+    public String getIpLogging()
+    {
+        StringBuilder sb = new StringBuilder();
+        
+        Statement stmt = null;
+        ResultSet rs = null;
+        try
+        {
+            String query = "SELECT date, ipadress"
+                         + " FROM iplogging "
+                         + " ORDER BY ID DESC"
+                         + " LIMIT 10";
+            
+           stmt = dbCon.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+           rs = stmt.executeQuery(query);
+              
+           sb.append("[");
+           boolean isfirst = true;
+            while(rs.next())
+            {
+                if(isfirst == false)
+                {
+                    sb.append(",");
+                }
+                    sb.append("{\"date\": \"" + rs.getString("date") + "\", \"ipadress\":\"" + rs.getString("ipadress") +"\"}");
+                isfirst = false;
+           }
+           sb.append("]");
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+        String test = sb.toString();
+        return sb.toString();
+    }
         
     public void InsertErrorLog(String pagename, String errormessage)
     {
@@ -362,11 +399,19 @@ public class Connectie {
             
            stmt = dbCon.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
            rs = stmt.executeQuery(query);
-           
-           while(rs.next())
-           {
-               sb.append("{\"page\": \"" + rs.getString("err_page") + "\", \"message\":\"" + rs.getString("err_message") +"\"}");
+              
+           sb.append("[");
+           boolean isfirst = true;
+            while(rs.next())
+            {
+                if(isfirst == false)
+                {
+                    sb.append(",");
+                }
+                    sb.append("{\"page\": \"" + rs.getString("err_page") + "\", \"message\":\"" + rs.getString("err_message") +"\"}");
+                isfirst = false;
            }
+           sb.append("]");
         }
         catch(Exception e)
         {
@@ -498,7 +543,7 @@ public class Connectie {
         ResultSet rs = null;
         try
         {
-            String query = "SELECT naam, omschrijving"
+            String query = "SELECT naam, omschrijving, prioriteit, richting, status, doorID"
             + " FROM todo"
             + " ORDER BY prioriteit DESC";
             
@@ -513,7 +558,12 @@ public class Connectie {
                     sb.append(",");
                 }
                 
-                sb.append("{\"Naam\": \"" + rs.getString("naam") + "\", \"Omschrijving\":\"" + rs.getString("omschrijving") +"\"}");
+                sb.append("{\"Naam\":\"" + rs.getString("naam") + "\", "
+                        + "\"Omschrijving\":\"" + rs.getString("omschrijving") +"\"," 
+                        + "\"Prioriteit\":\"" + rs.getString("prioriteit") + "\", "
+                        + "\"Richting\":\"" + rs.getString("richting") +"\"," 
+                        + "\"Status\":\"" + rs.getString("status") + "\","
+                        + "\"Door\":\"" + rs.getString("doorID") +"\"}");
                 isfirst = false;
             }
             
@@ -538,6 +588,21 @@ public class Connectie {
             }
         }
         return null;
+    }
+    
+    public void insertTodo(String naam, String omschrijving, int prioriteit, String richting, int status, int door)
+    {
+        try
+        {
+            String sql = "INSERT INTO todo(naam, omschrijving, prioriteit, doorID, richting, status) "
+                         + "VALUES ('"+naam+"','"+omschrijving+"',"+ prioriteit +"," + door + ",'"+richting+"',"+ status +")";
+
+            dbCon.createStatement().executeUpdate(sql);
+        }
+        catch(Exception e)
+        {
+            System.err.println("insert todo Query Failed!\r\n" + e.getMessage());
+        }
     }
 
 

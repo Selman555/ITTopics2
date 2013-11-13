@@ -70,6 +70,13 @@ public class ErrorLog {
         }
     }
     
+    @GET
+    @Path("getIpLog")
+    @Produces("application/json")
+    public String getIpLog() {
+        return c.getIpLogging();
+    }
+    
     @PreDestroy
     public void destroy() {
         //c.closeConnection();

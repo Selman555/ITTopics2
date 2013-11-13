@@ -53,8 +53,8 @@ private static Connectie c;
                 }
             } else {
                 try {
-
-                    //c.InsertTodo("TEST 1 WEBSERVICE", "Een test via de webservice", 1, 1, "AON");
+                    
+                     //c.insertTodo(null, null, prioriteit, null, status, door);
                 } catch (Exception e) {
                 }
             }
