@@ -22,9 +22,7 @@ class User extends CI_Controller {
 		$this->load->view ( 'login', $data );
 	}
 	
-	public function loginUser() {
-		$this->iplogging ();
-		
+	public function loginUser() {		
 		// het verplicht maken van username en password
 		$this->form_validation->set_rules ( 'username', 'Username', 'trim|required|xss_clean' );
 		$this->form_validation->set_rules ( 'password', 'Password', 'trim|required|xss_clean' );
@@ -124,34 +122,14 @@ class User extends CI_Controller {
 		redirect ( 'start/index', 'refresh' );
 	}
 	
-	public function iplogging() {
-		$baseurl = 'http://localhost:8080/Groep1/Iplogging?ipadress=';
-		$ipadress = $this->input->ip_address ();
-		
-		$url = $baseurl . $ipadress;
-		$this->do_post_request ( $url, '', null );
-	}
-	
-	function do_post_request($url, $data, $optional_headers = null) {
-		$params = array (
-				'http' => array (
-						'method' => 'POST',
-						'content' => $data 
-				) 
-		);
-		if ($optional_headers !== null) {
-			$params ['http'] ['header'] = $optional_headers;
+	public function logging() {
+		$data ['error'] = $this->user_model->getErrorlogs();
+		if (!$data['error']) {
+			$data['error'] = array('nomessages' => array('page' => 'N/A',
+			'message' => 'Geen foutmeldingen weer te geven.'));
 		}
-		$ctx = stream_context_create ( $params );
-		$fp = @fopen ( $url, 'rb', false, $ctx );
-		if (! $fp) {
-			throw new Exception ( "Problem with $url, $php_errormsg" );
-		}
-		$response = @stream_get_contents ( $fp );
-		if ($response === false) {
-			throw new Exception ( "Problem reading data from $url, $php_errormsg" );
-		}
-		return $response;
+		$data ['iplog'] = $this->user_model->getIpLogging();
+		$this->load->view('logging', $data);
 	}
 	
 	public function profile() {
@@ -246,11 +224,6 @@ class User extends CI_Controller {
 			$data ['error'] = $this->lang->line ( 'fieldsIncorrect' );
 			$this->load->view ( 'contact', $data );
 		}
-	}
-	public function Errorlogging() {
-		$data ['error'] = $this->user_model->getErrorlogs();
-		$data ['iplog'] = $this->user_model->getIpLogging();
-		$this->load->view ( 'errorlogging', $data );
 	}
 }
 

@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename source module &apos;application/views.errorlogging.php&apos; to &apos;logging.php&apos;&#x0D;&#x0A;- Original element: &apos;application/views\errorlogging.php&apos;&#x0D;&#x0A;- Renamed element: &apos;application/views\logging.php&apos;" description="Rename source module &apos;errorlogging.php&apos;" flags="589830" id="org.eclipse.dltk.ui.rename.sourcemodule" input="/&lt;application\/views{errorlogging.php" name="logging.php" stamp="1384361253922" version="1.0"/>
+</session>

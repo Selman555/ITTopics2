@@ -13,7 +13,11 @@ class Start extends CI_Controller {
 	}
 
 	public function index()
-	{		
+	{
+		if (!$this->session->userdata('iplogged')) {
+			$this->iplogging();
+			$this->session->set_userdata('iplogged', true);
+		}
         $data = $this->getCMS('hoofdpagina');
         if ($data['text'] == null) {
         	$data['text'] = $this->lang->line ( 'webserviceError' );
@@ -120,6 +124,36 @@ class Start extends CI_Controller {
         }
         
         return $this->user_model->getRequest('webresources/cmspost/gettext?id='.$id.'&taalcode='.$taalcode);
+    }
+    
+    public function iplogging() {
+    	$baseurl = 'http://localhost:8080/Groep1/Iplogging?ipadress=';
+    	$ipadress = $this->input->ip_address ();
+    
+    	$url = $baseurl . $ipadress;
+    	$this->do_post_request ( $url, '', null );
+    }
+    
+    function do_post_request($url, $data, $optional_headers = null) {
+    	$params = array (
+    			'http' => array (
+    					'method' => 'POST',
+    					'content' => $data
+    			)
+    	);
+    	if ($optional_headers !== null) {
+    		$params ['http'] ['header'] = $optional_headers;
+    	}
+    	$ctx = stream_context_create ( $params );
+    	$fp = @fopen ( $url, 'rb', false, $ctx );
+    	if (! $fp) {
+    		throw new Exception ( "Problem with $url, $php_errormsg" );
+    	}
+    	$response = @stream_get_contents ( $fp );
+    	if ($response === false) {
+    		throw new Exception ( "Problem reading data from $url, $php_errormsg" );
+    	}
+    	return $response;
     }
     
 }

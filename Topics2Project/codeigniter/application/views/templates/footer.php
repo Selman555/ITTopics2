@@ -13,10 +13,11 @@
            GitHub
          </a></li>
          <li> | <a href="<?php echo base_url('start/leden'); ?>">Leden</a></li>
-         <li><a href="#">Verslagen</a> | </li>
-         <li><a href="<?php echo base_url('start/tasks');?>">To do's</a> | </li>
-         <li><a href="<?php echo base_url('start/todo'); ?>">To Do's</a></li>
+         <li> | <a href="#">Verslagen</a></li>
+         <li> | <a href="<?php echo base_url('start/tasks');?>">Resultaten</a></li>
+         <li> | <a href="<?php echo base_url('start/todo'); ?>">To Do's</a></li>
          <?php if ($this->session->userdata('logged_in')) {?>
+         <li> | <a href="<?php echo base_url('user/logging'); ?>">Logging</a></li>
          <li> | <a href="<?php echo base_url('user/profile'); ?>">Profile</a></li>
          <li id="status">U bent aangemeld als: <?php echo $this->session->userdata('username');?></li>
          <?php }?>

@@ -1,0 +1,235 @@
+<?php
+if (! defined ( 'BASEPATH' ))
+	exit ( 'No direct script access allowed' );
+class User extends CI_Controller {
+	function __construct() {
+		parent::__construct ();
+		$this->load->model ( 'user_model', '', TRUE );
+		$this->load->helper ( array (
+				'form',
+				'string' 
+		) );
+		$this->load->library ( 'form_validation' ); // Post data validatie
+		if ($this->session->userdata ( 'language' ) == 'nederlands') {
+			$this->lang->load ( "profile", "nederlands" );
+		} else {
+			$this->lang->load ( "profile", "english" );
+		}
+	}
+	
+	public function login() {
+		$data ['error'] = "";
+		$this->load->view ( 'login', $data );
+	}
+	
+	public function loginUser() {		
+		// het verplicht maken van username en password
+		$this->form_validation->set_rules ( 'username', 'Username', 'trim|required|xss_clean' );
+		$this->form_validation->set_rules ( 'password', 'Password', 'trim|required|xss_clean' );
+		
+		// het ophalen van de salt
+		if (! $this->form_validation->run ()) {
+			$data ['error'] = $this->lang->line ( 'fieldsIncorrect' );
+			$this->load->view ( 'login', $data );
+		} else {
+			$username = $this->input->post ( 'username' );
+			$password = $this->input->post ( 'password' );
+			
+			$resultSalt = $this->user_model->getSalt ( $username );
+			
+			if ($resultSalt != "null") {
+				
+				$boolean = $this->user_model->login ( $username, $password, $resultSalt );
+				if ($boolean) {
+					
+					$array = array (
+							'username' => $username,
+							'logged_in' => true 
+					);
+					
+					$this->session->set_userdata ( $array );
+					
+					redirect ( 'start/index' );
+				} else {
+					$data ['error'] = $this->lang->line ( 'loginError' );
+					$this->load->view ( 'login', $data );
+				}
+			} else {
+				$data ['error'] = $this->lang->line ( 'fieldsIncorrect' );
+				$this->load->view ( 'login', $data );
+			}
+		}
+	}
+	
+	public function Password_recovery() {
+		$data ['error'] = '';
+		$this->load->view ( 'passwordRecovery', $data );
+	}
+	
+	public function setPassword() {
+		$this->form_validation->set_rules ( 'username', 'Username', 'trim|required|xss_clean' );
+		$this->form_validation->set_rules ( 'email', 'Email', 'trim|required|xss_clean' );
+		
+		if (! $this->form_validation->run ()) {
+			$data ['error'] = $this->lang->line ( 'fieldsIncorrect' );
+			$this->load->view ( 'passwordRecovery', $data );
+		} else {
+			// het ophalen van het emial address
+			$username = $this->input->post ( 'username' );
+			$email = $this->input->post ( 'email' );
+			$result = $this->user_model->getEmail ( $username );
+			
+			// het email address als er een is in een var zetten
+			if ($result == $email) {
+				// het genereren van een nieuw passwoord voor de gebruiker
+				$password = random_string ( 'alnum', 10 );
+				// genereren van een random int
+				$salt = $this->user_model->getSalt ( $username );
+				
+				// het password updaten in de database
+				$this->user_model->updatePassword ( $username, $password, $salt );
+				
+				// email sturen nr gebruiker
+				$this->user_model->sendEmail ( $username, $password, $email );
+				// tonen dat de email is verzonden
+				$this->load->view ( 'passwordRecoverySucceeded' );
+			} else { // anders printen dat de gebruiker niet aanwezig is in de database
+				$data ['error'] = $this->lang->line ( 'PasswordError' );
+				$this->load->view ( 'passwordRecovery', $data );
+			}
+		}
+	}
+	
+	// deel wanneer de user ingelog is
+	public function prive() {
+		if ($this->session->userdata ( 'logged_in' )) { // probleem
+			$session_date = $this->session->userdata ( 'logged_in' );
+			$data ['username'] = $session_date ['username'];
+			$this->load->view ( 'privatefiles' );
+		} else {
+			redirect ( 'login', 'refresh' );
+		}
+	}
+	
+	public function logout() {
+		$this->session->sess_destroy ();
+		redirect ( 'start/index', 'refresh' );
+	}
+	
+	public function language($taal) {
+		$this->session->set_userdata ( 'language', $taal );
+		
+		redirect ( 'start/index', 'refresh' );
+	}
+	
+	public function logging() {
+		$data ['error'] = $this->user_model->getErrorlogs();
+		$data ['iplog'] = $this->user_model->getIpLogging();
+		$this->load->view('logging', $data);
+	}
+	
+	public function profile() {
+		$data['tasks'] = $this->user_model->getTasks();
+		$data['email'] = $this->user_model->getEmail($this->session->userdata('username'));
+		$this->load->view ( 'profile', $data );
+	}
+	
+	public function changePassword() {
+		$this->form_validation->set_rules ( 'oldpass', 'newPass', 'trim|required|xss_clean' );
+		$this->form_validation->set_rules ( 'newpass', 'oldPass', 'trim|required|xss_clean' );
+		$this->form_validation->set_rules ( 'confirmpass', 'confirmPass', 'trim|required|xss_clean' );
+		
+		if ($this->form_validation->run ()) {
+			$oldPass = $this->input->post ( 'oldpass' );
+			$newPass = $this->input->post ( 'newpass' );
+			$confirmPass = $this->input->post ( 'confirmpass' );
+			$username = $this->session->userdata ( 'username' );
+			$salt = $this->user_model->getSalt ( $username );
+			
+			if ($salt && $username) {
+				$boolean = $this->user_model->login ( $username, $oldPass, $salt );
+				if ($boolean) {
+					if ($this->user_model->updatePassword ( $username, $newPass, $salt )) {
+						$data ['donePass'] = $this->lang->line ( 'passwordChanged' );
+					} else {
+						$data ['errorsPass'] = $this->lang->line ( 'webserviceError' );
+					}
+				} else {
+					$data ['errorsPass'] = $this->lang->line ( 'passwordIncorrect' );
+				}
+			} else {
+				$data ['errorsPass'] = $this->lang->line ( 'unauthorized' );
+			}
+		} else {
+			$data ['errorsPass'] = $this->lang->line ( 'fieldsIncorrect' );
+		}
+		$this->load->view ( 'profile', $data );
+	}
+	
+	public function changeEmail() {
+		$this->form_validation->set_rules ( 'email', 'email', 'trim|required|xss_clean|valid_email' );
+		$this->form_validation->set_rules ( 'emailconfirm', 'emailConfirm', 'trim|required|xss_clean|valid_email' );
+		
+		if ($this->form_validation->run ()) {
+			$newEmail = $this->input->post ( 'email' );
+			$newEmailConfirm = $this->input->post ( 'emailconfirm' );
+			if ($newEmail === $newEmailConfirm) {
+				$username = $this->session->userdata ( 'username' );
+				if ($this->user_model->updateEmail ( $username, $newEmail )) {
+					$data ['doneMail'] = $this->lang->line ( 'emailChanged' );
+				} else {
+					$data ['errorsMail'] = $this->lang->line ( 'webserviceError' );
+				}
+			} else {
+				$data ['errorsMail'] = $this->lang->line ( 'emailMatch' );
+			}
+		} else {
+			$data ['errorsMail'] = $this->lang->line ( 'fieldsIncorrect' );
+		}
+		$this->load->view ( 'profile', $data );
+	}
+	
+	public function ContactUs() {
+		$this->form_validation->set_rules ( 'name', 'Name', 'trim|required|xss_clean' );
+		$this->form_validation->set_rules ( 'email', 'Email', 'trim|required|xss_clean' );
+		$this->form_validation->set_rules ( 'message', 'Message', 'trim|required|xss_clean' );
+		
+		$this->load->helper ( 'recaptchalib' );
+		$privatekey = "6LeWDeoSAAAAAHokC_BO35HtzBg8ZMivJUupf7bb";
+		$resp = recaptcha_check_answer ( $privatekey, $_SERVER ["REMOTE_ADDR"], $_POST ["recaptcha_challenge_field"], $_POST ["recaptcha_response_field"] );
+		
+		if ($this->form_validation->run ()) {
+			if (! $resp->is_valid) {
+				$data ['error'] = $this->lang->line ( 'ContactError' );
+				$this->load->view ( 'contact', $data );
+			} else {
+				$name = $this->input->post ( 'name' );
+				$email = $this->input->post ( 'email' );
+				$message = $this->input->post ( 'message' );
+				
+				$verzonden = $this->user_model->sendEmailContact ( $name, $email, $message );
+				
+				if ($verzonden == true) {
+					$this->load->view ( 'contactVerzonden' );
+				} else {
+					$data ['error'] = $this->lang->line ( 'webserviceError' );
+					$this->load->view ( 'contact', $data );
+				}
+			}
+		} else {
+			$data ['error'] = $this->lang->line ( 'fieldsIncorrect' );
+			$this->load->view ( 'contact', $data );
+		}
+	}
+}
+
+/* End of file user.php */
+/* Location: ./application/controllers/user.php */
+
+
+
+
+
+
+
+
