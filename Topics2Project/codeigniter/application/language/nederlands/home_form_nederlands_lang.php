@@ -33,9 +33,9 @@ $lang['loginPasswordTitel']="Bent u uw paswoord vergeten?";
 $lang['LoginbtnAanmelden']="Aanmelden";
 $lang['paswoordbtnReset']="Instellen";
 $lang['LoginPasswoord']="paswoord ophalen";
-$lang['loginMeldingIngelogd']="U bent reeds aangemeld";
-$lang['loginMeldingNietIngelogd']="U kan zich";
-$lang['loginMeldingNietIngelogd2']="hier afmelden";
+$lang['loginMeldingIngelogd']="U moet aangemeld zijn om deze inhoud te zien";
+$lang['loginMeldingNietIngelogd']="Gelieve u eerst ";
+$lang['loginMeldingNietIngelogd2']="hier aan te melden.";
 $lang['profileTitle']="Profiel overzicht";
 $lang['email']="Uw e-mail adres";
 $lang['reset']="Opnieuw instellen";
@@ -52,7 +52,7 @@ $lang['ContactEmail']="Email";
 $lang['ContactMessage']="Boodschap";
 //contactverzonden
 $lang['ContactMessage']="Uw boodschap werd naar ons gestuurd";
-$lang['ContactMessage2']="Dank u voor ons te contacteren";
+$lang['ContactMessage2']="Bedankt voor uw reactie.";
 //password recovery
 $lang['loginEmail']='Email adres';
 

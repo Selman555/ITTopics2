@@ -21,10 +21,15 @@
                 
 			<section>
 				<h1><?php echo $this->lang->line('prive');?></h1>
+				<?php if ($this->session->userdata('logged_in')) {?>
 				<article>
 					<p><?php echo $this->lang->line('priveBestandBericht');?></p>
 					<input type="dropbox-chooser" name="selected-file" style="visibility: hidden;"/>
 				</article>
+				<?php } else { ?>
+                <?php echo $this->lang->line('loginMeldingIngelogd');?><br />
+                <?php echo $this->lang->line('loginMeldingNietIngelogd');?> <a href="<?php echo base_url('user/logout'); ?>"><?php echo $this->lang->line('loginMeldingNietIngelogd2');?></a>
+                <?php }?>
 			</section>
 
 		<?php include 'templates/footer.php'; ?>
