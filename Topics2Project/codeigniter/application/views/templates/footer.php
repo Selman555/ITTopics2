@@ -27,7 +27,9 @@
     </section>
     
     <section>
-        <a href="<?php echo base_url('start/index'); ?>"><img src="<?php echo base_url('img/Ford_Logo.jpg'); ?>" alt="logo" /></a>
+        <a href="https://www.facebook.com/PixelAppsPXL"><img alt="facebook" id="facebook"/></a>
+        <a href="https://twitter.com/PixelApps1"><img alt="twitter" id="twitter"/></a>
+        <a href="<?php echo base_url('start/index'); ?>"><img src="<?php echo base_url('img/Ford_Logo.jpg'); ?>" alt="logo" id="logo"/></a>
     </section>
 	
 </footer>
