@@ -28,8 +28,8 @@
 		<?php include 'templates/header.php'; ?>
 		<?php
 		if (! isset ( $_SERVER ['HTTPS'] ) || $_SERVER ['HTTPS'] == "") {
-			// $redirect = "https://".'localhost:4430'.$_SERVER['REQUEST_URI'];
-			// header("Location: $redirect");
+			 $redirect = "https://".'localhost'.$_SERVER['REQUEST_URI'];
+			 header("Location: $redirect");
 		}
 		?>
 

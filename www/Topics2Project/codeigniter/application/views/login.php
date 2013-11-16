@@ -8,6 +8,12 @@
 </head>
 <body>
 		<?php include 'templates/header.php'; ?>
+		<?php
+		if (! isset ( $_SERVER ['HTTPS'] ) || $_SERVER ['HTTPS'] == "") {
+			 $redirect = "https://".'localhost'.$_SERVER['REQUEST_URI'];
+			 header("Location: $redirect");
+		}
+		?>
 
 		<section>
 		<form method="post" action="<?php echo base_url('user/loginUser'); ?>"
